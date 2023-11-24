@@ -1,0 +1,59 @@
+# 기본적인 설정
+HELP.md
+.settings/
+.classpath
+.project
+.gradle/
+.gradle/
+.gradle.kts/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# 빌드 디렉토리 및 빌드 파일
+build/
+bin/
+out/
+target/
+
+# Gradle Wrapper 설정
+!gradle/wrapper/gradle-wrapper.jar
+
+# 소스 디렉토리의 빌드 디렉토리 포함
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# STS 설정
+.apt_generated
+.sts4-cache
+
+# IntelliJ IDEA 설정
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/.name
+.idea/modules.xml
+.idea/misc.xml
+.idea/vcs.xml
+
+# NetBeans 설정
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code 설정
+.vscode/
+
+# Gradle 설정 파일과 래퍼
+settings.gradle
+gradlew
+gradlew.bat
+/.gradle/
+/gradle/
+*.yml
+
+
+# db 계정 설정 제외
+/ERD/derror_dcl.sql
