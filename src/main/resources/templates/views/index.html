@@ -2,9 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Explorer</title>
+
+    <!-- Google Maps API 키를 YOUR_GOOGLE_MAPS_API_KEY에 입력하세요 -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAahD6lK89dPJgZkGSPY_koXo81g70jry8&callback=initMap" async defer></script>
+
+    <style>
+        #map {
+            width: 800px;
+            height: 800px;
+        }
+
+        #searchForm {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-이종현 만듬
+
+<h1>City Explorer</h1>
+
+<form id="searchForm" name="searchForm">
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" required>
+    <br>
+
+    <button type="button" id="button" onclick="searchLocation()">Search Location</button>
+</form>
+
+<!-- 지도를 표시할 div -->
+<div id="map"></div>
+
+<script>
+    var map;
+
+    function initMap() {
+        // 초기 지도 중심 좌표 (전체 도시를 포함하는 최적의 좌표를 설정하세요)
+        var initialCenter = {lat: 37.5665, lng: 126.9780};
+
+        // 초기 지도 생성
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: initialCenter,
+            zoom: 8 // 전체 도시를 보여주기 위해 적절한 줌 레벨 설정
+        });
+
+    }
+
+    function searchLocation() {
+        var location = document.getElementById("location").value;
+
+        // Google Maps Geocoding API로 위치 좌표 가져오기
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({address: location}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                // 검색 결과 중 첫 번째 위치로 이동하며 줌 인
+                map.setCenter(results[0].geometry.location);
+                map.setZoom(12); // 원하는 줌 레벨 설정
+            } else {
+                alert('Location not found.');
+            }
+        });
+
+
+        // 검색 폼에 이벤트 리스너 추가
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // 폼 제출 기본 동작 막기
+            searchLocation();
+        });
+
+        // 검색 폼에서 엔터 키를 눌렀을 때도 서브밋되도록 처리
+        document.getElementById('location').addEventListener('keyup', function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault(); // 폼 제출 기본 동작 막기
+                searchLocation();
+            }
+        })
+
+    }
+
+
+</script>
+
 </body>
 </html>
