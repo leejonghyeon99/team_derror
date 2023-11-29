@@ -25,29 +25,22 @@ public class GptService {
 
        OpenAiService service = new OpenAiService(token, Duration.ofSeconds(30));
 
-//       System.out.println("\nCreating completion...");
-//       CompletionRequest completionRequest = CompletionRequest.builder()
-//               .model("ada")
-//               .prompt("안녕")
-//               .echo(true)
-//               .user("testing")
-//               .n(3)
-//               .build();
-//       service.createCompletion(completionRequest).getChoices().forEach(System.out::println);
-
        System.out.println("\nCreating Image...");
        CreateImageRequest request = CreateImageRequest.builder()
                .model("dall-e-3")
                .quality("hd")
-               .prompt("파티장에서 춤추는 거북이")
+               .prompt("오락실에서 게임하는 거북이")
                .build();
 
        System.out.println("\nImage is located at:");
        System.out.println(service.createImage(request).getData().get(0).getUrl());
+   }
 
+   public void test2(){
+       OpenAiService service = new OpenAiService(token, Duration.ofSeconds(30));
        System.out.println("GPT 연결");
        final List<ChatMessage> messages = new ArrayList<>();
-       final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "안녕");
+       final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "오늘의 날씨 정보 알려줘");
        messages.add(systemMessage);
        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                .builder()

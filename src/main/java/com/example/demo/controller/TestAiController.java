@@ -19,12 +19,16 @@ public class TestAiController {
     public TestAiController(GptService service) {
         this.service = service;
     }
-
-    @RequestMapping("/test")
-    @ResponseBody
+   @RequestMapping("/test")
+   @ResponseBody
    public void test(){
 
         service.test();
 
+    }
+    @RequestMapping("/test2")
+    @ResponseBody
+    public void test2(){
+        service.test2();
     }
 }
