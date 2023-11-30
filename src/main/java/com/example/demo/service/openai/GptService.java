@@ -1,5 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.service.openai;
 
+import com.theokanning.openai.assistants.AssistantRequest;
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.completion.CompletionResult;
 import com.theokanning.openai.completion.chat.*;
@@ -56,5 +57,16 @@ public class GptService {
        //OpenAi 연결 종료
        service.shutdownExecutor();
        System.out.println("GPT 종료");
+   }
+
+   public void test3(){
+       OpenAiService service = new OpenAiService(token);
+
+       AssistantRequest assistantRequest = AssistantRequest
+               .builder()
+               .model("gpt-3.5-turbo-1106")
+               .instructions("입력받은 문자열을 연상되는 단어만 답해줘")
+               .build();
+
    }
 }
