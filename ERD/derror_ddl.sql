@@ -219,7 +219,7 @@ CREATE TABLE friends
     id bigint NOT NULL AUTO_INCREMENT,
     from_member bigint NOT NULL,
     to_member bigint NOT NULL,
-    status char NOT NULL default "0",
+    status char NOT NULL default 0,
     PRIMARY KEY (id)
 );
 
