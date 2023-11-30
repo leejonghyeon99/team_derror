@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @Autor 이종현
+ *
+ */
 @Service
 public class GptService {
 
