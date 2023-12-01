@@ -1,40 +1,62 @@
+// MapService.java
 package com.example.demo.service;
 
+import com.example.demo.domain.HotelDetail;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PlacesApi;
-import com.google.maps.model.PlaceType;
-import com.google.maps.model.PlacesSearchResponse;
+import com.google.maps.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MapService {
 
-    public String apiKey = "AIzaSyAahD6lK89dPJgZkGSPY_koXo81g70jry8";
+    private String apiKey = "AIzaSyAahD6lK89dPJgZkGSPY_koXo81g70jry8";
 
-    public String findHotels(String place) {
+    public List<HotelDetail> findHotels(String place) {
         try {
             GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
 
             PlacesSearchResponse response = PlacesApi.textSearchQuery(context, place + " hotels")
                     .type(PlaceType.LODGING)
+                    .language("ko")
                     .await();
 
-            StringBuilder result = new StringBuilder();
-
-            if (response.results.length > 0) {
-                for (int i = 0; i < response.results.length; i++) {
-                    result.append((i + 1) + ". " + response.results[i].name + "<br>");
-                }
+            if (response.results != null && response.results.length > 0) {
+                return convertToHotelDetails(response.results);
             } else {
-                result.append("No hotels found in the specified location.");
+                return new ArrayList<>();
             }
-
-            return result.toString();
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error occurred while searching for hotels.";
+            return new ArrayList<>(); // 에러 시 빈 리스트 반환
         }
     }
+
+
+    private List<HotelDetail> convertToHotelDetails(PlacesSearchResult[] placesSearchResults) {
+        List<HotelDetail> hotelDetails = new ArrayList<>();
+
+        for (PlacesSearchResult placesSearchResult : placesSearchResults) {
+            HotelDetail hotelDetail = HotelDetail.fromPlacesSearchResult(placesSearchResult);
+
+            // 위치 정보를 가져와 HotelDetail에 설정
+            if (placesSearchResult.geometry != null && placesSearchResult.geometry.location != null) {
+                hotelDetail.setLatitude(placesSearchResult.geometry.location.lat);
+                hotelDetail.setLongitude(placesSearchResult.geometry.location.lng);
+            }
+
+            hotelDetails.add(hotelDetail);
+        }
+
+
+
+        return hotelDetails;
+    }
+
+    // 다른 메서드들도 필요에 따라 추가 가능
 }
