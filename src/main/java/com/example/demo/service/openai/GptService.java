@@ -19,54 +19,54 @@ import java.util.List;
 @Service
 public class GptService {
 
-    @Value(value = "${openai.key}")
-    private String token;
-
-   public void test(){
-
-       OpenAiService service = new OpenAiService(token, Duration.ofSeconds(30));
-
-       System.out.println("\nCreating Image...");
-       CreateImageRequest request = CreateImageRequest.builder()
-               .model("dall-e-3")
-               .quality("hd")
-               .prompt("오락실에서 게임하는 거북이")
-               .build();
-
-       System.out.println("\nImage is located at:");
-       System.out.println(service.createImage(request).getData().get(0).getUrl());
-   }
-
-   public void test2(){
-       OpenAiService service = new OpenAiService(token, Duration.ofSeconds(30));
-       System.out.println("GPT 연결");
-       final List<ChatMessage> messages = new ArrayList<>();
-       final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "오늘의 날씨 정보 알려줘");
-       messages.add(systemMessage);
-       ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
-               .builder()
-               .model("gpt-3.5-turbo")
-               .messages(messages)
-               .n(1)
-               .maxTokens(50)
-               .logitBias(new HashMap<>())
-               .build();
-       service.createChatCompletion(chatCompletionRequest)
-               .getChoices().forEach(System.out::println);
-
-       //OpenAi 연결 종료
-       service.shutdownExecutor();
-       System.out.println("GPT 종료");
-   }
-
-   public void test3(){
-       OpenAiService service = new OpenAiService(token);
-
-       AssistantRequest assistantRequest = AssistantRequest
-               .builder()
-               .model("gpt-3.5-turbo-1106")
-               .instructions("입력받은 문자열을 연상되는 단어만 답해줘")
-               .build();
-
-   }
+//    @Value(value = "${openai.key}")
+//    private String token;
+//
+//   public void test(){
+//
+//       OpenAiService service = new OpenAiService(token, Duration.ofSeconds(30));
+//
+//       System.out.println("\nCreating Image...");
+//       CreateImageRequest request = CreateImageRequest.builder()
+//               .model("dall-e-3")
+//               .quality("hd")
+//               .prompt("오락실에서 게임하는 거북이")
+//               .build();
+//
+//       System.out.println("\nImage is located at:");
+//       System.out.println(service.createImage(request).getData().get(0).getUrl());
+//   }
+//
+//   public void test2(){
+//       OpenAiService service = new OpenAiService(token, Duration.ofSeconds(30));
+//       System.out.println("GPT 연결");
+//       final List<ChatMessage> messages = new ArrayList<>();
+//       final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "오늘의 날씨 정보 알려줘");
+//       messages.add(systemMessage);
+//       ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
+//               .builder()
+//               .model("gpt-3.5-turbo")
+//               .messages(messages)
+//               .n(1)
+//               .maxTokens(50)
+//               .logitBias(new HashMap<>())
+//               .build();
+//       service.createChatCompletion(chatCompletionRequest)
+//               .getChoices().forEach(System.out::println);
+//
+//       //OpenAi 연결 종료
+//       service.shutdownExecutor();
+//       System.out.println("GPT 종료");
+//   }
+//
+//   public void test3(){
+//       OpenAiService service = new OpenAiService(token);
+//
+//       AssistantRequest assistantRequest = AssistantRequest
+//               .builder()
+//               .model("gpt-3.5-turbo-1106")
+//               .instructions("입력받은 문자열을 연상되는 단어만 답해줘")
+//               .build();
+//
+//   }
 }
