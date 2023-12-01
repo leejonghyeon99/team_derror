@@ -7,8 +7,17 @@ import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.completion.CompletionResult;
 import com.theokanning.openai.completion.chat.*;
 import com.theokanning.openai.image.CreateImageRequest;
+import com.theokanning.openai.messages.Message;
+import com.theokanning.openai.messages.MessageContent;
+import com.theokanning.openai.messages.MessageRequest;
+import com.theokanning.openai.messages.content.Text;
+import com.theokanning.openai.runs.CreateThreadAndRunRequest;
+import com.theokanning.openai.runs.Run;
+import com.theokanning.openai.runs.RunCreateRequest;
 import com.theokanning.openai.service.FunctionExecutor;
 import com.theokanning.openai.service.OpenAiService;
+import com.theokanning.openai.threads.Thread;
+import com.theokanning.openai.threads.ThreadRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -67,30 +76,23 @@ public class GptService {
 
    public void test3(){
        OpenAiService service = new OpenAiService(token);
-       String instructions = "입력받은 키워드로 명소 추천" +
-               "최대 5개 명사만 출력" +
-               "명사로만 출력하고 경도, 위도 같이 출력" +
-               "출력형식" +
-               "{" +
-               "  \"recommendations\": [" +
-               "    {" +
-               "      \"place\": String," +
-               "      \"longitude\": String," +
-               "      \"latitude\": String" +
-               "    }," +
-               "  ]" +
-               "}";
-       List<Tool> tools = new ArrayList<>();
-       Tool tool = new Tool();
-       tool.setType(AssistantToolsEnum.CODE_INTERPRETER);
-       tools.add(tool);
-       AssistantRequest assistantRequest = AssistantRequest
-               .builder()
-               .name("recommendation")
-               .model("gpt-3.5-turbo-1106")
-               .instructions("입력받은 문자열을 연상되는 단어만 답해줘")
-               .tools(tools)
+        String id = "asst_Es5Gqn9qr4aonTRGvLAgS9uE";
+
+       MessageRequest messageRequest = MessageRequest.builder()
+               .role("user")
+               .content("파리")
                .build();
+
+
+
+       Message message = service.createMessage("thread_2AUFXlAHJ0YVjeSnLcNH9Vj1",messageRequest);
+       RunCreateRequest runCreateRequest = RunCreateRequest.builder()
+               .assistantId(id)
+               .build();
+
+       Run run = service.createRun("thread_2AUFXlAHJ0YVjeSnLcNH9Vj1",runCreateRequest);
+       System.out.println(message.toString());
+       System.out.println(run.toString());
 
    }
 }
