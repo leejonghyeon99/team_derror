@@ -6,8 +6,12 @@
 </head>
 <body>
 <form th:action="@{/user/login}" method="POST">
-    아이디:<input type="text" name="username" id="username" placeholder="아이디입력"><br>
-    비밀번호:<input type="password" name="password" id="password" placeholder="비밀번호입력"><br>
+    <label for="username">아이디:</label>
+    <input type="text" name="username" id="username" placeholder="아이디입력" required><br>
+
+    <label for="password">비밀번호:</label>
+    <input type="password" name="password" id="password" placeholder="비밀번호입력" required><br>
+
     <input type="submit" th:value="로그인"><br>
     <a th:href="@{/user/signup}">
         <input type="button" th:value="회원가입">

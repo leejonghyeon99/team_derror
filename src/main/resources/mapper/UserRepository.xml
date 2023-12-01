@@ -5,6 +5,7 @@
     <select id="findId" resultType="com.example.demo.repository.UserRepository">
         SELECT
             id "id"
+             ,auth_id "auth_id"
              , username "username"
              , password "password"
              , email "email"
@@ -12,8 +13,7 @@
              , phone "phone"
              , age "age"
              , created_date "created_date"
-             , provider "provider"
-             , providerId "providerId"
+
         FROM member
             AND id= #{id}
     </select>
@@ -21,6 +21,7 @@
     <select id="findUsername" resultType="com.example.demo.repository.UserRepository">
         SELECT
             id "id"
+             ,auth_id "auth_id"
              , username "username"
              , password "password"
              , email "email"
@@ -28,20 +29,19 @@
              , phone "phone"
              , age "age"
              , created_date "created_date"
-             , provider "provider"
-             , providerId "providerId"
         FROM member
             AND username = #{username}
     </select>
 
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.Member"
             keyProperty="id" useGeneratedKeys="true" keyColumn="id">
-        INSERT INTO member(username, password, age, phone, name, email, provider, providerId)
-        VALUES(#{username}, #{password}, #{age}, #{phone}, #{name}, #{email}, #{provider}, #{providerId})
+        INSERT INTO member(username, password, age, phone, name, email,auth_id)
+        VALUES(#{username}, #{password}, #{age}, #{phone}, #{name}, #{email}, #{auth_id})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.example.demo.domain.Member">
-        UPDATE member SET username = #{username}, password = #{password}, age=#{age}, name = #{name}, email = #{email}, phone=#{phone}
+        UPDATE member SET username = #{username}, password = #{password}, age=#{age}, name = #{name}, email = #{email}
+                          , phone=#{phone}, auth_id=#{auth_id}
         WHERE id = #{id}
     </update>
 </mapper>
