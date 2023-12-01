@@ -13,6 +13,7 @@ import com.theokanning.openai.messages.MessageRequest;
 import com.theokanning.openai.messages.content.Text;
 import com.theokanning.openai.runs.CreateThreadAndRunRequest;
 import com.theokanning.openai.runs.Run;
+import com.theokanning.openai.runs.RunCreateRequest;
 import com.theokanning.openai.service.FunctionExecutor;
 import com.theokanning.openai.service.OpenAiService;
 import com.theokanning.openai.threads.Thread;
@@ -83,27 +84,15 @@ public class GptService {
                .build();
 
 
-       Run run = Run.builder()
+
+       Message message = service.createMessage("thread_2AUFXlAHJ0YVjeSnLcNH9Vj1",messageRequest);
+       RunCreateRequest runCreateRequest = RunCreateRequest.builder()
                .assistantId(id)
                .build();
 
-       List<MessageRequest> messageRequests = new ArrayList<>();
-       List<MessageContent> messageContents = new ArrayList<>();
-       MessageContent messageContent = new MessageContent();
-       Text text = new Text();
-       text.setValue("파리");
-       messageContent.setText(text);
-       messageContents.add(messageContent);
-
-       Message message = Message.builder()
-               .role(ChatMessageRole.USER.value())
-               .content(messageContents)
-               .build();
-       messageContents.add(messageContent);
-
-       ThreadRequest threadRequest = new ThreadRequest();
-       threadRequest.setMessages(messageRequests);
-       System.out.println(service.retrieveAssistant(id).toString());
+       Run run = service.createRun("thread_2AUFXlAHJ0YVjeSnLcNH9Vj1",runCreateRequest);
+       System.out.println(message.toString());
+       System.out.println(run.toString());
 
    }
 }

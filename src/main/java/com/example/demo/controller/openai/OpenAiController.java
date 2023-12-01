@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @Author 이종현
+ */
 @RestController
 @RequestMapping("/openai")
 public class OpenAiController {
