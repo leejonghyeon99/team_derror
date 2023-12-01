@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.board.BoardController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,7 @@ public class MainController {
     public String Search(){
        return "Search";
     }
-
+  
     @RequestMapping("/index")
     public String Index(){return "index";}
 }
