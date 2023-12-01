@@ -1,26 +1,19 @@
 package com.example.demo.service.openai;
 
-import com.theokanning.openai.assistants.AssistantRequest;
-import com.theokanning.openai.assistants.AssistantToolsEnum;
-import com.theokanning.openai.assistants.Tool;
-import com.theokanning.openai.completion.CompletionRequest;
-import com.theokanning.openai.completion.CompletionResult;
+import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.completion.chat.*;
 import com.theokanning.openai.image.CreateImageRequest;
 import com.theokanning.openai.messages.Message;
-import com.theokanning.openai.messages.MessageContent;
 import com.theokanning.openai.messages.MessageRequest;
 import com.theokanning.openai.messages.content.Text;
-import com.theokanning.openai.runs.CreateThreadAndRunRequest;
 import com.theokanning.openai.runs.Run;
 import com.theokanning.openai.runs.RunCreateRequest;
-import com.theokanning.openai.service.FunctionExecutor;
 import com.theokanning.openai.service.OpenAiService;
 import com.theokanning.openai.threads.Thread;
 import com.theokanning.openai.threads.ThreadRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -78,22 +71,29 @@ public class GptService {
        OpenAiService service = new OpenAiService(token);
         String id = "asst_Es5Gqn9qr4aonTRGvLAgS9uE";
 
-       MessageRequest messageRequest = MessageRequest.builder()
-               .role("user")
-               .content("파리")
+
+       ThreadRequest threadRequest = ThreadRequest.builder()
                .build();
+       Thread thread = service.createThread(threadRequest);
 
-
-
-       Message message = service.createMessage("thread_2AUFXlAHJ0YVjeSnLcNH9Vj1",messageRequest);
+       MessageRequest messageRequest = MessageRequest.builder()
+               .content("스위스 강가 절벽")
+               .build();
+       service.createMessage(thread.getId(),messageRequest);
 
        RunCreateRequest runCreateRequest = RunCreateRequest.builder()
                .assistantId(id)
                .build();
+       Run run = service.createRun(thread.getId(),runCreateRequest);
 
-       Run run = service.createRun("thread_2AUFXlAHJ0YVjeSnLcNH9Vj1",runCreateRequest);
-       System.out.println(message.toString());
-       System.out.println(run.toString());
+       Run retrievedRun;
+       do {
+           retrievedRun = service.retrieveRun(thread.getId(), run.getId());
+       }
+       while (!(retrievedRun.getStatus().equals("completed")) && !(retrievedRun.getStatus().equals("failed")));
 
+       OpenAiResponse<Message> messageOpenAiResponse = service.listMessages(thread.getId());
+
+       System.out.println(messageOpenAiResponse.getData().get(0).getContent());
    }
 }
