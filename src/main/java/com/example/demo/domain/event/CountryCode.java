@@ -1,7 +1,11 @@
 package com.example.demo.domain.event;
 
+/**
+ * @author 종선
+ */
 
 public enum CountryCode {
+    KR("KR", "대한민국"),
     US("US", "미국"),
     AD("AD", "안도라"),
     AI("AI", "앵귈라"),
@@ -46,7 +50,6 @@ public enum CountryCode {
     IT("IT", "이탈리아"),
     JM("JM", "자메이카"),
     JP("JP", "일본"),
-    KR("KR", "대한민국"),
     LV("LV", "라트비아"),
     LB("LB", "레바논"),
     LT("LT", "리투아니아"),
@@ -85,6 +88,7 @@ public enum CountryCode {
     AE("AE", "아랍에미리트"),
     UY("UY", "우루과이"),
     VE("VE", "베네수엘라");
+
 
     private final String code; // 국가 코드를 저장할 변수
     private final String value; // 국가이름 저장할 변수
