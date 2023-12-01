@@ -1,7 +1,6 @@
 // HotelDetail.java
-package com.example.demo.domain;
+package com.example.demo.domain.airandhotel;
 
-import com.google.maps.model.PlaceDetails;
 import com.google.maps.model.PlacesSearchResult;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

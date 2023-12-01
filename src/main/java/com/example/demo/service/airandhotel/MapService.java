@@ -1,11 +1,10 @@
 // MapService.java
-package com.example.demo.service;
+package com.example.demo.service.airandhotel;
 
-import com.example.demo.domain.HotelDetail;
+import com.example.demo.domain.airandhotel.HotelDetail;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PlacesApi;
 import com.google.maps.model.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

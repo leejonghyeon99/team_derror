@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.airandhotel;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/service/api")
+@RequestMapping("/api/air")
 public class ServiceApiController {
 
     @RequestMapping("/code")
