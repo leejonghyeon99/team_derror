@@ -18,7 +18,7 @@ public class SecurityConfig {
 //                        .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**").hasAnyRole("MEMBER", "ADMIN")
                                 .anyRequest().permitAll()
                 )
-
+                //s
                 .formLogin(form -> form
                                 .loginPage("/user/login")
                                 .loginProcessingUrl("/user/login")
