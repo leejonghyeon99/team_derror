@@ -12,5 +12,7 @@ public class MainController {
     public String Search(){
        return "Search";
     }
-
+  
+    @RequestMapping("/index")
+    public String Index(){return "index";}
 }
