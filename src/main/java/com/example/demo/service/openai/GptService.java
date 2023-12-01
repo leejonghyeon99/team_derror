@@ -86,6 +86,7 @@ public class GptService {
 
 
        Message message = service.createMessage("thread_2AUFXlAHJ0YVjeSnLcNH9Vj1",messageRequest);
+
        RunCreateRequest runCreateRequest = RunCreateRequest.builder()
                .assistantId(id)
                .build();
