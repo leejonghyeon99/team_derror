@@ -91,6 +91,5 @@ public class GptService {
                .instructions("입력받은 문자열을 연상되는 단어만 답해줘")
                .tools(tools)
                .build();
-
    }
 }
