@@ -28,7 +28,7 @@
     var countryName = document.getElementById("countryName").value;
 
     // API 호출
-    fetch(`/service/api/code`)
+    fetch(`/api/air/code`)
             .then(response => response.json())
             .then(data => {
               // "네덜란드"를 포함하는 데이터만 필터링

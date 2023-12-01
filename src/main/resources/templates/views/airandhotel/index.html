@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,6 +53,7 @@
                 <input type="text" id="searchInput" class="form-control" placeholder="도시명을 입력하세요">
                 <button class="btn btn-primary" type="button" id="searchButton">검색</button>
             </div>
+            <div id="searchInputResults"></div>
             <!-- 지도 표시할 부분 -->
             <div id="map"></div>
         </div>
@@ -68,41 +69,42 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAahD6lK89dPJgZkGSPY_koXo81g70jry8&callback=initMap" async defer></script>
+<script th:src="@{~/templates/js/airandhotel/mapAutocomplete.js}"></script>
 <script>
     let map;
     let markers = [];
 
-    function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-            center: {  lat: 37.5665, lng: 126.9780 }, // 초기 지도 중심 좌표
-            zoom: 11, // 초기 줌 레벨
-        });
-
-
-        function handleSearch() {
-            const city = document.getElementById("searchInput").value;
-            searchHotels(city);
-
-            // 지도를 입력한 도시로 이동
-            moveMapToCity(city);
-        }
-
-        // input 이벤트로 변경
-        document.getElementById("searchInput").addEventListener("change", handleSearch);
-
-        document.getElementById("searchButton").addEventListener("click", handleSearch);
-
-        document.getElementById("searchInput").addEventListener("keyup", function (event) {
-            if (event.keyCode === 13) {
-                handleSearch();
-            }
-        });
-    }
+    // function initMap() {
+    //     map = new google.maps.Map(document.getElementById("map"), {
+    //         center: {  lat: 37.5665, lng: 126.9780 }, // 초기 지도 중심 좌표
+    //         zoom: 11, // 초기 줌 레벨
+    //     });
+    //
+    //
+    //     function handleSearch() {
+    //         const city = document.getElementById("searchInput").value;
+    //         searchHotels(city);
+    //
+    //         // 지도를 입력한 도시로 이동
+    //         moveMapToCity(city);
+    //     }
+    //
+    //     // input 이벤트로 변경
+    //     document.getElementById("searchInput").addEventListener("change", handleSearch);
+    //
+    //     document.getElementById("searchButton").addEventListener("click", handleSearch);
+    //
+    //     document.getElementById("searchInput").addEventListener("keyup", function (event) {
+    //         if (event.keyCode === 13) {
+    //             handleSearch();
+    //         }
+    //     });
+    // }
 
     async function searchHotels(city) {
         try {
             // 호텔 목록을 가져오는 서버 통신 코드
-            const response = await fetch(`/service/hotel?city=${city}`);
+            const response = await fetch(`/api/hotel/service?city=${city}`);
             const hotels = await response.json();
 
             // 가져온 결과를 updateMapMarkers와 updateHotelList 함수를 사용해 지도와 호텔 목록을 업데이트
