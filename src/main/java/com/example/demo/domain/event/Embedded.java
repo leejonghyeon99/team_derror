@@ -1,21 +1,17 @@
 package com.example.demo.domain.event;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-/**
- * @author 종선
- */
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CountryInfo {
+public class Embedded {
 
-    @JsonProperty("_embedded")
-    private Embedded embedded;
-
+    private List<Events> events;
 }

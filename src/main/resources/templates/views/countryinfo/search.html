@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h1>이벤트 정보 조회</h1>
+
+<label for="countryCode">국가 코드:</label>
+<input type="text" id="countryCode" placeholder="국가코드를 입력하세요">
+
+<label for="keyword">장르:</label>
+<input type="text" id="keyword" placeholder="장르를 입력하세요">
+
+<label for="city">도시:</label>
+<input type="text" id="city" placeholder="도시를 입력하세요">
+
+<button onclick="getEventInformation()">확인</button>
+<div id="result"></div>
+
+<script>
+    function getEventInformation() {
+        const countryCode = document.getElementById('countryCode').value;
+        const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}`;
+
+        // API 요청
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                list(data)
+                })
+            .catch(error => {
+                console.error('데이터를 가져오는 중 오류 발생:', error);
+            });
+        function list(data){
+            const embedded = data._embedded;
+            for (let i = 0; i < embedded.events.length; i++) {
+                console.log(embedded.events[i].images[0].url)
+                console.log(embedded.events[i].name)
+                console.log(embedded.events[i].embeds)
+
+                const resultElement = document.getElementById('result');
+                resultElement.innerHTML += `
+                        <img src="${embedded.events[i].images[0].url}" width="400">
+                        <p><strong>이벤트 제목:</strong>${embedded.events[i].name}</p>
+                        <p><strong>장소 이름:</strong>${embedded.events[i].embed}</p>
+                        <p><strong>도시 이름:</strong></p>
+                    `;
+            }
+        }
+    }
+</script>
+</body>
+</html>
