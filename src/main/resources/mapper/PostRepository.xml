@@ -2,4 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.repository.PostRepository">
 
+    <insert id="save" flushCache="true" parameterType="com.example.demo.domain.board.Post"
+    useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO post
+            (title, content, member_id)
+        VALUES
+            (#{title}, #{content}, #{member.id})
+    </insert>
+
+    <sql id="SELECT_BASE">
+        SELECT
+            p.id "p_id",
+            p.title "p_title",
+            p.content "p_content",
+            p.view_cnt "p_viewCnt",
+            p.created_date "p_createdDate",
+            m.id "m_id",
+            m.username "m_username",
+            m.created_date "m_created_date",
+            m.email "m_email"
+        FROM
+            post p, member m
+        WHERE
+            p.member_id = m.id
+    </sql>
+
+    <resultMap id="mapMember" type="com.example.demo.domain.Member">
+        <result column="m_id" property="id"/>
+        <result column="m_username" property="username"/>
+        <result column="m_password" property="password"/>
+        <result column="m_name" property="name"/>
+        <result column="m_created_date" property="created_date"/>
+        <result column="m_email" property="email"/>
+    </resultMap>
+
+    <resultMap id="mapPost" type="com.example.demo.domain.board.Post">
+        <result column="p_id" property="id"/>
+        <result column="p_title" property="title"/>
+        <result column="p_content" property="content"/>
+        <result column="p_view_cnt" property="viewCnt"/>
+        <result column="p_createdDate" property="createdDate"/>
+        <collection property="member" resultMap="mapMember"/>
+    </resultMap>
+
+    <select id="findById" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        AND p.id = #{id}
+    </select>
+
+    <update id="ViewCnt" flushCache="true">
+        UPDATE post
+        SET view_cnt = view_cnt + 1
+        WHERE id = #{id}
+    </update>
+
+
 </mapper>

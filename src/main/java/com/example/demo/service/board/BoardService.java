@@ -15,4 +15,17 @@ import java.util.Map;
  */
 public interface BoardService {
 
+    int write(Post post, Map<String, MultipartFile> files);
+
+    Post detail(Long id);
+
+    List<Post> list(Integer page, Model model);
+
+    Post selectById(Long id);
+
+    int update(Post post,
+               Map<String, MultipartFile> files,
+               Long[] delfile);
+
+    int deleteById(Long id);
 } // end Service
