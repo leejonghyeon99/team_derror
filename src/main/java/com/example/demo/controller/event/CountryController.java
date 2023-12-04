@@ -42,7 +42,8 @@ public class CountryController {
         RestTemplate restTemplate = new RestTemplate();
         CountryInfo countryInfo = restTemplate.getForObject(apiUrl, CountryInfo.class);
         countryInfo.getEmbedded().getEvents().forEach(events -> events.getId());
-        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().get("name"));
+        System.out.println(countryInfo.getPage().getTotalPages());
+        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
         System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
         System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
         return countryInfo;

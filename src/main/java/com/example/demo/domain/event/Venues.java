@@ -15,7 +15,8 @@ public class Venues {
     private String id;
     private String name;
     private String type;
-    private Map<String, String> city;
+//    private Map<String, String> city;
+    private City city;
     private Map<String, String> address;
     private Map<String, Integer> upcomingEvents;
 }

@@ -2,22 +2,25 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <h1>이벤트 정보 조회</h1>
 
 <label for="countryCode">국가 코드:</label>
-<input type="text" id="countryCode" placeholder="국가코드를 입력하세요">
+<input id="countryCode" placeholder="국가코드를 입력하세요" type="text" required>
 
 <label for="keyword">장르:</label>
-<input type="text" id="keyword" placeholder="장르를 입력하세요">
+<input id="keyword" placeholder="장르를 입력하세요" type="text">
 
 <label for="city">도시:</label>
-<input type="text" id="city" placeholder="도시를 입력하세요">
+<input id="city" placeholder="도시를 입력하세요" type="text">
 
 <button onclick="getEventInformation()">확인</button>
+
 <div id="result"></div>
 
 <script>
@@ -30,27 +33,49 @@
             .then(response => response.json())
             .then(data => {
                 list(data)
-                })
+            })
             .catch(error => {
                 console.error('데이터를 가져오는 중 오류 발생:', error);
             });
-        function list(data){
-            const embedded = data._embedded;
-            for (let i = 0; i < embedded.events.length; i++) {
-                console.log(embedded.events[i].images[0].url)
-                console.log(embedded.events[i].name)
-                console.log(embedded.events[i].embeds)
 
-                const resultElement = document.getElementById('result');
-                resultElement.innerHTML += `
-                        <img src="${embedded.events[i].images[0].url}" width="400">
-                        <p><strong>이벤트 제목:</strong>${embedded.events[i].name}</p>
-                        <p><strong>장소 이름:</strong>${embedded.events[i].embed}</p>
-                        <p><strong>도시 이름:</strong></p>
-                    `;
+        function list(data) {
+            const embedded = data._embedded;
+            const events = embedded.events;
+            const page = data.page;
+
+            console.log(embedded);
+            console.log(events);
+            console.log(page);
+
+            const resultElement = document.getElementById('result');
+            let htmlString = `<div class="row rwo-cols-4 row-cols-md-4 g-4">`
+
+            for (var event of events) {
+                for (var venue of event._embedded.venues) {
+                    htmlString += `
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="${event.images[0].url}" width="455" height="350">
+                                <div class="card-body">
+                                    <p><strong>이벤트 제목:</strong>${event.name}</p>
+                                    <p><strong>장소 이름:</strong>${venue.name}</p>
+                                    <p><strong>도시 이름:</strong>${venue.city.name}</p>
+                                </div>
+                            </div>
+                        </div>
+            `;
+                }
             }
-        }
-    }
+            htmlString += `</div>`;
+            resultElement.innerHTML = htmlString;
+
+        } // end list
+    } // end getEventInformation
+
+    // <img src="${event.images[0].url}" width="400">
+    // <p><strong>이벤트 제목:</strong>${event.name}</p>
+    // <p><strong>장소 이름:</strong>${venue.name}</p>
+    // <p><strong>도시 이름:</strong>${venue.city.name}</p>
 </script>
 </body>
 </html>
