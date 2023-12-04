@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Authority {
     private Long id;
-    private String username;
+    private String name;
 }

@@ -26,6 +26,11 @@ public class UserController {
     @GetMapping("/login")
     public void login(Model model){}
 
+    @PostMapping("/loginError")
+    public String loginError(){
+        return "user/login";
+    }
+
     @GetMapping("/signup")
     public void signup(){}
 

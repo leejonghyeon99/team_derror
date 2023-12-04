@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.repository.UserRepository">
 
-    <select id="findId" resultType="com.example.demo.repository.UserRepository">
+    <select id="findId" resultType="com.example.demo.domain.Member">
         SELECT
             id "id"
              ,auth_id "auth_id"
@@ -13,12 +13,11 @@
              , phone "phone"
              , age "age"
              , created_date "created_date"
-
         FROM member
-            AND id= #{id}
+            WHERE id= #{id}
     </select>
 
-    <select id="findUsername" resultType="com.example.demo.repository.UserRepository">
+    <select id="findUsername" resultType="com.example.demo.domain.Member">
         SELECT
             id "id"
              ,auth_id "auth_id"
@@ -30,13 +29,13 @@
              , age "age"
              , created_date "created_date"
         FROM member
-            AND username = #{username}
+            WHERE username = #{username}
     </select>
 
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.Member"
             keyProperty="id" useGeneratedKeys="true" keyColumn="id">
-        INSERT INTO member(username, password, age, phone, name, email,auth_id)
-        VALUES(#{username}, #{password}, #{age}, #{phone}, #{name}, #{email}, #{auth_id})
+        INSERT INTO member(auth_id,username, password, age, phone, name, email)
+        VALUES(#{auth_id},#{username}, #{password}, #{age}, #{phone}, #{name}, #{email})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.example.demo.domain.Member">
