@@ -17,9 +17,13 @@ public interface BoardService {
 
     int write(Post post, Map<String, MultipartFile> files);
 
+    @Transactional
     Post detail(Long id);
 
+    List<Post> list();
+
     List<Post> list(Integer page, Model model);
+
 
     Post selectById(Long id);
 

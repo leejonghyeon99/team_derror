@@ -3,6 +3,7 @@ package com.example.demo.controller.board;
 
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.PostValidator;
+import com.example.demo.domain.board.U;
 import com.example.demo.service.board.BoardService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,8 +26,13 @@ import java.util.Map;
 @RequestMapping("/board")
 public class BoardController {
 
-    @Autowired
+
     private BoardService boardService;
+
+    @Autowired
+    public BoardController(BoardService boardService) {
+        this.boardService = boardService;
+    }
 
     @GetMapping("/write")
     public void write(){}
@@ -62,11 +69,11 @@ public class BoardController {
     }
 
     // 페이징 사용
-    @GetMapping("/list")
+    @GetMapping("/notice")
     public void list(Integer page, Model model){
-//        List<Post> list = boardService.list();
-//        model.addAttribute("list", list);
-        boardService.list(page, model);
+        List<Post> notice = boardService.list();
+        // 여기서 선언된 notice가 html에서 불러온다
+        model.addAttribute("notice", notice);
     }
 
     @GetMapping("/update/{id}")
@@ -111,16 +118,15 @@ public class BoardController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        System.out.println("initBinder() 호출");
         binder.setValidator(new PostValidator());
     }
 
     // 페이징
     // pageRows 변경시 동작
-//    @PostMapping("/pageRows")
-//    public String pageRows(Integer page, Integer pageRows){
-//        U.getSession().setAttribute("pageRows", pageRows);
-//        return "redirect:/board/list?page=" + page;
-//    }
+    @PostMapping("/pageRows")
+    public String pageRows(Integer page, Integer pageRows){
+        U.getSession().setAttribute("pageRows", pageRows);
+        return "redirect:/board/notice?page=" + page;
+    }
 
 }   // end Controller

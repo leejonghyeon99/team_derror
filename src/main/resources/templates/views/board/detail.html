@@ -20,7 +20,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-<!--    <script th:src="@{/js/detail.js}"></script>-->
+    <script th:src="@{/js/board/detail.js}"></script>
 
     <title>조회 - [[${post.title}]]</title>
   </head>
@@ -51,6 +51,23 @@
         <div class="border bg-light rounded p-2" th:utext="${post.content}"></div>
       </div>
 
+      <!-- 첨부파일목록 -->
+      <div class="container mt-3 mb-3 border rounded">
+        <div class="mb-3 mt-3">
+          <label>첨부파일:</label>
+          <ul class="list-group mb-1">
+            <li class="list-group-item" th:each="attachment : ${post.fileList}">
+              <a th:href="@{/board/download(id=${attachment.id})}" th:text="${attachment.sourcename}"></a>
+            </li>
+          </ul>
+          <!--/* 이미지인 경우 보여주기 */-->
+          <div th:each="attachment : ${post.fileList}" th:if="${attachment.image}">
+            <img th:src="@{'/upload/' + ${attachment.filename}}" class="img-thumbnail" alt="Cinque Terre">
+          </div>
+        </div>
+      </div>
+      <!-- 첨부파일목록 -->
+
 
 
       <!-- 하단 링크 -->
@@ -58,11 +75,13 @@
         <a class="btn btn-outline-dark" th:href="@{'/board/update/' + ${post.id}}">수정</a>
         <button type="button" class="btn btn-outline-danger ms-2" id="btnDel" >삭제</button>
         <a class="btn btn-outline-dark ms-2" th:href="@{/board/write}" sec:authorize="hasAnyRole('MEMBER', 'ADMIN')">작성</a>
-        <a class="btn btn-outline-dark ms-2" th:href="@{/board/list}">목록</a>
+        <a class="btn btn-outline-dark ms-2" onclick="history.back()">목록</a>
       </div>
       <!-- 하단 링크 -->
 
-
+      <!-- 댓글 -->
+      <th:block th:insert="~{board/comment::comment}"></th:block>
+      <!-- 댓글 -->
 
     </section>
   </div>

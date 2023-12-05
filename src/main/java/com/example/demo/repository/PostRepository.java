@@ -16,7 +16,7 @@ public interface PostRepository {
     Post findById(Long id);
 
     // 특정 id 글 조회수 +1 증가 (UPDATE)
-    int ViewCnt(Long id);
+    int viewCnt(Long id);
 
     // 전체 글 목록 : 최신순 (SELECT)
     List<Post> findAll();
@@ -29,7 +29,7 @@ public interface PostRepository {
 
     // 페이징
     // from 부터 rows 개 만큼 SELECT
-//    List<Post> selectFromRow(int from, int rows);
+    List<Post> selectFromRow(int from, int rows);
 
     // 전체 글의 개수
     int countAll();

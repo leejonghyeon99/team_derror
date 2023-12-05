@@ -3,6 +3,8 @@ package com.example.demo.domain.board;
 import com.example.demo.domain.Member;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 @Author 장고운
@@ -23,6 +25,11 @@ public class Post {
     private Long viewCnt;   // 조회수
 
     private Member member;  // 글 작성자 (FK)
+
+    // 첨부파일
+    @ToString.Exclude
+    @Builder.Default
+    private List<Attachment> fileList = new ArrayList<>();
 
 
 

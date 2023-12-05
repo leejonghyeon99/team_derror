@@ -5,18 +5,20 @@
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.board.Post"
     useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO post
-            (title, content, member_id)
+            (category, title, content, member_id )
         VALUES
-            (#{title}, #{content}, #{member.id})
+            (#{category}, #{title}, #{content}, #{memberId})
     </insert>
 
     <sql id="SELECT_BASE">
         SELECT
             p.id "p_id",
             p.title "p_title",
+            p.category "p_catagoty",
             p.content "p_content",
             p.view_cnt "p_viewCnt",
             p.created_date "p_createdDate",
+            p.member_id "p_memberId",
             m.id "m_id",
             m.username "m_username",
             m.created_date "m_created_date",
@@ -38,9 +40,10 @@
 
     <resultMap id="mapPost" type="com.example.demo.domain.board.Post">
         <result column="p_id" property="id"/>
+        <result column="p_category" property="category"/>
         <result column="p_title" property="title"/>
         <result column="p_content" property="content"/>
-        <result column="p_view_cnt" property="viewCnt"/>
+        <result column="p_viewCnt" property="viewCnt"/>
         <result column="p_createdDate" property="createdDate"/>
         <collection property="member" resultMap="mapMember"/>
     </resultMap>
@@ -50,11 +53,33 @@
         AND p.id = #{id}
     </select>
 
-    <update id="ViewCnt" flushCache="true">
+    <update id="viewCnt" flushCache="true">
         UPDATE post
-        SET view_cnt = view_cnt + 1
+        SET view_cnt = post.view_cnt + 1
         WHERE id = #{id}
     </update>
 
+    <select id="findAll" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.id DESC
+    </select>
 
+    <update id="update" flushCache="true" parameterType="com.example.demo.domain.board.Post">
+        UPDATE post
+        SET title = #{title}, content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" flushCache="true" parameterType="com.example.demo.domain.board.Post">
+        DELETE FROM post WHERE id = #{id}
+    </delete>
+
+    <select id="selectFromRow" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+    <select id="countAll" resultType="int">
+        SELECT count(*) FROM post
+    </select>
 </mapper>

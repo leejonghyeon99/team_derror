@@ -9,7 +9,6 @@ public class PostValidator implements Validator {
     public boolean supports(Class<?> clazz) {
         System.out.println("supports(" + clazz.getName() + ")");
         boolean result = Post.class.isAssignableFrom(clazz);
-        System.out.println(result);
         return result;
     }
 
@@ -17,8 +16,7 @@ public class PostValidator implements Validator {
     public void validate(Object target, Errors errors) {
         System.out.println("validate() 호출");
         Post post = (Post) target;
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"subject", "글제목은 필수입니다.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"title", "글제목은 필수입니다.");
 
     }
 }
