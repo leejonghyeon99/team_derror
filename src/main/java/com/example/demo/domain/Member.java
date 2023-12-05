@@ -27,7 +27,5 @@ public class Member {
     private String thumnail_img;
 
 
-    // OAuth2
-    private String provider;
-    private String providerId;
+
 }
