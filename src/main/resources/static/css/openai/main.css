@@ -1,0 +1,22 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+    overflow: hidden; /* body의 기본 스크롤바를 숨기기 */
+}
+
+.main {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto; /* 내용이 넘치면 스크롤바 표시 */
+    background: linear-gradient(to bottom right, #274B74 0%, #8233C5 50%, #E963FD 100%);
+}
+
+
+
+
+
+
