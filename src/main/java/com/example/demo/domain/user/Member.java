@@ -26,6 +26,9 @@ public class Member {
     private String email;
     private String thumnail_img;
 
+    private String provider;
+    private String provider_Id;
+
 
 
 }

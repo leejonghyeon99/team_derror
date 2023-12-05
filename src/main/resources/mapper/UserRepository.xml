@@ -34,8 +34,8 @@
 
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.user.Member"
             keyProperty="id" useGeneratedKeys="true" keyColumn="id">
-        INSERT INTO member(auth_id,username, password, age, phone, name, email)
-        VALUES(#{auth_id},#{username}, #{password}, #{age}, #{phone}, #{name}, #{email})
+        INSERT INTO member(auth_id,username, password, age, phone, name, email, provider,provider_id)
+        VALUES(#{auth_id},#{username}, #{password}, #{age}, #{phone}, #{name}, #{email},#{provider},#{provider_id})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.example.demo.domain.user.Member">
