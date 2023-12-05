@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.demo.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -27,7 +27,5 @@ public class Member {
     private String thumnail_img;
 
 
-    // OAuth2
-    private String provider;
-    private String providerId;
+
 }

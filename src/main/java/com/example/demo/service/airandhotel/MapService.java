@@ -18,17 +18,18 @@ public class MapService {
     public List<HotelDetail> findHotels(String place) {
         try {
             GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
-
-            PlacesSearchResponse response = PlacesApi.textSearchQuery(context, place + " hotels")
+            List<HotelDetail> hotelDetails = new ArrayList<>();
+            PlacesSearchResponse response = PlacesApi.textSearchQuery(context, place + " lodging")
                     .type(PlaceType.LODGING)
+                    .radius(800)
                     .language("ko")
                     .await();
 
-            if (response.results != null && response.results.length > 0) {
-                return convertToHotelDetails(response.results);
-            } else {
-                return new ArrayList<>();
+            for (PlacesSearchResult result : response.results) {
+                hotelDetails.add(convertToHotelDetail(result));
             }
+
+            return hotelDetails;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,26 +37,15 @@ public class MapService {
         }
     }
 
-
-    private List<HotelDetail> convertToHotelDetails(PlacesSearchResult[] placesSearchResults) {
-        List<HotelDetail> hotelDetails = new ArrayList<>();
-
-        for (PlacesSearchResult placesSearchResult : placesSearchResults) {
-            HotelDetail hotelDetail = HotelDetail.fromPlacesSearchResult(placesSearchResult);
-
-            // 위치 정보를 가져와 HotelDetail에 설정
-            if (placesSearchResult.geometry != null && placesSearchResult.geometry.location != null) {
-                hotelDetail.setLatitude(placesSearchResult.geometry.location.lat);
-                hotelDetail.setLongitude(placesSearchResult.geometry.location.lng);
-            }
-
-            hotelDetails.add(hotelDetail);
-        }
-
-
-
-        return hotelDetails;
+    private HotelDetail convertToHotelDetail(PlacesSearchResult placesSearchResult) {
+        HotelDetail hotelDetail = HotelDetail.fromPlacesSearchResult(placesSearchResult);
+        hotelDetail.setPlaceId(placesSearchResult.placeId);  // 플레이스 ID 설정
+        return hotelDetail;
     }
+
+
+
+
 
     // 다른 메서드들도 필요에 따라 추가 가능
 }

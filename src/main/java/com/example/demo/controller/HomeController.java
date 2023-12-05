@@ -1,13 +1,13 @@
-package com.example.demo.controller.openai;
+package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/openai")
-public class OpenAiController {
-
-    @GetMapping("/main")
-    public void main(){}
+@RequestMapping("/")
+public class HomeController {
+    @GetMapping("/home")
+    public void home(Model model){}
 }
