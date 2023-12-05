@@ -1,6 +1,6 @@
 package com.example.demo.domain.board;
 
-import com.example.demo.domain.Member;
+import com.example.demo.domain.user.Member;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

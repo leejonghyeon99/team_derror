@@ -29,7 +29,7 @@
             p.member_id = m.id
     </sql>
 
-    <resultMap id="mapMember" type="com.example.demo.domain.Member">
+    <resultMap id="mapMember" type="com.example.demo.domain.user.Member">
         <result column="m_id" property="id"/>
         <result column="m_username" property="username"/>
         <result column="m_password" property="password"/>

@@ -2,13 +2,13 @@ package com.example.demo.service.board;
 
 
 
-import com.example.demo.domain.Member;
+
 import com.example.demo.domain.board.Attachment;
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.U;
 import com.example.demo.repository.AttachmentRepository;
 import com.example.demo.repository.PostRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;

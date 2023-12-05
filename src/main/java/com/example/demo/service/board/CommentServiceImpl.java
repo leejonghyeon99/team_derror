@@ -1,11 +1,11 @@
 package com.example.demo.service.board;
 
-import com.example.demo.domain.Member;
 import com.example.demo.domain.board.Comment;
 import com.example.demo.domain.board.QryCommentList;
 import com.example.demo.domain.board.QryResult;
+import com.example.demo.domain.user.Member;
 import com.example.demo.repository.CommentRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.user.UserRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

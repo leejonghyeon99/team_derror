@@ -1,6 +1,6 @@
 package com.example.demo.domain.board;
 
-import com.example.demo.domain.Member;
+import com.example.demo.domain.user.Member;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
