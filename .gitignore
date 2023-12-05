@@ -57,4 +57,5 @@ gradlew.bat
 
 # db 계정 설정 제외
 
-/ERD/
+*.sql
+

@@ -17,4 +17,5 @@ public class Recommendations {
     private String place;
     private String longitude;
     private String latitude;
+    private String detail;
 }

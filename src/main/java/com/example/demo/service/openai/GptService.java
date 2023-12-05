@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
+import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,11 +54,25 @@ public class GptService {
                .build();
        Run run = service.createRun(thread.getId(),runCreateRequest);
 
+       long startTime = System.currentTimeMillis();
+
        Run retrievedRun;
-       do {
-           retrievedRun = service.retrieveRun(thread.getId(), run.getId());
+       try {
+           do {
+               retrievedRun = service.retrieveRun(thread.getId(), run.getId());
+               System.out.println("request");
+           } while (!(retrievedRun.getStatus().equals("completed")) && !(retrievedRun.getStatus().equals("failed")));
+
+       }catch (Exception e){
+
+       }finally {
+           long endTime = System.currentTimeMillis();
+           long elapsedTime = endTime - startTime;
+
+           System.out.println("요청이 완료되었습니다. 소요 시간: " + elapsedTime + "밀리초");
        }
-       while (!(retrievedRun.getStatus().equals("completed")) && !(retrievedRun.getStatus().equals("failed")));
+
+
 
        OpenAiResponse<Message> messageOpenAiResponse = service.listMessages(thread.getId());
        ObjectMapper mapper = new ObjectMapper();

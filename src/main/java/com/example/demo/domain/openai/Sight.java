@@ -13,5 +13,5 @@ import java.util.List;
 @Builder
 public class Sight {
 
-    private List<Recommendations> recommendations;
+    private Recommendations recommendation;
 }
