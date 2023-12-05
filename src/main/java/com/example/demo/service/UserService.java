@@ -1,9 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Authority;
-import com.example.demo.domain.Member;
+import com.example.demo.domain.user.Authority;
+import com.example.demo.domain.user.Member;
 
 import java.util.List;
+
 
 public interface UserService {
     Member findUsername(String username);

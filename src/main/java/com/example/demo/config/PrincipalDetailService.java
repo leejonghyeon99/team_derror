@@ -1,6 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.domain.Member;
+import com.example.demo.domain.user.Member;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

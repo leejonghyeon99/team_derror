@@ -1,7 +1,7 @@
 package com.example.demo.config;
 
-import com.example.demo.domain.Authority;
-import com.example.demo.domain.Member;
+import com.example.demo.domain.user.Authority;
+import com.example.demo.domain.user.Member;
 import com.example.demo.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 public class PrincipalDetails implements UserDetails{
 

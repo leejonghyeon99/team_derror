@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.repository.UserRepository">
+<mapper namespace="com.example.demo.repository.user.UserRepository">
 
-    <select id="findId" resultType="com.example.demo.domain.Member">
+    <select id="findId" resultType="com.example.demo.domain.user.Member">
         SELECT
             id "id"
              ,auth_id "auth_id"
@@ -17,7 +17,7 @@
             WHERE id= #{id}
     </select>
 
-    <select id="findUsername" resultType="com.example.demo.domain.Member">
+    <select id="findUsername" resultType="com.example.demo.domain.user.Member">
         SELECT
             id "id"
              ,auth_id "auth_id"
@@ -32,13 +32,13 @@
             WHERE username = #{username}
     </select>
 
-    <insert id="save" flushCache="true" parameterType="com.example.demo.domain.Member"
+    <insert id="save" flushCache="true" parameterType="com.example.demo.domain.user.Member"
             keyProperty="id" useGeneratedKeys="true" keyColumn="id">
         INSERT INTO member(auth_id,username, password, age, phone, name, email)
         VALUES(#{auth_id},#{username}, #{password}, #{age}, #{phone}, #{name}, #{email})
     </insert>
 
-    <update id="update" flushCache="true" parameterType="com.example.demo.domain.Member">
+    <update id="update" flushCache="true" parameterType="com.example.demo.domain.user.Member">
         UPDATE member SET username = #{username}, password = #{password}, age=#{age}, name = #{name}, email = #{email}
                           , phone=#{phone}, auth_id=#{auth_id}
         WHERE id = #{id}
