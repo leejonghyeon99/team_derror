@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Authority;
-import com.example.demo.domain.Member;
-import com.example.demo.repository.AuthorityRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.domain.user.Authority;
+import com.example.demo.domain.user.Member;
+import com.example.demo.repository.user.AuthorityRepository;
+import com.example.demo.repository.user.UserRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

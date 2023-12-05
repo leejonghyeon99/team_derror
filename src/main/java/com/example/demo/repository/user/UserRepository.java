@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.demo.repository.user;
 
-import com.example.demo.domain.Member;
+import com.example.demo.domain.user.Member;
 
 public interface UserRepository {
     Member findId(Long id);

@@ -1,7 +1,7 @@
-package com.example.demo.repository;
+package com.example.demo.repository.user;
 
-import com.example.demo.domain.Authority;
-import com.example.demo.domain.Member;
+import com.example.demo.domain.user.Authority;
+import com.example.demo.domain.user.Member;
 
 import java.util.List;
 
