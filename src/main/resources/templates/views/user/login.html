@@ -20,10 +20,16 @@
     <label for="password">비밀번호:</label>
     <input type="password" name="password" id="password" placeholder="비밀번호입력" required><br>
 
-    <input type="submit" th:value="로그인"><br>
-    <a th:href="@{/user/signup}">
-        <input type="button" th:value="회원가입">
-    </a> <br>
+
+    <div class="button-container">
+      <input type="submit" th:value="로그인">
+      <a th:href="@{/user/signup}"><input type="button" th:value="회원가입"></a>
+    </div>
+
+    <a class="btn btn-lg my-1" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+        <img th:src="@{/img/kakao_login_button.png}" width="240" height="35">
+    </a>
+   <br>
 </form>
 </body>
 </html>
