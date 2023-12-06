@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="header">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
     <nav class="navbar-primary">
         <a href="#" class="btn-expand-collapse"><i class="bi bi-arrow-return-left"></i></a>
         <ul class="navbar-primary-menu">
             <li>
+                <a th:href="@{/view/}"><i class="bi bi-house"></i><span class="nav-label text-white"> home</span></a>
                 <a th:href="@{/countryinfo/search}"><i class="bi bi-globe-americas"></i><span class="nav-label text-white"> 이벤트</span></a>
                 <a th:href="@{/board/notice}"><i class="bi bi-file-text"></i><span class="nav-label text-white"> 게시판</span></a>
                 <a th:href="@{/openai/main}"><i class="bi bi-emoji-smile"></i><span class="nav-label text-white"> 도우미</span></a>
@@ -21,5 +23,6 @@
             </li>
         </ul>
     </nav>
+    <script th:src="@{/js/header.js}"></script>
 </th:block>
 </html>
