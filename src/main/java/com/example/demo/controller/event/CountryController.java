@@ -2,6 +2,7 @@ package com.example.demo.controller.event;
 
 import com.example.demo.domain.event.CountryInfo;
 import com.example.demo.domain.event.Embedded;
+import com.example.demo.domain.event.Page;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,8 +36,8 @@ public class CountryController {
 
     @GetMapping("/list")
     @ResponseBody
-    public CountryInfo list(@RequestParam String countryCode) {
-        String apiUrl = API_BASE_URL + "&countryCode=" + countryCode;
+    public CountryInfo list(@RequestParam String countryCode, @RequestParam(defaultValue = "1") Integer page) {
+        String apiUrl = API_BASE_URL + "&countryCode=" + countryCode + "&page=" + page;
         System.out.println(apiUrl);
 
         RestTemplate restTemplate = new RestTemplate();

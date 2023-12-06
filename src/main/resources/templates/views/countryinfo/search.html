@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -19,14 +19,21 @@
 <label for="city">도시:</label>
 <input id="city" placeholder="도시를 입력하세요" type="text">
 
-<button onclick="getEventInformation()">확인</button>
-
+<button onclick="getEventInformation(0)">확인</button>
+<hr>
 <div id="result"></div>
 
+<div id="pages"></div>
+
+<div id="paging"></div>
+
 <script>
-    function getEventInformation() {
+    let currentPage = 1;
+    let totalPages;
+    function getEventInformation(targetPage) {
         const countryCode = document.getElementById('countryCode').value;
-        const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}`;
+        const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}`;
+        console.log(apiUrl)
 
         // API 요청
         fetch(apiUrl)
@@ -41,25 +48,28 @@
         function list(data) {
             const embedded = data._embedded;
             const events = embedded.events;
-            const page = data.page;
+            const page = data.page.number;
+            totalPages = data.page.totalPages;
 
             console.log(embedded);
             console.log(events);
-            console.log(page);
+            console.log(totalPages);
+            console.log(page)
+
 
             const resultElement = document.getElementById('result');
-            let htmlString = `<div class="row rwo-cols-4 row-cols-md-4 g-4">`
-
+            let htmlString = `<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">`
             for (var event of events) {
                 for (var venue of event._embedded.venues) {
+                    var imageUrl = event.images.find(image => image.url.includes('TABLET_LANDSCAPE_3_2'));
                     htmlString += `
                         <div class="col">
                             <div class="card h-100">
-                                <img src="${event.images[0].url}" width="455" height="350">
+                                <img src="${imageUrl ? imageUrl.url : event.images[0].url}" width="455" height="350" style="max-width: 100%; max-height: 100%;">
                                 <div class="card-body">
-                                    <p><strong>이벤트 제목:</strong>${event.name}</p>
-                                    <p><strong>장소 이름:</strong>${venue.name}</p>
-                                    <p><strong>도시 이름:</strong>${venue.city.name}</p>
+                                    <p><strong>이벤트 제목:</strong> ${event.name}</p>
+                                    <p><strong>장소 이름:</strong> ${venue.name}</p>
+                                    <p><strong>도시 이름:</strong> ${venue.city.name}</p>
                                 </div>
                             </div>
                         </div>
@@ -69,13 +79,43 @@
             htmlString += `</div>`;
             resultElement.innerHTML = htmlString;
 
-        } // end list
-    } // end getEventInformation
 
-    // <img src="${event.images[0].url}" width="400">
-    // <p><strong>이벤트 제목:</strong>${event.name}</p>
-    // <p><strong>장소 이름:</strong>${venue.name}</p>
-    // <p><strong>도시 이름:</strong>${venue.city.name}</p>
+            renderPagination(totalPages);
+        } // end list()
+
+        function renderPagination() {
+            const pagingElement = document.getElementById('paging');
+            const pagesPerGroup = 10;
+
+            let groupNumber = Math.ceil(currentPage / pagesPerGroup);
+            let startPage = (groupNumber - 1) * pagesPerGroup + 1;
+            let endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
+
+            let pagingHtml = `<br> <nav aria-label="페이지 네비게이션" style="display: flex; justify-content: center;"><ul class="pagination">`;
+
+            // 이전 버튼
+            pagingHtml += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${startPage - 1})"><<</a></li>`;
+
+            // 페이지 숫자
+            for (let i = startPage; i <= endPage; i++) {
+                pagingHtml += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`;
+            }
+
+            // 다음 버튼
+            pagingHtml += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${endPage + 1})">>></a></li>`;
+
+            pagingHtml += `</ul></nav>`;
+            pagingElement.innerHTML = pagingHtml;
+
+        } // end renderPagination()
+    } // end getEventInformation
+        function changePage(targetPage) {
+            if (targetPage >= 1 && targetPage <= totalPages){
+                currentPage = targetPage;
+                getEventInformation(targetPage -1)
+            }
+        } // end changePage
+
 </script>
 </body>
 </html>
