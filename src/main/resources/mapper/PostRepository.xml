@@ -7,7 +7,7 @@
         INSERT INTO post
             (category, title, content, member_id )
         VALUES
-            (#{category}, #{title}, #{content}, #{memberId})
+            (#{category}, #{title}, #{content}, #{member.id})
     </insert>
 
     <sql id="SELECT_BASE">
@@ -79,6 +79,7 @@
         ORDER BY p.id DESC
         LIMIT #{param1}, #{param2}
     </select>
+
     <select id="countAll" resultType="int">
         SELECT count(*) FROM post
     </select>
