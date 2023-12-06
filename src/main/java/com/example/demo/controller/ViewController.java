@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController {
 
     @RequestMapping("/")
-    public String main(){return "main";}
+    public String main(){return "homepage";}
 }
