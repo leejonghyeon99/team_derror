@@ -2,18 +2,37 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>회원가입</title>
 </head>
 <body>
-<form th:action="@{/user/signup}" method="POST"><br>
-아이디:<input type="text" name="username" id="username" placeholder="아이디입력"><br>
-비밀번호:<input type="password" name="password" id="password" placeholder="비밀번호입력"><br>
-비밀번호재입력:<input type="password" name="re_password" id="re_password" placeholder="비밀번호재입력"><br>
-이름:<input type="text" name="name" id="name" placeholder="이름입력"><br>
-나이:<input type="number" name="age" id="age" placeholder="나이입력"><br>
-연락처:<input type="text" name="phone" id="phone" placeholder="연락처입력"><br>
-이메일:<input type="text" name="email" id="email" placeholder="이메일입력"><br>
-<input type="submit" th:value="회원가입 완료"><br>
+    <div class="col-12 text-danger" th:text="${error}">
+    </div>
+
+<form th:action="@{/user/signup}" method="POST">
+    <label for="username">아이디:</label>
+    <input type="text" name="username" id="username" placeholder="아이디입력" th:value="${username}" required><br>
+
+    <label for="password">비밀번호:</label>
+    <input type="password" name="password" id="password" placeholder="비밀번호입력" required><br>
+
+    <label for="re_password">비밀번호재입력:</label>
+    <input type="password" name="re_password" id="re_password" placeholder="비밀번호재입력" required><br>
+
+    <label for="name">이름:</label>
+    <input type="text" name="name" id="name" placeholder="이름입력" th:value="${name}"required><br>
+
+    <label for="age">나이:</label>
+    <input type="number" name="age" id="age" placeholder="나이입력" th:value="${age}" required><br>
+
+    <label for="phone">연락처:</label>
+    <input type="text" name="phone" id="phone" placeholder="연락처입력" required><br>
+
+    <label for="email">이메일:</label>
+    <input type="text" name="email" id="email" placeholder="이메일입력" required><br>
+
+    <input type="submit" th:value="회원가입완료"><br>
+
 </form>
 </body>
 </html>

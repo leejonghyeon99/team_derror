@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/airandhotel")
 public class MainController {
 
-    @RequestMapping("/search")
+    @RequestMapping("/airport")
     public String Search(){
-       return "airandhotel/Search";
+       return "airandhotel/airport";
     }
   
-    @RequestMapping("/index")
-    public String Index(){return "airandhotel/index";}
+    @RequestMapping("/hotel")
+    public String Index(){return "airandhotel/hotel";}
 }
