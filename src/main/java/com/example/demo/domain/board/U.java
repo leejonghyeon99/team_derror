@@ -1,6 +1,8 @@
 package com.example.demo.domain.board;
 
 
+import com.example.demo.config.PrincipalDetails;
+import com.example.demo.domain.user.Member;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,12 +29,12 @@ public class U {
     }
 
     // 현재 로그인 한 사용자 UserDetail 구하기
-//    public static User getLoggedUser(){
-//        // 현재 로그인 한 사용자
-//        PrincipalDetails userDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User user = userDetails.getUser();
-//        return user;
-//    }
+    public static Member getLoggedUser(){
+        // 현재 로그인 한 사용자
+        PrincipalDetails userDetails = (PrincipalDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member member = userDetails.getMember();
+        return member;
+    }
 
 
     public static void printFileInfo(MultipartFile file) {

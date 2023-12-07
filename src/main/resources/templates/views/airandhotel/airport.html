@@ -1,60 +1,147 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Country Information Search</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공항 조회</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 <body>
-<h1>Country Information Search</h1>
+<h3>국가공항 IATA 조회</h3>
 
-<label for="countryName">Enter Country Name:</label>
+<label for="countryName">국가명: </label>
 <input type="text" id="countryName" name="countryName" required>
-<button onclick="searchCountry()">Search</button>
+<button onclick="searchCountry()">검색</button>
 
-<table id="resultTable">
-  <thead>
-  <tr>
-    <th>국가 이름</th>
-    <th>공항 이름</th>
-    <th>공항 코드</th>
-  </tr>
-  </thead>
-  <tbody id="resultBody"></tbody>
+<hr>
+
+<table id="resultTable" class="table table-striped table-sm text-center">
+    <thead>
+    <tr>
+        <th>국가 이름</th>
+        <th>공항 이름</th>
+        <th>공항 코드</th>
+        <th>공항 선택</th>
+    </tr>
+    </thead>
+    <tbody id="resultBody"></tbody>
+</table>
+<hr>
+
+<h3>항공사별 운항정보</h3>
+<table class="table table-striped text-center">
+    <thead>
+    <tr>
+        <th>항공기</th>
+        <th>항공사</th>
+        <th>출발시간</th>
+        <th>시작일정</th>
+        <th>종료일정</th>
+        <th>항공코드</th>
+        <th>공항</th>
+        <th>월요일</th>
+        <th>화요일</th>
+        <th>수요일</th>
+        <th>목요일</th>
+        <th>금요일</th>
+        <th>토요일</th>
+        <th>일요일</th>
+    </tr>
+    </thead>
+    <tbody id="resultBody2">
+    </tbody>
 </table>
 
 <script>
-  function searchCountry() {
-    var countryName = document.getElementById("countryName").value;
+    function searchCountry() {
+        var countryName = document.getElementById("countryName").value;
 
-    // API 호출
-    fetch(`/api/air/code`)
+        // API 호출
+        fetch(`/api/air/code`)
             .then(response => response.json())
             .then(data => {
-              // "네덜란드"를 포함하는 데이터만 필터링
-              var countryList = data.response.body.items || [];
-              var filteredData = countryList.filter(country => country.countryName.includes(countryName));
+                var countryList = data.response.body.items || [];
+                var filteredData = countryList.filter(country => country.countryName.includes(countryName));
 
-              // 결과를 표에 표시
-              displayResults(filteredData);
+                // 결과를 표에 표시
+                displayResults(filteredData);
+                $('.aircode').on('click', function () {
+                    const code = $(this).data('airport-code');
+                    send(code);
+                });
             })
             .catch(error => {
-              console.error('Error:', error);
-              document.getElementById("resultBody").innerHTML = '<tr><td colspan="3">Error occurred while fetching data.</td></tr>';
+                console.error('Error:', error);
+                document.getElementById("resultBody").innerHTML = '<tr><td colspan="3">Error occurred while fetching data.</td></tr>';
             });
-  }
+    }
 
-  function displayResults(data) {
-    var resultHtml = '';
-    data.forEach(country => {
-      resultHtml += `<tr>
+    document.getElementById("countryName").addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            // 엔터 키를 누르면 검색 수행
+            searchCountry();
+        }
+    })
+
+    function displayResults(data) {
+        var resultHtml = '';
+        data.forEach(country => {
+            var airportCode = country.airportCode;
+            resultHtml += `<tr>
           <td>${country.countryName}</td>
           <td>${country.airportName}</td>
-          <td>${country.airportCode}</td>
+          <td>${airportCode}</td>
+          <td>
+              <button type="button" class="btn btn-info text-white aircode" data-airport-code="${airportCode}">선택</button>
+          </td>
         </tr>`;
-    });
-    document.getElementById("resultBody").innerHTML = resultHtml;
-  }
+        });
+
+        document.getElementById("resultBody").innerHTML = resultHtml;
+
+    }
+
+    function send(code) {
+        $.ajax({
+            url: `/api/air/airport`,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ code: code }), // 코드를 JSON 형식으로 전송
+            success: function (data, status) {
+                if (status === "success") {
+                    var tableHtml = '';
+                    data.forEach(function (air) {
+                        tableHtml += `<tr>
+                <td>${air.flightid}</td>
+                <td>${air.airline}</td>
+                <td>${air.st}</td>
+                <td>${air.firstdate}</td>
+                <td>${air.lastdate}</td>
+                <td>${air.airportcode}</td>
+                <td>${air.airport}</td>
+                <td>${(air.monday === "Y") ? "운항" : "" }</td>
+                <td>${(air.tuesday === "Y") ? "운항" : "" }</td>
+                <td>${(air.wednesday === "Y") ? "운항" : "" }</td>
+                <td>${(air.thursday === "Y") ? "운항" : "" }</td>
+                <td>${(air.friday === "Y") ? "운항" : "" }</td>
+                <td>${(air.saturday === "Y") ? "운항" : "" }</td>
+                <td>${(air.sunday === "Y") ? "운항" : "" }</td>
+            </tr>`;
+                    });
+
+                    // 예시: 해당 테이블의 tbody에 업데이트된 HTML 삽입
+                    $('#resultBody2').html(tableHtml);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
 </script>
 </body>
 </html>

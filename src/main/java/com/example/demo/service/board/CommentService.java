@@ -8,7 +8,7 @@ public interface CommentService {
     QryCommentList list(Long id);
 
     // 특정 글(postId) 에 특정 사용자(userId) 가 댓글 작성
-    QryResult write(Long postId, Long userId, String content);
+    QryResult write(Long postId, Long memberId, String content);
 
     // 특정 댓글(id) 삭제
     QryResult delete(Long id);
