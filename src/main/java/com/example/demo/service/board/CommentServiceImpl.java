@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
     public QryResult write(Long postId, Long memberId, String content) {
 
         Member member = userRepository.findId(memberId);
-
+        System.out.println("comment test: ");
         Comment comment = Comment.builder()
                 .member(member)
                 .content(content)

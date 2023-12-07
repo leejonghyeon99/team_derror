@@ -34,9 +34,11 @@ public class BoardController {
         this.boardService = boardService;
     }
 
+    // 작성페이지
     @GetMapping("/write")
     public void write(){}
 
+    // 작성완료
     @PostMapping("/write")
     public String writeOk(
             @RequestParam Map<String, MultipartFile> files   // 첨부 파일
@@ -61,6 +63,7 @@ public class BoardController {
         return "board/writeOk";
     }
 
+    // 세부사항
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
         Post detail = boardService.detail(id);
@@ -71,11 +74,13 @@ public class BoardController {
     // 페이징 사용
     @GetMapping("/notice")
     public void list(Integer page, Model model){
-        List<Post> notice = boardService.list();
-        // 여기서 선언된 notice가 html에서 불러온다
-        model.addAttribute("notice", notice);
+//        List<Post> notice = boardService.list();
+//        model.addAttribute("notice", notice);
+//        여기서 선언된 notice가 html에서 불러온다
+        boardService.list(page, model);
     }
 
+    // 수정페이지
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model){
         Post post = boardService.selectById(id);
@@ -83,6 +88,7 @@ public class BoardController {
         return "board/update";
     }
 
+    // 수정완료
     @PostMapping("/update")
     public String updateOk(
             @RequestParam Map<String, MultipartFile> files  // 새로 추가될 첨부파일들
@@ -109,6 +115,7 @@ public class BoardController {
         return "board/updateOk";
     }
 
+    // 삭제
     @PostMapping("/delete")
     public String deleteOk(Long id, Model model){
         int result = boardService.deleteById(id);
@@ -121,8 +128,7 @@ public class BoardController {
         binder.setValidator(new PostValidator());
     }
 
-    // 페이징
-    // pageRows 변경시 동작
+    // 페이징 - pageRows 변경시 동작
     @PostMapping("/pageRows")
     public String pageRows(Integer page, Integer pageRows){
         U.getSession().setAttribute("pageRows", pageRows);

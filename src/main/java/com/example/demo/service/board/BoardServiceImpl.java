@@ -101,6 +101,7 @@ public class BoardServiceImpl implements BoardService {
 
     // 물리적으로 파일 저장.  중복된 이름 rename 처리
     private Attachment upload(MultipartFile multipartFile) {
+
         Attachment attachment = null;
 
         // 담긴 파일이 없으면 pass
@@ -114,6 +115,7 @@ public class BoardServiceImpl implements BoardService {
 
         // 파일명 이 중복되는지 확인
         File file = new File(uploadDir, sourceName);
+
         if(file.exists()){  // 이미 존재하는 파일명,  중복되면 다름 이름으로 변경하여 저장
             // a.txt => a_2378142783946.txt  : time stamp 값을 활용할거다!
             int pos = fileName.lastIndexOf(".");
@@ -166,6 +168,7 @@ public class BoardServiceImpl implements BoardService {
         if(post != null){
             // 첨부파일(들) 정보 가져오기
             List<Attachment> fileList = attachmentRepository.findByPost(post.getId());
+            System.out.println(fileList);
             setImage(fileList);   // 이미지 파일 여부 세팅
             post.setFileList(fileList);
         }
@@ -242,7 +245,7 @@ public class BoardServiceImpl implements BoardService {
 
             // 해당페이지의 글 목록 읽어오기
             list = postRepository.selectFromRow(fromRow, pageRows);
-            model.addAttribute("notice", list);
+            model.addAttribute("list", list);
         } else {
             page = 0;
         }
