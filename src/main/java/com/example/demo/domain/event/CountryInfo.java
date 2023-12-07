@@ -18,4 +18,5 @@ public class CountryInfo {
     @JsonProperty("_embedded")
     private Embedded embedded;
     private Page page;
+
 }

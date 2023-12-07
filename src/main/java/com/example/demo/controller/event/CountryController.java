@@ -1,21 +1,10 @@
 package com.example.demo.controller.event;
 
 import com.example.demo.domain.event.CountryInfo;
-import com.example.demo.domain.event.Embedded;
-import com.example.demo.domain.event.Page;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.DataInput;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author 종선
@@ -42,11 +31,13 @@ public class CountryController {
 
         RestTemplate restTemplate = new RestTemplate();
         CountryInfo countryInfo = restTemplate.getForObject(apiUrl, CountryInfo.class);
-        countryInfo.getEmbedded().getEvents().forEach(events -> events.getId());
-        System.out.println(countryInfo.getPage().getTotalPages());
-        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
-        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
-        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
-        return countryInfo;
+
+            countryInfo.getEmbedded().getEvents().forEach(events -> events.getId());
+            System.out.println(countryInfo.getPage().getTotalPages());
+            System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
+            System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
+            System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
+            return countryInfo;
     }
+
 }

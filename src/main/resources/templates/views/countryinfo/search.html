@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <style>
+        .event-card {
+            cursor: pointer;
+            margin: 5px;
+            width: 470px;
+        }
+    </style>
+
 </head>
 <body>
 
 <h1>이벤트 정보 조회</h1>
 
 <label for="countryCode">국가 코드:</label>
-<input id="countryCode" placeholder="국가코드를 입력하세요" type="text" required>
+<input id="countryCode" placeholder="국가코드를 입력하세요" required>
 
 <label for="keyword">장르:</label>
 <input id="keyword" placeholder="장르를 입력하세요" type="text">
@@ -21,10 +31,8 @@
 
 <button onclick="getEventInformation(0)">확인</button>
 <hr>
+
 <div id="result"></div>
-
-<div id="pages"></div>
-
 <div id="paging"></div>
 
 <script>
@@ -34,6 +42,11 @@
         const countryCode = document.getElementById('countryCode').value;
         const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}`;
         console.log(apiUrl)
+
+        if (!countryCode) {
+            alert('국가 코드를 입력하세요.');
+            return;
+        }
 
         // API 요청
         fetch(apiUrl)
@@ -49,21 +62,20 @@
             const embedded = data._embedded;
             const events = embedded.events;
             const page = data.page.number;
-            totalPages = data.page.totalPages;
+
 
             console.log(embedded);
             console.log(events);
             console.log(totalPages);
             console.log(page)
 
-
             const resultElement = document.getElementById('result');
-            let htmlString = `<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">`
+            let htmlString = `<div class="card-container row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">`
             for (var event of events) {
                 for (var venue of event._embedded.venues) {
                     var imageUrl = event.images.find(image => image.url.includes('TABLET_LANDSCAPE_3_2'));
                     htmlString += `
-                        <div class="col">
+                        <div class="col event-card" onclick="redirectToLoadInfo('${event.name}', '${venue.name}', '${venue.city.name}')">
                             <div class="card h-100">
                                 <img src="${imageUrl ? imageUrl.url : event.images[0].url}" width="455" height="350" style="max-width: 100%; max-height: 100%;">
                                 <div class="card-body">
@@ -79,8 +91,7 @@
             htmlString += `</div>`;
             resultElement.innerHTML = htmlString;
 
-
-            renderPagination(totalPages);
+            renderPagination();
         } // end list()
 
         function renderPagination() {
@@ -92,15 +103,12 @@
             let endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
 
             let pagingHtml = `<br> <nav aria-label="페이지 네비게이션" style="display: flex; justify-content: center;"><ul class="pagination">`;
-
             // 이전 버튼
             pagingHtml += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${startPage - 1})"><<</a></li>`;
-
             // 페이지 숫자
             for (let i = startPage; i <= endPage; i++) {
                 pagingHtml += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`;
             }
-
             // 다음 버튼
             pagingHtml += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${endPage + 1})">>></a></li>`;
 
@@ -115,6 +123,12 @@
                 getEventInformation(targetPage -1)
             }
         } // end changePage
+        function redirectToLoadInfo(eventName, venueName, cityName) {
+            const params = new URLSearchParams({ eventName, venueName, cityName});
+
+            const cookie = `eventParams=${params}`;
+            window.location.href = `loadinfo.html?${params}`;
+        }
 
 </script>
 </body>

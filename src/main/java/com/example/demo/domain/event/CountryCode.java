@@ -4,6 +4,7 @@ package com.example.demo.domain.event;
  * @author 종선
  */
 
+
 public enum CountryCode {
     KR("KR", "대한민국"),
     US("US", "미국"),
@@ -103,4 +104,5 @@ public enum CountryCode {
     public String getValue(){
         return value;
     }
+
 }
