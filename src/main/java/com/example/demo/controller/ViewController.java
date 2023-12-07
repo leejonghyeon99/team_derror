@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Author 이종현
  */
 @Controller
-@RequestMapping("/view")
 public class ViewController {
 
     @RequestMapping("/")
-    public String main(){return "homepage";}
+    public String main(){return "index";}
 }
