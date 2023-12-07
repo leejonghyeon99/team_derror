@@ -28,6 +28,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+
+
+
+
 @Controller
 @RequestMapping("/oauth2")
 public class OAuth2Controller {
@@ -79,14 +84,15 @@ public class OAuth2Controller {
     }
 
     private Member signupKakao(KakaoProfile kakaoProfile){
+
         String provider = "KAKAO";
         String provider_id = "" + kakaoProfile.getId();
         String username = provider + "_" + provider_id;
         String name = kakaoProfile.getKakaoAccount().getProfile().getNickname();
         String password = oauth2Password;
-        Long age = 20L;
+        Long age =20L;
         String phone = "010-1234-5678";
-        String email = "imsen45@naver.com";
+        String email = String.valueOf(kakaoProfile.getKakaoAccount().getHasEmail());
         Member member = userService.findUsername(username);
 
         System.out.println("""
@@ -103,7 +109,7 @@ public class OAuth2Controller {
                """.formatted(username, name,age,phone,email, password, provider, provider_id));
 
         if(member == null){
-            Member newUser = Member.builder()
+            Member newMember = Member.builder()
                     .username(username)
                     .name(name)
                     .age(Math.toIntExact(age))
@@ -114,7 +120,7 @@ public class OAuth2Controller {
                     .provider_id(provider_id)
                     .build();
 
-            int cnt = userService.signup(newUser);
+            int cnt = userService.signup(newMember);
             if(cnt > 0){
                 System.out.println("[Kakao 인증 회원 가입 성공]");
                 member = userService.findUsername(username);

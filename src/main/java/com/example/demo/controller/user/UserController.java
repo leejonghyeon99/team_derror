@@ -44,8 +44,8 @@ public class UserController {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-//    @RequestMapping("/home")
-//    public void home(Model model){}
+    @RequestMapping("/test")
+    public void test(Model model){}
 
     @GetMapping("/login")
     public void login(Model model){}
@@ -76,8 +76,11 @@ public class UserController {
             redirectAttrs.addFlashAttribute("phone", member.getPhone());
 
             List<FieldError> errList = result.getFieldErrors();
+
             for(FieldError err : errList) {
-                redirectAttrs.addFlashAttribute("error", err.getCode());
+                redirectAttrs.addFlashAttribute("error", err.getDefaultMessage());
+
+
                 break;
             }
 

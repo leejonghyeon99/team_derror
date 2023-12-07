@@ -5,12 +5,14 @@ import com.example.demo.domain.user.Member;
 import com.example.demo.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails{
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private UserService userService;
 
@@ -31,7 +33,10 @@ public class PrincipalDetails implements UserDetails{
         this.member = member;
     }
 
-
+    public PrincipalDetails(Member member, Map<String, Object> attributes){
+        this.attributes = attributes;
+        this.member = member;
+    }
 
 
 
@@ -98,16 +103,16 @@ public class PrincipalDetails implements UserDetails{
 
 
 
-//    private Map<String, Object> attributes;
-//
-//    @Override
-//    public String getName() {
-//        return null;   // 사용하지 않을 예정
-//    }
-//
-//    @Override
-//    public Map<String, Object> getAttributes() {
-//        return attributes;  // 어디서 받아올까?  -> 생성자!
-//    }
+    private Map<String, Object> attributes;
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 }
 

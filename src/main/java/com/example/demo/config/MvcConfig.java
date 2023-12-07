@@ -12,4 +12,5 @@ public class MvcConfig {
 
         return new BCryptPasswordEncoder();
     }
+
 }

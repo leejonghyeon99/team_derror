@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <title>로그인</title>
 </head>
@@ -27,9 +31,16 @@
     </div>
 
     <a class="btn btn-lg my-1" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+<!--        <a class="btn btn-lg my-1" th:href="@{https://kauth.kakao.com/oauth/authorize?client_id=${'4989e4da1c28c04be933413c057c2159'}&redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')}&response_type=${'code'}&scope=${'account_email'}}">-->
         <img th:src="@{/img/kakao_login_button.png}" width="240" height="35">
+    </a>
+
+    <a class="btn btn-lg my-1" th:href="@{/oauth2/authorization/google}">
+        <img th:src="@{/img/google_login_button.png}" width="240" height="35">
     </a>
    <br>
 </form>
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>
