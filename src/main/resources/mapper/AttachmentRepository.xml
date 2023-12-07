@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.AttachmentRepository">
+
+    <insert id="insert" flushCache="true" parameterType="arraylist">
+        INSERT INTO attach(sourcename, filename, post_id, type)
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (#{e.sourcename}, #{e.filename}, #{param2}, #{type})
+        </foreach>
+    </insert>
+
+    <insert id="save" flushCache="true" parameterType="com.example.demo.domain.board.Attachment">
+        INSERT INTO attach(sourcename, filename, post_id, type)
+        VALUES
+            (#{sourcename}, #{filename}, #{post_id}, #{type})
+    </insert>
+
+    <sql id="SELECTFILE">
+        SELECT id, sourcename, filename, post_id
+        FROM attach
+        WHERE 1 = 1
+    </sql>
+
+    <select id="findById" resultType="com.example.demo.domain.board.Attachment">
+        <include refid="SELECTFILE"/>
+        AND id = #{id}
+    </select>
+
+    <select id="findByPost" resultType="com.example.demo.domain.board.Attachment">
+        <include refid="SELECTFILE"/>
+        AND
+        post_id = #{param1}
+        ORDER BY id ASC
+    </select>
+
+    <select id="findByIds" resultType="com.example.demo.domain.board.Attachment">
+        parameterType="arraylist">
+        <include refid="SELECTFILE"/>
+        AND id IN (<foreach collection="array" item="item" separator=",">
+        #{item}
+    </foreach> )
+        ORDER BY id ASC
+    </select>
+
+    <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
+        DELETE FROM attach
+        WHERE id IN (<foreach collection="array" item="item" separator=",">
+        #{item}
+    </foreach> )
+    </delete>
+
+    <delete id="delete" flushCache="true">
+        DELETE FROM attach WHERE id = #{id}
+    </delete>
+</mapper>

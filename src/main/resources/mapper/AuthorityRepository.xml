@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.user.AuthorityRepository">
+
+
+
+    <select id="findName" resultType="com.example.demo.domain.user.Authority">
+        SELECT
+            id "id"
+           ,name "name"
+        FROM authority
+        WHERE name = #{name}
+    </select>
+
+    <select id="findUser" resultType="com.example.demo.domain.user.Authority">
+        SELECT a.id "id", a.name "name"
+        FROM member m, authority a
+        WHERE m.auth_id = a.id AND m.id = #{id}
+    </select>
+
+    <insert id="addAuthority">
+        INSERT INTO member(id, auth_id)
+        VALUES(#{param1}, #{param2})
+    </insert>
+</mapper>

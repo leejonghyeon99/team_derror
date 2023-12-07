@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.CommentRepository">
+
+    <resultMap id="mapMember" type="com.example.demo.domain.user.Member">
+        <result column="m_id" property="id"/>
+        <result column="m_username" property="username"/>
+        <result column="m_password" property="password"/>
+        <result column="m_name" property="name"/>
+        <result column="m_email" property="email"/>
+        <result column="m_created_date" property="created_date"/>
+    </resultMap>
+
+    <resultMap id="mapComment" type="com.example.demo.domain.board.Comment">
+        <result column="c_id" property="id"/>
+        <result column="c_content" property="content"/>
+        <result column="c_created_date" property="createdDate"/>
+        <result column="c_post_id" property="post_id"/>
+        <collection property="member" resultMap="mapMember"/>
+    </resultMap>
+
+    <select id="findByPost" resultMap="mapComment">
+        SELECT
+            c.id "c_id",
+            c.content "c_content",
+            c.created_date "c_createdDate",
+            c.post_id "c_post_id",
+            m.id "m_id",
+            m.username "m_username",
+            m.password "m_password",
+            m.name "m_name",
+            m.email "m_email",
+            m.created_date "m_created_date"
+        FROM comment c, member m
+        WHERE
+            c.member_id = m.id
+          AND c.post_id = #{post.id}
+        ORDER BY c.id DESC
+    </select>
+
+    <insert id="save" flushCache="true"
+            parameterType="com.example.demo.domain.board.Comment"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO comment(member_id, post_id, content)
+        VALUES(#{member.id}, #{post.id}, #{content})
+    </insert>
+
+    <delete id="deleteById" flushCache="true">
+        DELETE FROM comment WHERE id = #{id}
+    </delete>
+</mapper>
