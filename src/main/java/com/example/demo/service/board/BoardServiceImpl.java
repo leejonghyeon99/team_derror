@@ -6,6 +6,7 @@ package com.example.demo.service.board;
 import com.example.demo.domain.board.Attachment;
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.U;
+import com.example.demo.domain.user.Member;
 import com.example.demo.repository.AttachmentRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.user.UserRepository;
@@ -58,11 +59,11 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int write(Post post, Map<String, MultipartFile> files) {
         // 현재 로그인한 작성자 정보.
-//        User user = U.getLoggedUser();
-//
-//        // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
-//        user = userRepository.findById(user.getId());
-//        post.setUser(user);   // 글 작성자 세팅
+        Member member = U.getLoggedUser();
+
+        // 위 정보는 session 의 정보이고, 일단 DB 에서 다시 읽어온다
+        member = userRepository.findId(member.getId());
+        post.setMember(member);   // 글 작성자 세팅
 
         int cnt = postRepository.save(post);
 
@@ -240,7 +241,7 @@ public class BoardServiceImpl implements BoardService {
 
             // 해당페이지의 글 목록 읽어오기
             list = postRepository.selectFromRow(fromRow, pageRows);
-            model.addAttribute("list", list);
+            model.addAttribute("notice", list);
         } else {
             page = 0;
         }
