@@ -2,34 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="header">
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">DERROR</a>
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/countryinfo/search}">이벤트</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/openai/main}">AI도우미</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/board/notice}">게시판</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">항공/숙박</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" th:href="@{/airandhotel/airport}">항공</a>
-                            <a class="dropdown-item" th:href="@{/airandhotel/hotel}">숙박</a>
-                        </div>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <nav class="navbar-primary">
+        <a href="#" class="btn-expand-collapse"><i class="bi bi-arrow-return-left"></i></a>
+        <ul class="navbar-primary-menu">
+            <li>
+                <a th:href="@{/view/}"><i class="bi bi-house"></i><span class="nav-label text-white"> home</span></a>
+                <a th:href="@{/countryinfo/search}"><i class="bi bi-globe-americas"></i><span class="nav-label text-white"> 이벤트</span></a>
+                <a th:href="@{/board/notice}"><i class="bi bi-file-text"></i><span class="nav-label text-white"> 게시판</span></a>
+                <a th:href="@{/openai/main}"><i class="bi bi-emoji-smile"></i><span class="nav-label text-white"> 도우미</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-airplane"></i><span class="nav-label text-white"> 항공/숙박</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-dark" style="width: 100%">
+                    <a th:href="@{/airandhotel/airport}" class="dropdown-item"><span class="nav-label text-white"> 항공</span></a>
+                    <a th:href="@{/airandhotel/hotel}" class="dropdown-item"><span class="nav-label text-white"> 숙박</span></a>
+                </div>
+            </li>
+        </ul>
     </nav>
+    <script th:src="@{/js/header.js}"></script>
 </th:block>
 </html>
