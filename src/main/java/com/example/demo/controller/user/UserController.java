@@ -5,15 +5,15 @@ import com.example.demo.domain.user.MemberValidator;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -37,6 +37,15 @@ public class UserController {
         this.userService = userService;
         this.memberValidator = memberValidator;
     }
+
+    @RequestMapping("/auth")
+    @ResponseBody
+    public Authentication auth() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+//    @RequestMapping("/home")
+//    public void home(Model model){}
 
     @GetMapping("/login")
     public void login(Model model){}

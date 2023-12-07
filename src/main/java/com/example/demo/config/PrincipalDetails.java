@@ -32,10 +32,7 @@ public class PrincipalDetails implements UserDetails{
     }
 
 
-//    public PrincipalDetails(Member member, Map<String, Object> attributes){
-//        this.member = member;
-//        this.attributes = attributes;
-//    }
+
 
 
 

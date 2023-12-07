@@ -13,6 +13,8 @@
              , phone "phone"
              , age "age"
              , created_date "created_date"
+             , provider "provider"
+             , provider_id "provider_id"
         FROM member
             WHERE id= #{id}
     </select>
@@ -28,6 +30,8 @@
              , phone "phone"
              , age "age"
              , created_date "created_date"
+             , provider "provider"
+             , provider_id "provider_id"
         FROM member
             WHERE username = #{username}
     </select>
