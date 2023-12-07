@@ -34,7 +34,7 @@
         FROM comment c, member m
         WHERE
             c.member_id = m.id
-          AND c.post_id = #{post_id}
+          AND c.post_id = #{post.id}
         ORDER BY c.id DESC
     </select>
 
@@ -42,7 +42,7 @@
             parameterType="com.example.demo.domain.board.Comment"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO comment(member_id, post_id, content)
-        VALUES(#{member.id}, #{post_id}, #{content})
+        VALUES(#{member.id}, #{post.id}, #{content})
     </insert>
 
     <delete id="deleteById" flushCache="true">

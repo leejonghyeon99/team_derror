@@ -90,11 +90,11 @@ function buildComment(result) {
     result.data.forEach(comment => {
         let id = comment.id;
         let content = comment.content.trim();
-        let regdate = comment.regdate;
+        let regdate = comment.createdDate;
 
-        let user_id = comment.user.id;
-        let username = comment.user.username;
-        let name = comment.user.name;
+        let user_id = comment.member.id;
+        let username = comment.member.username;
+        let name = comment.member.name;
 
         // 삭제버튼 여부: 작성자 본인인 경우만 삭제 버튼 보이게 하기
         const delBtn = (logged_id !== user_id) ? '' : `

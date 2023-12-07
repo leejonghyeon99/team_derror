@@ -41,9 +41,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public QryResult write(Long postId, Long userId, String content) {
+    public QryResult write(Long postId, Long memberId, String content) {
 
-        Member member = userRepository.findId(userId);
+        Member member = userRepository.findId(memberId);
 
         Comment comment = Comment.builder()
                 .member(member)
