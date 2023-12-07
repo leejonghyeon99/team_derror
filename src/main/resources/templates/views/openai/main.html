@@ -18,7 +18,7 @@
     <title>Document</title>
 </head>
 <body>
-<th:block th:insert="~{common/header::header}"/>
+<th:block th:insert="~{common/sidebar::sidebar}"/>
     <div class="main">
         <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
@@ -66,5 +66,7 @@
         
     </div>
 <script th:src="@{/js/openai/place.js}"></script>
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>
