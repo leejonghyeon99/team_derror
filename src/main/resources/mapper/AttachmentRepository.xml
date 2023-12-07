@@ -3,17 +3,17 @@
 <mapper namespace="com.example.demo.repository.AttachmentRepository">
 
     <insert id="insert" flushCache="true" parameterType="arraylist">
-        INSERT INTO attach(sourcename, filename, post_id, type)
+        INSERT INTO attach(sourcename, filename, post_id)
         VALUES
         <foreach collection="list" item="e" separator=",">
-            (#{e.sourcename}, #{e.filename}, #{param2}, #{type})
+            (#{e.sourcename}, #{e.filename}, #{param2})
         </foreach>
     </insert>
 
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.board.Attachment">
-        INSERT INTO attach(sourcename, filename, post_id, type)
+        INSERT INTO attach(sourcename, filename, post_id)
         VALUES
-            (#{sourcename}, #{filename}, #{post_id}, #{type})
+            (#{sourcename}, #{filename}, #{post_id})
     </insert>
 
     <sql id="SELECTFILE">

@@ -22,10 +22,9 @@ public class CommentController {
     }
 
     @PostMapping("/write")
-
     public QryResult write(
             @RequestParam("post_id") Long postId,
-            @RequestParam("member_id") Long memberId,
+            @RequestParam("member.id") Long memberId,
             String content
     ){
         return commentService.write(postId, memberId, content);

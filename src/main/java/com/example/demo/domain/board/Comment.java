@@ -30,6 +30,6 @@ public class Comment {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    @JsonProperty("createdDate")
-    private LocalDateTime createdDate;
+    @JsonProperty("created_date")
+    private LocalDateTime created_date;
 }

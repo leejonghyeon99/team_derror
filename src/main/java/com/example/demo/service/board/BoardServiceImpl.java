@@ -98,6 +98,7 @@ public class BoardServiceImpl implements BoardService {
         }
     } // end addFiles()
 
+
     // 물리적으로 파일 저장.  중복된 이름 rename 처리
     private Attachment upload(MultipartFile multipartFile) {
         Attachment attachment = null;
@@ -176,7 +177,7 @@ public class BoardServiceImpl implements BoardService {
     private void setImage(List<Attachment> fileList) {
         // upload 실제 물리적인 경로
         String realPath = new File(uploadDir).getAbsolutePath();
-
+        System.out.println("setImage test: "+ fileList.toString());
         for(var attachment : fileList){
             BufferedImage imgData = null;
             File f = new File(realPath, attachment.getFilename());  // 저장된 첨부파일에 대한 File 객체
