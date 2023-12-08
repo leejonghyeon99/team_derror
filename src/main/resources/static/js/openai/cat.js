@@ -12,8 +12,23 @@ rightDown.style.display = 'none';
 const leftKeys = ['KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'Space'];
 const rightKeys = ['KeyU', 'KeyJ', 'KeyN', 'KeyI', 'KeyK', 'KeyM', 'KeyO', 'KeyL', 'KeyP', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period', 'Slash', 'Enter'];
 
+function isInput(){
+    let bool = false;
+    if(box.value.trim() === ""){
+      bool = false;
+    }else{
+        bool = true;
+    }
+    return true;
+}
 
 box.addEventListener("keydown", function(event){
+    if(isInput()){
+        leftUp.style.display = 'none';
+        leftDown.style.display = 'none';
+        rightUp.style.display = 'none';
+        rightDown.style.display = 'none';
+    }
     if (leftKeys.includes(event.code)) {
         leftUp.style.display = 'block';
         leftDown.style.display = 'none';
@@ -24,6 +39,12 @@ box.addEventListener("keydown", function(event){
 })
 
 box.addEventListener("keyup", function(event){
+    if(isInput()){
+        leftUp.style.display = 'none';
+        leftDown.style.display = 'none';
+        rightUp.style.display = 'none';
+        rightDown.style.display = 'none';
+    }
     if (leftKeys.includes(event.code)) {
         leftUp.style.display = 'none';
         leftDown.style.display = 'block';

@@ -24,16 +24,18 @@
     <div class="main">
         <div class="container h-100">
             <div class="row justify-content-center align-items-center">
-                <div id="cat-box" class="col-md-6">
-                    <img id="base" class="cat" th:src="@{/../4k/base.png}">
-                    <img id="left-up" class="cat" th:src="@{/../4k/base_0100.png}">
-                    <img id="left-down" class="cat" th:src="@{/../4k/base_left.png}">
-                    <img id="right-up" class="cat" th:src="@{/../4k/base_0001.png}">
-                    <img id="right-down" class="cat" th:src="@{/../4k/base_right.png}">
+                <div class="col-md-6">
+                    <div id="cat-box">
+                        <img id="base" class="cat" th:src="@{/../4k/base.png}">
+                        <img id="left-up" class="cat" th:src="@{/../4k/base_0100.png}">
+                        <img id="left-down" class="cat" th:src="@{/../4k/base_left.png}">
+                        <img id="right-up" class="cat" th:src="@{/../4k/base_0001.png}">
+                        <img id="right-down" class="cat" th:src="@{/../4k/base_right.png}">
+                    </div>
                 </div>
             </div>
-            <div class="row h-100 justify-content-center align-items-center">
-                <div class="col-md-6">
+            <div class="row justify-content-center align-items-center">
+                <div id="content-box" class="col-md-6">
                     <!-- 검색바 -->
                     <div class="form-inline mb-3">
                         <div class="input-group">
