@@ -245,7 +245,7 @@ public class BoardServiceImpl implements BoardService {
 
             // 해당페이지의 글 목록 읽어오기
             list = postRepository.selectFromRow(fromRow, pageRows);
-            model.addAttribute("list", list);
+            model.addAttribute("notice", list);
         } else {
             page = 0;
         }
