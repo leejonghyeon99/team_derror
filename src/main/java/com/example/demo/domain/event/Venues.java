@@ -14,7 +14,6 @@ import java.util.Map;
 public class Venues {
     private String id;
     private String name;
-    private String type;
     private City city;
     private Map<String, String> address;
     private Map<String, Integer> upcomingEvents;
