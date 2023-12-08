@@ -1,0 +1,13 @@
+#cat-box{
+    position: relative;
+    width: 500px;
+    display: block;
+}
+.cat{
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+}
