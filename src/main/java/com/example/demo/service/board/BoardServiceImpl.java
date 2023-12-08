@@ -98,8 +98,10 @@ public class BoardServiceImpl implements BoardService {
         }
     } // end addFiles()
 
+
     // 물리적으로 파일 저장.  중복된 이름 rename 처리
     private Attachment upload(MultipartFile multipartFile) {
+
         Attachment attachment = null;
 
         // 담긴 파일이 없으면 pass
@@ -113,6 +115,7 @@ public class BoardServiceImpl implements BoardService {
 
         // 파일명 이 중복되는지 확인
         File file = new File(uploadDir, sourceName);
+
         if(file.exists()){  // 이미 존재하는 파일명,  중복되면 다름 이름으로 변경하여 저장
             // a.txt => a_2378142783946.txt  : time stamp 값을 활용할거다!
             int pos = fileName.lastIndexOf(".");
@@ -165,6 +168,7 @@ public class BoardServiceImpl implements BoardService {
         if(post != null){
             // 첨부파일(들) 정보 가져오기
             List<Attachment> fileList = attachmentRepository.findByPost(post.getId());
+            System.out.println(fileList);
             setImage(fileList);   // 이미지 파일 여부 세팅
             post.setFileList(fileList);
         }
@@ -176,7 +180,7 @@ public class BoardServiceImpl implements BoardService {
     private void setImage(List<Attachment> fileList) {
         // upload 실제 물리적인 경로
         String realPath = new File(uploadDir).getAbsolutePath();
-
+        System.out.println("setImage test: "+ fileList.toString());
         for(var attachment : fileList){
             BufferedImage imgData = null;
             File f = new File(realPath, attachment.getFilename());  // 저장된 첨부파일에 대한 File 객체

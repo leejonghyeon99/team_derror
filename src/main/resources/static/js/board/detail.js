@@ -24,7 +24,7 @@ $(function(){
 
         // 검증
         if(!content){
-            alert("댓글 입력을 하세요");
+            alert("댓글을 입력을 하세요");
             $("#input_comment").focus();
             return;
         }
@@ -90,7 +90,7 @@ function buildComment(result) {
     result.data.forEach(comment => {
         let id = comment.id;
         let content = comment.content.trim();
-        let regdate = comment.createdDate;
+        let regdate = comment.created_date;
 
         let user_id = comment.member.id;
         let username = comment.member.username;

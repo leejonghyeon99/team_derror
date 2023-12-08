@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+
 public class U {
     // 현재 request 구하기
     public static HttpServletRequest getRequest() {
