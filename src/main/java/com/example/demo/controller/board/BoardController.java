@@ -80,6 +80,7 @@ public class BoardController {
         boardService.list(page, model);
     }
 
+
     // 수정페이지
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model){

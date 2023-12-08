@@ -21,17 +21,21 @@
 <body>
 /* 인증 헤더 */
 <th:block th:insert="~{common/sidebar::sidebar}"/>
-<div class="main-content">
 
+<div class="main-content">
     <div class="container mt-3">
         <h2>공지사항</h2>
         <hr>
-
-        <div class="row">
-            <div class="col-12">
-                <a class="btn btn-outline-dark" th:href="@{/board/write}">작성</a>
-            </div>
+        <div sec:authorize="isAuthenticated()">
+            <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <div class="row">
+                    <div class="col-12">
+                        <a class="btn btn-outline-dark" th:href="@{/board/write}" th:class="writeButton">작성</a>
+                    </div>
+                </div>
+            </th:block>
         </div>
+
         <!-- 페이징 헤더 -->
         <div class="mb-3 mt-3 clearfix">
             <span class="float-start me-2">총 [[${cnt}]]개</span>
