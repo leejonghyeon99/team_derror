@@ -1,9 +1,15 @@
 package com.example.demo.controller.event;
 
+import com.example.demo.domain.event.ClassificationName;
+import com.example.demo.domain.event.CountryCode;
 import com.example.demo.domain.event.CountryInfo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.*;
+
 
 
 /**
@@ -19,14 +25,29 @@ public class CountryController {
         System.out.println("CountryController() 생성");
     }
     @GetMapping("/search")
-    public void search(){};
+    public void search(Model model){
+
+        Map<String, String> codeMap = Arrays.stream(CountryCode.values()).collect(
+                HashMap::new,
+                (map, countryCode) -> map.put(countryCode.getCode(), countryCode.getValue()),
+                HashMap::putAll
+        );
+        Map<String, String> classMap = Arrays.stream(ClassificationName.values()).collect(
+                HashMap::new,
+                (map, ClassificationName) -> map.put(ClassificationName.getClassificationName(), ClassificationName.getValue()),
+                HashMap::putAll
+        );
+        model.addAttribute("codes", codeMap);
+        model.addAttribute("classifications", classMap);
+    };
 
     //https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*&countryCode=US
 
     @GetMapping("/list")
     @ResponseBody
-    public CountryInfo list(@RequestParam String countryCode, @RequestParam(defaultValue = "1") Integer page) {
-        String apiUrl = API_BASE_URL + "&countryCode=" + countryCode + "&page=" + page;
+        public CountryInfo list(@RequestParam String countryCode, @RequestParam(defaultValue = "1") Integer page, @RequestParam String classificationName) {
+        String apiUrl = API_BASE_URL + "&countryCode=" + countryCode + "&page=" + page + "&classificationName=" + classificationName;
+
         System.out.println(apiUrl);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -37,7 +58,20 @@ public class CountryController {
             System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
             System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
             System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
+
+//        countryInfo.getEmbedded().getEvents().stream().reduce( (e,v) -> {
+//
+//            return null;
+//        });
+
             return countryInfo;
     }
+    @GetMapping("/info")
+    @ResponseBody
+    public void info(
+            @RequestParam(name = "eventName", required = false) String eventName,
+            @RequestParam(name = "venueName", required = false) String venueName,
+            @RequestParam(name = "cityName", required = false) String cityName
+    ){};
 
 }
