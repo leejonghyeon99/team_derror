@@ -6,4 +6,11 @@ $(function (){
         frm.submit();
     });
 
+    $("[name='sort']").change(function (){
+        let frm = $("[name = 'frmPageRows']");
+        frm.attr("method", "POST");
+        frm.attr("action", "sort")
+        frm.submit();
+    });
+
 });

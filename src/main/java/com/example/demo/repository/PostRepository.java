@@ -21,6 +21,10 @@ public interface PostRepository {
     // 전체 글 목록 : 최신순 (SELECT)
     List<Post> findAll();
 
+    // 전체 글 목록 : 조회순 (SELECT)
+    List<Post> findViewCnt();
+
+
     // 특정 id 글 수정 (제목, 내용) (UPDATE)
     int update(Post post);
 
@@ -30,6 +34,7 @@ public interface PostRepository {
     // 페이징
     // from 부터 rows 개 만큼 SELECT
     List<Post> selectFromRow(int from, int rows);
+
 
     // 전체 글의 개수
     int countAll();

@@ -71,15 +71,17 @@ public class BoardController {
         return "board/detail";
     }
 
-    // 페이징 사용
-    @GetMapping("/notice")
+    // 페이징 사용 최신순
+    @GetMapping("/notice/{sort}")
     public void list(Integer page, Model model){
-//        List<Post> notice = boardService.list();
-//        model.addAttribute("notice", notice);
-//        여기서 선언된 notice가 html에서 불러온다
         boardService.list(page, model);
     }
 
+    // 페이징 사용 조회순
+    @GetMapping("/notice/{sort}")
+    public void viewList(Integer page, Model model){
+        boardService.viewCnt(page, model);
+    }
 
     // 수정페이지
     @GetMapping("/update/{id}")

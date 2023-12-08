@@ -41,17 +41,24 @@
             <span class="float-start me-2">총 [[${cnt}]]개</span>
             <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
             <span class="float-end">
-                <form name="frmPageRows">
-                    <input type="hidden" name="page" th:value="${page}">
-                    <select class="form-select" name="pageRows">
-                        <option value="10" th:selected="${pageRows==10}">10</option>
-                        <option value="15" th:selected="${pageRows==15}">15</option>
-                        <option value="20" th:selected="${pageRows==20}">20</option>
-                        <option value="50" th:selected="${pageRows==50}">50</option>
-                    </select>
-                </form>
+        <form name="frmPageRows">
+            <input type="hidden" name="page" th:value="${page}">
+            <select class="form-select" name="pageRows">
+                <option value="10" th:selected="${pageRows==10}">10</option>
+                <option value="15" th:selected="${pageRows==15}">15</option>
+                <option value="20" th:selected="${pageRows==20}">20</option>
+                <option value="50" th:selected="${pageRows==50}">50</option>
+            </select>
+
+            <select class="form-select" name="sort">
+                <option value="latest" >최신순</option>
+                <option value="popular">조회순</option>
+            </select>
+        </form>
             </span>
         </div>
+
+
         <!-- 페이징 헤더 -->
 
         <!-- 목록 -->
@@ -73,7 +80,6 @@
                 <td><span th:text="${post.viewCnt}"></span></td>
                 <td><span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
             </tr>
-
             </tbody>
         </table>
         <!-- 목록 -->
