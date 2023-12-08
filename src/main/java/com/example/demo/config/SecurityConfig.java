@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/board/detail/**").authenticated()
                         .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**",
-                                "/countryinfo/search/**", "/openai/main/**"
+                                "/countryinfo/search/**"
                                 ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
