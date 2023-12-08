@@ -24,8 +24,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/countryinfo/search/**", "/openai/main/**", "/board/notice/**"
-                                        ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/board/detail/**").authenticated()
+                        .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**",
+                                "/countryinfo/search/**"
+                                ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
