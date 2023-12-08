@@ -38,7 +38,7 @@ public class UserController {
         this.userService = userService;
         this.memberValidator = memberValidator;
     }
-
+//
     @RequestMapping("/auth")
     @ResponseBody
     public Authentication auth() {
