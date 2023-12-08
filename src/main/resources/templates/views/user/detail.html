@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/user/detail.css}">
+    <script th:src="@{/js/user/detail.js}"></script>
+
+    <title>회원정보</title>
+
+</head>
+<body>
+<th:block th:insert="~{common/sidebar::sidebar}"/>
+
+<form th:action="@{/user/detail}" method="POST" id="detail">
+
+    <div id="modalbtn" class="modalbtn">
+        <div>
+            <input type="button" id="btn1" th:value="회원정보">
+        </div>
+
+        <div>
+            <input type="button" id="modalOpen1" th:value="친구관리">
+        </div>
+        <div>
+            <input type="button" id="modalOpen2" th:value="일정관리">
+        </div>
+        <div>
+            <input type="button" id="modalOpen3" th:value="발신알림">
+        </div>
+        <div>
+            <input type="button" id="modalOpen4" th:value="수신알림">
+        </div>
+    </div>
+ <div id="memberForm" class="memberForm">
+    <div id="memberInfo" class="memberInfo">
+        <h5>회원기본정보</h5>
+        <div class="name">
+            <label>이름:</label>
+            <div  class="col-12 text-danger" th:text="${errmsg}">
+            </div>
+        </div>
+        <div class="age">
+            <label>나이:</label>
+            <div class="col-12 text-danger" th:text="${errmsg}">
+            </div>
+        </div>
+        <div class="email">
+            <label>이메일:</label>
+            <div class="col-12 text-danger" th:text="${errmsg}">
+            </div>
+        </div>
+        <div class="phone">
+            <label>전화번호:</label>
+            <div class="col-12 text-danger" th:text="${errmsg}">
+            </div>
+        </div>
+        <div class="friends">
+            <label>친구목록:</label>
+            <div class="col-12 text-danger" th:text="${errmsg}">
+            </div>
+        </div>
+        <div class="schedule">
+            <label>일정관리:</label>
+            <div class="col-12 text-danger" th:text="${errmsg}">
+            </div>
+        </div>
+    </div>
+
+    <div class="postList">
+        <label>회원게시글목록</label>
+        <span class="name">
+            <label>제목</label>
+        </span>
+        <span class="name">
+            <label>작성일</label>
+        </span>
+        <span class="name">
+            <label>조회수</label>
+        </span>
+    </div>
+ </div>
+
+    <div class="modal" id="modal1">
+        <div class="modal-content">
+            <h2>친구관리</h2>
+            <p>친구내용</p>
+            <input type="button" class="close" onclick="closeModal('modal1')" th:value="닫기">
+        </div>
+    </div>
+    <div class="modal" id="modal2">
+        <div class="modal-content">
+            <h2>일정관리</h2>
+            <p>일정내용</p>
+            <input type="button" class="close" onclick="closeModal('modal2')" th:value="닫기">
+        </div>
+    </div>
+    <div class="modal" id="modal3">
+        <div class="modal-content">
+
+            <h2>발신알림</h2>
+            <p>발신내용</p>
+            <input type="button" class="close" onclick="closeModal('modal3')" th:value="닫기">
+        </div>
+    </div>
+    <div class="modal" id="modal4">
+        <div class="modal-content">
+            <h2>수신알림</h2>
+            <p>수신내용</p>
+            <input type="button" class="close" onclick="closeModal('modal4')" th:value="닫기">
+        </div>
+    </div>
+</form>
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
+<script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>

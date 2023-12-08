@@ -16,6 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -47,6 +48,9 @@ public class UserController {
     @RequestMapping("/test")
     public void test(Model model){}
 
+    @RequestMapping("/detail")
+    public void detail(Model model){}
+
     @GetMapping("/login")
     public void login(Model model){}
 
@@ -57,6 +61,8 @@ public class UserController {
 
     @GetMapping("/signup")
     public void signup(){}
+
+
 
 
 

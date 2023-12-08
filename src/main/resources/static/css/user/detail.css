@@ -1,0 +1,77 @@
+.active {
+    background-color: #5CFFD1;
+}
+
+
+.memberForm {
+    position: fixed;
+    top: 33%;
+    left: 45%;
+    transform: translate(-33%, -45%);
+    border: 1px solid #00498C;
+    background-color: #fff;
+    padding: 10px;
+    max-width: 30%;
+    max-height: 60%;
+    box-sizing: border-box;
+    box-shadow: 0 0 19px rgba(0,0,0,0.3);
+}
+
+.memberInfo, .postList {
+    height:50%;
+    border: 1px solid #adb5bd;
+}
+
+.postList {
+    margin-top: 2px;
+}
+
+.modalbtn {
+    position: fixed;
+    top: 28%;
+    left: 30%;
+    transform: translate(-28%, -30%);
+    box-sizing: border-box;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #00498C;
+    background-color: #fff;
+    padding: 10px;
+    max-width: 30%;
+    max-height: 60%;
+    box-sizing: border-box;
+    box-shadow: 0 0 19px rgba(0,0,0,0.3);
+
+}
+
+.modal-content {
+    height: 90%;
+
+
+}
+
+.close {
+    color: #aaa;
+    font-size: 15px;
+    font-weight: bold;
+    position: fixed;
+    bottom: 2%;
+    right: 10px;
+    max-height: 5%;
+}
+
+
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
