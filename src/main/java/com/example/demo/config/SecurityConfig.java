@@ -24,8 +24,10 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/countryinfo/search/**", "/openai/main/**", "/board/notice/**"
-                                        ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/board/detail/**").authenticated()
+                        .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**",
+                                "/countryinfo/search/**", "/openai/main/**"
+                                ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
@@ -52,7 +54,6 @@ public class SecurityConfig {
                 .build();
 
     }
-    //manager
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
