@@ -16,6 +16,7 @@ public class MvcConfig {
         return new BCryptPasswordEncoder();
     }
 
+
     @Configuration
     public static class LocalMvcConfiguration implements WebMvcConfigurer {
         @Value("${app.upload.path}")
@@ -33,4 +34,5 @@ public class MvcConfig {
                     .addResourceLocations("file:" + uploadDir + "/");
         }
     }
+
 }
