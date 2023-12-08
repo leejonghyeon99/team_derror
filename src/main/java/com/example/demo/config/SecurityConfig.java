@@ -1,8 +1,12 @@
 package com.example.demo.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.util.Instantiator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -10,25 +14,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
+
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // URL 과 접근권한 세팅(들)
-                        // ↓ /board/detail/** URL로 들어오는 요청은 '인증'만 필요.
                         .requestMatchers("/board/detail/**").authenticated()
-                        // ↓ "/board/write/**", "/board/update/**", "/board/delete/**" URL로 들어오는 요청은 '인증' 뿐 아니라 ROLE_MEMBER 나 ROLE_ADMIN 권한을 갖고 있어야 한다. ('인가')
-                        .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**").hasAnyRole("USER", "ADMIN")
-                        // ↓ 그 밖의 다른 요청은 모두 permit!
+                        .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**",
+                                "/countryinfo/search/**", "/openai/main/**"
+                                ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                 .loginPage("/user/login")
                 .loginProcessingUrl("/user/login")
                 .defaultSuccessUrl("/")
-                .successHandler(new SuccessHandler("/home"))
+                .successHandler(new SuccessHandler("/"))
                 .failureHandler(new FailureHandler())
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
@@ -36,10 +42,21 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/user/login")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
+
+                )
+                .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
+                        .loginPage("/user/login")
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(principalOauth2UserService)
+                        )
+
                 )
                 .build();
 
-
-
+    }
+    //manager
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
