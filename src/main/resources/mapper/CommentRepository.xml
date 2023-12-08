@@ -14,7 +14,7 @@
     <resultMap id="mapComment" type="com.example.demo.domain.board.Comment">
         <result column="c_id" property="id"/>
         <result column="c_content" property="content"/>
-        <result column="c_created_date" property="createdDate"/>
+        <result column="c_created_date" property="created_date"/>
         <result column="c_post_id" property="post_id"/>
         <collection property="member" resultMap="mapMember"/>
     </resultMap>
@@ -23,7 +23,7 @@
         SELECT
             c.id "c_id",
             c.content "c_content",
-            c.created_date "c_createdDate",
+            c.created_date "c_created_Date",
             c.post_id "c_post_id",
             m.id "m_id",
             m.username "m_username",
@@ -34,7 +34,7 @@
         FROM comment c, member m
         WHERE
             c.member_id = m.id
-          AND c.post_id = #{post.id}
+          AND c.post_id = #{post_id}
         ORDER BY c.id DESC
     </select>
 
@@ -42,7 +42,7 @@
             parameterType="com.example.demo.domain.board.Comment"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO comment(member_id, post_id, content)
-        VALUES(#{member.id}, #{post.id}, #{content})
+        VALUES(#{member.id}, #{post_id}, #{content})
     </insert>
 
     <delete id="deleteById" flushCache="true">

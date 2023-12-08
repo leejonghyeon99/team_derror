@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
         member.setUsername(member.getUsername().toUpperCase());
         member.setPassword(passwordEncoder.encode(member.getPassword()));
-        member.setAuth_id(1L);
+        member.setAuth_id(2L);  // 권한설정
         userRepository.save(member);
 
         return 1;
