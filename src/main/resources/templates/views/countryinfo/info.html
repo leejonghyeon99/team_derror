@@ -45,17 +45,17 @@
             console.error('데이터를 가져오는 중 오류 발생:', error);
         });
 
-    function detail(data, eventName) {
+    function detail(data) {
         const embedded = data._embedded;
         const events = embedded.events;
-        const venues = events._embedded.venues;
+        //const venues = events._embedded.venues;
 
-        const selectedEvent = events.find(event => event.name === eventName);
+        //const selectedEvent = events.find(event => event.name === eventName);
 
         const eventDetailElement = document.getElementById('eventDetail')
         let eventDt = `
             <p>${events.name}</p>
-            <p>${events.type}</p>
+
 
         `;
         eventDetailElement.innerHTML = eventDt;

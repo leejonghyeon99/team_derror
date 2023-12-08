@@ -14,10 +14,10 @@
             width: 470px;
         }
     </style>
-
 </head>
 <body>
-
+<th:block th:insert="~{common/sidebar::sidebar}"/>
+<div class="main-content">
 <h1>이벤트 정보 조회</h1>
 
 <label for="countryCode">국가 코드:</label>
@@ -31,11 +31,12 @@
 
 <button onclick="getEventInformation(0)">확인</button>
 <hr>
-
+<br>
 <div id="result"></div>
 <div id="paging"></div>
-
+</div>
 <script>
+
     let currentPage = 1;
     let totalPages;
     function getEventInformation(targetPage) {
@@ -62,6 +63,7 @@
             const embedded = data._embedded;
             const events = embedded.events;
             const page = data.page.number;
+            totalPages = data.page.totalPages;
 
 
             console.log(embedded);
@@ -91,7 +93,7 @@
             htmlString += `</div>`;
             resultElement.innerHTML = htmlString;
 
-            renderPagination();
+            renderPagination(totalPages);
         } // end list()
 
         function renderPagination() {
@@ -126,10 +128,11 @@
         function redirectToLoadInfo(eventName, venueName, cityName) {
             const params = new URLSearchParams({ eventName, venueName, cityName});
 
-            const cookie = `eventParams=${params}`;
-            window.location.href = `loadinfo.html?${params}`;
+            window.location.href = `info?${params}`;
         }
 
 </script>
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
+<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>

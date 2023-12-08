@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 @RequestMapping("/countryinfo")
 public class CountryController {
-    public static final String API_BASE_URL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*";
+    public static final String API_BASE_URL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*&size=21";
 
     public CountryController() {
         System.out.println("CountryController() 생성");
