@@ -5,6 +5,7 @@ import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.PostValidator;
 import com.example.demo.domain.board.U;
 import com.example.demo.service.board.BoardService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,16 +73,20 @@ public class BoardController {
     }
 
     // 페이징 사용 최신순
-    @GetMapping("/notice/{sort}")
-    public void list(Integer page, Model model){
+    @GetMapping("/notice")
+    public void list(String sort, Integer page, Model model){
+        System.out.println(sort);
         boardService.list(page, model);
+
     }
 
-    // 페이징 사용 조회순
-    @GetMapping("/notice/{sort}")
-    public void viewList(Integer page, Model model){
-        boardService.viewCnt(page, model);
+    @GetMapping("/notice/desc")
+    public String listDesc(Integer page,String sort, Model model){
+        System.out.println(sort);
+        boardService.listDescByViewCnt(page, model);
+        return "board/notice";
     }
+
 
     // 수정페이지
     @GetMapping("/update/{id}")

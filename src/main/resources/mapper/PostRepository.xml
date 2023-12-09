@@ -64,11 +64,6 @@
         ORDER BY p.id DESC
     </select>
 
-    <select id="findViewCnt" resultMap="mapPost">
-        <include refid="SELECT_BASE"/>
-        ORDER BY p.view_cnt DESC
-    </select>
-
     <update id="update" flushCache="true" parameterType="com.example.demo.domain.board.Post">
         UPDATE post
         SET title = #{title}, content = #{content}
@@ -84,6 +79,13 @@
         ORDER BY p.id DESC
         LIMIT #{param1}, #{param2}
     </select>
+
+    <select id="selectFromRowByViewCnt" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        ORDER BY p.view_cnt DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
 
     <select id="countAll" resultType="int">
         SELECT count(*) FROM post

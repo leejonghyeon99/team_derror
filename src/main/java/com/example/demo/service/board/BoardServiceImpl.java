@@ -220,7 +220,7 @@ public class BoardServiceImpl implements BoardService {
 
         // 현재 페이지 번호 -> session 에 저장
         session.setAttribute("page", page);
-
+        session.setAttribute("sort", "id");
         long cnt = postRepository.countAll();   // 글 목록 전체의 개수
         int totalPage = (int)Math.ceil(cnt / (double)pageRows);   // 총 몇 '페이지' ?
 
@@ -250,7 +250,7 @@ public class BoardServiceImpl implements BoardService {
         } else {
             page = 0;
         }
-
+        model.addAttribute("sort","id");
         model.addAttribute("cnt", cnt);  // 전체 글 개수
         model.addAttribute("page", page); // 현재 페이지
         model.addAttribute("totalPage", totalPage);  // 총 '페이지' 수
@@ -266,12 +266,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Post> viewCnt() {
-        return postRepository.findViewCnt();
-    }
-    @Override
-    public List<Post> viewCnt(Integer page, Model model) {
-        // 현재 페이지 parameter
+    public List<Post> listDescByViewCnt(Integer page, Model model) {
         if(page == null) page = 1;  // 디폴트는 1page
         if(page < 1) page = 1;
 
@@ -286,7 +281,7 @@ public class BoardServiceImpl implements BoardService {
 
         // 현재 페이지 번호 -> session 에 저장
         session.setAttribute("page", page);
-
+        session.setAttribute("sort", "view");
         long cnt = postRepository.countAll();   // 글 목록 전체의 개수
         int totalPage = (int)Math.ceil(cnt / (double)pageRows);   // 총 몇 '페이지' ?
 
@@ -295,7 +290,7 @@ public class BoardServiceImpl implements BoardService {
         int endPage = 0;
 
         // 해당 페이지의 글 목록
-        List<Post> viewCnt = null;
+        List<Post> list = null;
 
         if(cnt > 0){  // 데이터가 최소 1개 이상 있는 경우만 페이징
             //  page 값 보정
@@ -310,12 +305,13 @@ public class BoardServiceImpl implements BoardService {
             if (endPage >= totalPage) endPage = totalPage;
 
             // 해당페이지의 글 목록 읽어오기
-            viewCnt = postRepository.selectFromRow(fromRow, pageRows);
+            list = postRepository.selectFromRowByViewCnt(fromRow, pageRows);
 
-            model.addAttribute("notice", viewCnt);
+            model.addAttribute("notice", list);
         } else {
             page = 0;
         }
+        model.addAttribute("sort","view");
 
         model.addAttribute("cnt", cnt);  // 전체 글 개수
         model.addAttribute("page", page); // 현재 페이지
@@ -328,7 +324,7 @@ public class BoardServiceImpl implements BoardService {
         model.addAttribute("startPage", startPage);  // [페이징] 에 표시할 시작 페이지
         model.addAttribute("endPage", endPage);   // [페이징] 에 표시할 마지막 페이지
 
-        return viewCnt;
+        return list;
     }
 
     @Override
@@ -405,5 +401,8 @@ public class BoardServiceImpl implements BoardService {
         }
         return result;
     }
+
+
+
 }
 

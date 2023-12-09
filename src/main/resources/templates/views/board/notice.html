@@ -51,8 +51,8 @@
             </select>
 
             <select class="form-select" name="sort">
-                <option value="latest" >최신순</option>
-                <option value="popular">조회순</option>
+                <option name="sortVal" value="id" th:selected="${sort eq 'id'}">최신순</option>
+                <option name="sortVal" value="viewCnt" th:selected="${sort eq 'view'}">조회순</option>
             </select>
         </form>
             </span>
@@ -72,15 +72,25 @@
                 <th>작성일</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="post : ${notice}">
+            <tbody id="th_body">
+            <tr th:if="${notice}" th:each="post : ${notice}">
                 <td><span th:text="${post.id}"></span></td>
-                <td><span><a th:href="@{'/board/detail/' + ${post.id}}" th:text="${post.title}">Hello</a></span></td>
+                <td><span><a th:href="@{'/board/detail/' + ${post.id}}" th:text="${post.title}"></a></span></td>
                 <td><span th:text="${post.member.username}"></span></td>
                 <td><span th:text="${post.viewCnt}"></span></td>
                 <td><span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
             </tr>
             </tbody>
+<!--            <tbody id="rest_body">-->
+<!--&lt;!&ndash;                <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td><span></span>#</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td><span></span>제목</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td><span></span>작성자</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td><span></span>조회수</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <td><span></span>작성일</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
+<!--            </tbody>-->
+
         </table>
         <!-- 목록 -->
 
@@ -89,6 +99,7 @@
     <!-- pagination -->
     <th:block th:insert="~{board/pagination::pagination}"></th:block>
 </div>
+
 
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>

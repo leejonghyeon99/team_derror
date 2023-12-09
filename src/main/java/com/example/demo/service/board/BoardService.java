@@ -24,10 +24,7 @@ public interface BoardService {
 
     List<Post> list(Integer page, Model model);
 
-    List<Post> viewCnt();
-
-    List<Post> viewCnt(Integer page, Model model);
-
+    List<Post> listDescByViewCnt(Integer page, Model model);
 
     Post selectById(Long id);
 
