@@ -16,10 +16,6 @@
 <body>
 <th:block th:insert="~{common/sidebar::sidebar}"/>
 <div class="main-content">
-    <!-- 로딩 페이지 -->
-    <div id="loadingOverlay">
-        <i id="loadingSpinner" class="fa fa-spinner fa-spin"></i>
-    </div>
 
     <div id="backgroundSlideshow">
         <img th:src="@{/img/축제.jpg}" alt="Slide 1" class="active" loading="lazy">
@@ -34,7 +30,9 @@
             <img th:src="@{/img/메인글귀.png}" alt="Main_Text">
         </div>
     </div>
+
 </div>
+
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>
 </body>

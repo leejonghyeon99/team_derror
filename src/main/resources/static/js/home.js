@@ -2,21 +2,11 @@ $(document).ready(function () {
     startSlideshow();
 });
 
-function showLoadingOverlay() {
-    var loadingOverlay = $('<div id="loadingOverlay"><i id="loadingSpinner" class="fa fa-spinner fa-spin"></i></div>');
-    $('body').append(loadingOverlay);
-}
-
-function hideLoadingOverlay() {
-    $('#loadingOverlay').remove();
-}
-
 function startSlideshow() {
     // 이미지가 로딩될 때마다 이벤트 핸들러 등록
     $('#backgroundSlideshow img').on('load', function () {
         // 첫 번째 이미지가 로딩되면 로딩 페이지 숨김
         if ($(this).is(':first-child')) {
-            hideLoadingOverlay();
         }
     });
 
