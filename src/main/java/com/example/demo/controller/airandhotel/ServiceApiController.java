@@ -50,7 +50,6 @@ public class ServiceApiController {
     @PostMapping("/airport")
     public ResponseEntity<List<Items>> airport(@RequestBody Map<String, String> requestBody) {
         String code = requestBody.get("code");
-        System.out.println(code);
 
         // code 값을 이용하여 작업 수행
         List<Items> airPortList = airPortService.airportInfo(code);
