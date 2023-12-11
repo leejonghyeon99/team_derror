@@ -73,7 +73,7 @@
             </tr>
             </thead>
             <tbody id="th_body">
-            <tr th:if="${notice}" th:each="post : ${notice}">
+            <tr th:each="post : ${notice}" th:unless="${post.category == 'notice'}">
                 <td><span th:text="${post.id}"></span></td>
                 <td><span><a th:href="@{'/board/detail/' + ${post.id}}" th:text="${post.title}"></a></span></td>
                 <td><span th:text="${post.member.username}"></span></td>
@@ -81,16 +81,6 @@
                 <td><span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
             </tr>
             </tbody>
-<!--            <tbody id="rest_body">-->
-<!--&lt;!&ndash;                <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td><span></span>#</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td><span></span>제목</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td><span></span>작성자</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td><span></span>조회수</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <td><span></span>작성일</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                </tr>&ndash;&gt;-->
-<!--            </tbody>-->
-
         </table>
         <!-- 목록 -->
 
@@ -98,6 +88,11 @@
 
     <!-- pagination -->
     <th:block th:insert="~{board/pagination::pagination}"></th:block>
+
+    <form id="searchForm">
+        <input type="text" id="searchInput" name="query" placeholder="검색어를 입력하세요">
+        <button type="submit">검색</button>
+    </form>
 </div>
 
 

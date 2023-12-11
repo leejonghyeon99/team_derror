@@ -33,4 +33,6 @@ public interface BoardService {
                Long[] delfile);
 
     int deleteById(Long id);
+
+    List<Post> searchByTitle(String keyword);
 } // end Service

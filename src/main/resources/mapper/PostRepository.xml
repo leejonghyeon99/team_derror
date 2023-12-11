@@ -90,4 +90,19 @@
     <select id="countAll" resultType="int">
         SELECT count(*) FROM post
     </select>
+
+    <select id="findByTitle" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        WHERE p.title like concat('%', #{keyword},'%')
+        ORDER BY p.id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
+
+    <select id="searchResultCnt" resultMap="mapPost">
+        SELECT count(*)
+        FROM post p
+        WHERE p.title LIKE concat('%', #{keyword}, '%')
+        ORDER BY p.id DESC
+        LIMIT #{param1}, #{param2}
+    </select>
 </mapper>

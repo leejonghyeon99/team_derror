@@ -402,6 +402,11 @@ public class BoardServiceImpl implements BoardService {
         return result;
     }
 
+    @Override
+    public List<Post> searchByTitle(String keyword) {
+        // 제목을 기준으로 검색하여 결과 반환 (가정: Post 엔터티의 title 필드로 검색)
+        return postRepository.findByTitle(keyword);
+    }
 
 
 }
