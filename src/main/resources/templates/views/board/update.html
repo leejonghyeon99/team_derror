@@ -6,7 +6,7 @@
   history.back();
 </script>
 
-
+<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.member}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,7 +80,7 @@
 
       <!-- 하단 링크 -->
       <div class="d-flex">
-        <button type="submit" class="btn btn-outline-dark">수정완료</button>
+        <button type="submit" class="btn btn-outline-dark" th:if="${logged_user.id == post.member.id}">수정완료</button>
         <button type="button" class="btn btn-outline-dark ms-1" onclick="history.back()">이전으로</button>
         <a class="btn btn-outline-dark ms-1" onclick="history.back()">목록</a>
       </div>

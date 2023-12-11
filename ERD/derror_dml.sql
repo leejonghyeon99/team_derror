@@ -13,6 +13,8 @@ select * from post;
 insert into post (member_id, category, title, content)
 values (2,'testcategory','testtitle','testcontent');
 
+INSERT INTO comment (member_id, post_id, comment_id, content)
+VALUES (4, 1, 4, '이거봐라');
 
 
 

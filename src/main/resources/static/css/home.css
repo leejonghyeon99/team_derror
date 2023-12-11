@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+}
+
+#backgroundSlideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+#backgroundSlideshow img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+#backgroundSlideshow img.active {
+    opacity: 0.7;
+}
+
+.content-container {
+    position: fixed;
+    top: 45%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.content img {
+    background-color: rgba(255, 255, 255, 0);
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#brightImage {
+filter: brightness(70%); /* 밝기 조절 값 (0%부터 100%까지) */
+}

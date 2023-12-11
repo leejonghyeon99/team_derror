@@ -24,6 +24,7 @@ public interface BoardService {
 
     List<Post> list(Integer page, Model model);
 
+    List<Post> listDescByViewCnt(Integer page, Model model);
 
     Post selectById(Long id);
 
@@ -32,4 +33,6 @@ public interface BoardService {
                Long[] delfile);
 
     int deleteById(Long id);
+
+    List<Post> searchByTitle(String keyword);
 } // end Service
