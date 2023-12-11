@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.*;
 
 
-
 /**
  * @author 종선
  */
@@ -20,12 +19,16 @@ import java.util.*;
 @RequestMapping("/countryinfo")
 public class CountryController {
     public static final String API_BASE_URL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*&size=21";
+    //public static final String API_BASE_URLE = "https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&id=G5v0Z9Yc3DYBk&locale=*&countryCode=US";
+
+    public static final String API_BASE_URLA = "https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*";
 
     public CountryController() {
         System.out.println("CountryController() 생성");
     }
+
     @GetMapping("/search")
-    public void search(Model model){
+    public void search(Model model) {
 
         Map<String, String> codeMap = Arrays.stream(CountryCode.values()).collect(
                 HashMap::new,
@@ -39,39 +42,45 @@ public class CountryController {
         );
         model.addAttribute("codes", codeMap);
         model.addAttribute("classifications", classMap);
-    };
+    }; // end search
 
     //https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*&countryCode=US
 
+
     @GetMapping("/list")
     @ResponseBody
-        public CountryInfo list(@RequestParam String countryCode, @RequestParam(defaultValue = "1") Integer page, @RequestParam String classificationName) {
-        String apiUrl = API_BASE_URL + "&countryCode=" + countryCode + "&page=" + page + "&classificationName=" + classificationName;
-
+    public CountryInfo list(@RequestParam String countryCode, @RequestParam(defaultValue = "1") Integer page, @RequestParam String classificationName) {
+        String apiUrl = API_BASE_URL     + "&countryCode=" + countryCode + "&page=" + page + "&classificationName=" + classificationName;
         System.out.println(apiUrl);
 
         RestTemplate restTemplate = new RestTemplate();
         CountryInfo countryInfo = restTemplate.getForObject(apiUrl, CountryInfo.class);
 
-            countryInfo.getEmbedded().getEvents().forEach(events -> events.getId());
-            System.out.println(countryInfo.getPage().getTotalPages());
-            System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
-            System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
-            System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
+        countryInfo.getEmbedded().getEvents().forEach(events -> events.getId());
+        System.out.println(countryInfo.getPage().getTotalPages());
+        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
+        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
+        System.out.println(countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
 
 //        countryInfo.getEmbedded().getEvents().stream().reduce( (e,v) -> {
 //
 //            return null;
 //        });
 
-            return countryInfo;
-    }
-    @GetMapping("/info")
-    @ResponseBody
-    public void info(
-            @RequestParam(name = "eventName", required = false) String eventName,
-            @RequestParam(name = "venueName", required = false) String venueName,
-            @RequestParam(name = "cityName", required = false) String cityName
-    ){};
+        return countryInfo;
+    } // end CountryInfo
 
-}
+    @GetMapping("/info")
+    public void info(@RequestParam String eventId, Model model) {
+        String apiUrl = API_BASE_URLA + "&id=" + eventId;
+        System.out.println(apiUrl);
+
+        RestTemplate restTemplate = new RestTemplate();
+        CountryInfo countryInfo = restTemplate.getForObject(apiUrl, CountryInfo.class);
+
+
+        model.addAttribute("info", countryInfo.getEmbedded().getEvents().get(0));
+    }
+
+
+} // end countryController
