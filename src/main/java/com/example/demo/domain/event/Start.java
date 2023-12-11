@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class Start {
     private String localDate;
     private String localTime;
-    private String dateTime;
 }

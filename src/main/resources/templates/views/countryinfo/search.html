@@ -22,8 +22,8 @@
 
 
 <label for="countryCode">국가 코드:</label>
-    <select id="countryCode" placeholder="국가코드를 입력하세요" required>
-        <option>국가코드를 선택하세요</option>
+    <select id="countryCode">
+        <option>선택하세요</option>
         <option th:each="code : ${codes}" th:value="${code.key}">
             <span th:text="${code.value}"></span>
         </option>
@@ -43,6 +43,7 @@
 
 <hr>
 <br>
+
 <div id="result"></div>
 <div id="paging"></div>
 </div>
@@ -55,7 +56,10 @@
         const classificationName = document.getElementById('classification').value;
         const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}`;
         console.log(apiUrl)
-
+        // if (!countryCode) {
+        //     alert('국가 코드를 선택하세요.');
+        //     return;
+        // }
         // API 요청
         fetch(apiUrl)
             .then(response => response.json())
@@ -63,12 +67,12 @@
                 if (data && data._embedded && data._embedded.events) {
                     if (data._embedded.events.length === 0) {
                         // 이벤트 목록이 없을 때의 처리
-                        alert('이벤트가 없습니다.');
+                        alert('적절한 이벤트가 없습니다.');
                     } else {
                         list(data)
                     }
                 }else {
-                    alert('적절한 이벤트가 없습니다')
+                    alert('국가 코드를 선택하세요')
                 }
             })
             .catch(error => {
@@ -90,23 +94,25 @@
             const resultElement = document.getElementById('result');
             let htmlString = `<div class="card-container row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">`
             for (var event of events) {
-                if (event._embedded && event._embedded.venues) {
-                    const venues = event._embedded.venues;
-                for (var venue of venues) {
+                for (var venue of event._embedded.venues) {
                     var imageUrl = event.images.find(image => image.url.includes('TABLET_LANDSCAPE_3_2'));
                     htmlString += `
-                        <div class="col event-card" onclick="redirectToLoadInfo('${event.name}', '${venue.name}', '${venue.city.name}')">
+                        <div class="col event-card" onclick="redirectToLoadInfo()">
+                            <form id="getDetailEvent" action="http://localhost:8080/countryinfo/info">
+                                <input id="eventId" type="hidden" name="eventId" value="${event.id}">
+
+                            </form>
                             <div class="card h-100">
                                 <img src="${imageUrl ? imageUrl.url : event.images[0].url}" width="455" height="350" style="max-width: 100%; max-height: 100%;">
                                 <div class="card-body">
                                     <p><strong>이벤트 제목:</strong> ${event.name}</p>
                                     <p><strong>장소 이름:</strong> ${venue.name}</p>
                                     <p><strong>도시 이름:</strong> ${venue.city.name}</p>
+                                    <p><strong>현지 시간:</strong> ${event.dates.start.localDate} ${event.dates.start.localTime  ? event.dates.start.localTime : ''}</p>
                                 </div>
                             </div>
                         </div>
             `;
-                }
                 }
             }
             htmlString += `</div>`;
@@ -144,21 +150,16 @@
                 getEventInformation(targetPage -1)
             }
         } // end changePage
-    function redirectToLoadInfo(event) {
+    function redirectToLoadInfo() {
         // 이벤트의 상세 정보를 전달
-        const eventDetails = {
-            eventName: event.name,
-            venueName: event._embedded.venues[0].name,
-            cityName: event._embedded.venues[0].city.name
-        };
-        // URL에 쿼리 매개변수 추가
-        const params = new URLSearchParams(eventDetails);
-        const infoUrl = `info?${params}`;
-        // info 페이지로 이동
-        window.location.href = infoUrl;
+        let event = document.getElementById("getDetailEvent");
+        let eventId = document.getElementById("eventId");
+        console.log(eventId.value);
+        event.submit();
+
     }
-
-
+    //
+    // <input id="countyCode" type="hidden" name="countryCode" value="${countryCode}">
 </script>
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>
