@@ -16,5 +16,8 @@ values (2,'testcategory','testtitle','testcontent');
 INSERT INTO comment (member_id, post_id, comment_id, content)
 VALUES (4, 1, 4, '이거봐라');
 
-
+select * from member;
+select * from post;
+select * from post where post.member_id in (3,4,5);
+SELECT count(distinct p.id) FROM member m join post p on m.auth_id = 2 and p.title like concat('%','권','%');
 

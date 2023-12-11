@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="serchform">
+
+    <form th:action="@{search}" method="GET">
+        <input type="text" name="keyword" placeholder="검색어를 입력하세요">
+        <button type="submit">검색</button>
+    </form>
+
+
+</th:block>
+</html>

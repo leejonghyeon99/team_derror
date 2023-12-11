@@ -34,5 +34,5 @@ public interface BoardService {
 
     int deleteById(Long id);
 
-    List<Post> searchByTitle(String keyword);
+    List<Post> serchByList(String keyword, Integer page, Model model);
 } // end Service
