@@ -13,6 +13,10 @@
     <title>작성</title>
 </head>
 <body>
+/* 인증 헤더 */
+<th:block th:insert="~{common/sidebar::sidebar}"/>
+
+<div class="container mt-3" th:with="user=${#authentication.getPrincipal().getMember()}">
 
 <div class="container mt-3" >
     <h2>작성</h2>
@@ -25,6 +29,7 @@
         <div class="my-3">
             <label for="title">제목: </label>
             <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title" th:value="${title}">
+            <span class="text-danger" th:if="${error_title}" th:utext="${error_title}"></span>
         </div>
 
         <div class="my-3">

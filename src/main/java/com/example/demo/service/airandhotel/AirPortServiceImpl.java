@@ -21,7 +21,7 @@ public class AirPortServiceImpl implements AirPortService {
         URI uri = UriComponentsBuilder
                 .fromUriString(baseUri)
                 .queryParam("serviceKey", apiKey)
-                .queryParam("numOfRows", 200)
+                .queryParam("numOfRows", 500)
                 .queryParam("lang", "K")
                 .queryParam("airport", code)
                 .queryParam("type", "json")

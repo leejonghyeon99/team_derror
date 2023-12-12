@@ -21,33 +21,44 @@
 <body>
 /* 인증 헤더 */
 <th:block th:insert="~{common/sidebar::sidebar}"/>
-<div class="main-content">
 
+<div class="main-content">
     <div class="container mt-3">
         <h2>공지사항</h2>
         <hr>
-
-        <div class="row">
-            <div class="col-12">
-                <a class="btn btn-outline-dark" th:href="@{/board/write}">작성</a>
-            </div>
+        <div sec:authorize="isAuthenticated()">
+            <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <div class="row">
+                    <div class="col-12">
+                        <a class="btn btn-outline-dark" th:href="@{/board/write}" th:class="writeButton">작성</a>
+                    </div>
+                </div>
+            </th:block>
         </div>
+
         <!-- 페이징 헤더 -->
         <div class="mb-3 mt-3 clearfix">
             <span class="float-start me-2">총 [[${cnt}]]개</span>
             <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
             <span class="float-end">
-                <form name="frmPageRows">
-                    <input type="hidden" name="page" th:value="${page}">
-                    <select class="form-select" name="pageRows">
-                        <option value="10" th:selected="${pageRows==10}">10</option>
-                        <option value="15" th:selected="${pageRows==15}">15</option>
-                        <option value="20" th:selected="${pageRows==20}">20</option>
-                        <option value="50" th:selected="${pageRows==50}">50</option>
-                    </select>
-                </form>
+        <form name="frmPageRows">
+            <input type="hidden" name="page" th:value="${page}">
+            <select class="form-select" name="pageRows">
+                <option value="10" th:selected="${pageRows==10}">10</option>
+                <option value="15" th:selected="${pageRows==15}">15</option>
+                <option value="20" th:selected="${pageRows==20}">20</option>
+                <option value="50" th:selected="${pageRows==50}">50</option>
+            </select>
+
+            <select class="form-select" name="sort">
+                <option name="sortVal" value="id" th:selected="${sort eq 'id'}">최신순</option>
+                <option name="sortVal" value="viewCnt" th:selected="${sort eq 'view'}">조회순</option>
+            </select>
+        </form>
             </span>
         </div>
+
+
         <!-- 페이징 헤더 -->
 
         <!-- 목록 -->
@@ -61,15 +72,14 @@
                 <th>작성일</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="post : ${notice}">
+            <tbody id="th_body">
+            <tr th:each="post : ${notice}" th:unless="${post.category == 'notice'}">
                 <td><span th:text="${post.id}"></span></td>
-                <td><span><a th:href="@{'/board/detail/' + ${post.id}}" th:text="${post.title}">Hello</a></span></td>
+                <td><span><a th:href="@{'/board/detail/' + ${post.id}}" th:text="${post.title}"></a></span></td>
                 <td><span th:text="${post.member.username}"></span></td>
                 <td><span th:text="${post.viewCnt}"></span></td>
                 <td><span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
             </tr>
-
             </tbody>
         </table>
         <!-- 목록 -->
@@ -78,7 +88,13 @@
 
     <!-- pagination -->
     <th:block th:insert="~{board/pagination::pagination}"></th:block>
+
+    <form id="searchForm">
+        <input type="text" id="searchInput" name="query" placeholder="검색어를 입력하세요">
+        <button type="submit">검색</button>
+    </form>
 </div>
+
 
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>

@@ -24,6 +24,8 @@ public class Comment {
     @JsonIgnore // JSON 변환 시 제외하는 필드
     private Long post_id;// 어느글의 댓글(FK)
 
+    private Long comment_id; // 부모 댓글 아이디
+
     private String content; // 댓글 내용
 
     // java.time.* 객체 변환을 위한 annotation  들
