@@ -1,16 +1,15 @@
 package com.example.demo.domain.event;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Images {
-    private String url;
-    private Integer width;
-    private Integer height;
+public class Attractions {
+    private List<Classifications> classifications;
 }

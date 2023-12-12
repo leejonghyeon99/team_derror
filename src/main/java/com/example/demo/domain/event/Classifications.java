@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Images {
-    private String url;
-    private Integer width;
-    private Integer height;
+public class Classifications {
+    private Map<String, String> segment;
+    private Map<String, String> genre;
+    private Map<String, String> subGenre;
 }

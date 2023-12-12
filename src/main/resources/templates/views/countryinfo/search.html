@@ -47,8 +47,8 @@
 <div id="result"></div>
 <div id="paging"></div>
 </div>
-<script>
 
+<script>
     let currentPage = 1;
     let totalPages;
     function getEventInformation(targetPage) {
@@ -56,24 +56,12 @@
         const classificationName = document.getElementById('classification').value;
         const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}`;
         console.log(apiUrl)
-        // if (!countryCode) {
-        //     alert('국가 코드를 선택하세요.');
-        //     return;
-        // }
+
         // API 요청
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
-                if (data && data._embedded && data._embedded.events) {
-                    if (data._embedded.events.length === 0) {
-                        // 이벤트 목록이 없을 때의 처리
-                        alert('적절한 이벤트가 없습니다.');
-                    } else {
-                        list(data)
-                    }
-                }else {
-                    alert('국가 코드를 선택하세요')
-                }
+                list(data)
             })
             .catch(error => {
                 console.error('데이터를 가져오는 중 오류 발생:', error);
@@ -85,7 +73,6 @@
             const page = data.page.number;
             totalPages = data.page.totalPages;
 
-
             console.log(embedded);
             console.log(events);
             console.log(totalPages);
@@ -96,11 +83,11 @@
             for (var event of events) {
                 for (var venue of event._embedded.venues) {
                     var imageUrl = event.images.find(image => image.url.includes('TABLET_LANDSCAPE_3_2'));
+                    const eventId = event.id;
                     htmlString += `
-                        <div class="col event-card" onclick="redirectToLoadInfo()">
-                            <form id="getDetailEvent" action="http://localhost:8080/countryinfo/info">
-                                <input id="eventId" type="hidden" name="eventId" value="${event.id}">
-
+                        <div class="col event-card" onclick="redirectToLoadInfo(this)">
+                            <form class="getDetailEvent" action="http://localhost:8080/countryinfo/info">
+                                <input class="eventId" type="hidden" name="eventId" value="${eventId}">
                             </form>
                             <div class="card h-100">
                                 <img src="${imageUrl ? imageUrl.url : event.images[0].url}" width="455" height="350" style="max-width: 100%; max-height: 100%;">
@@ -150,16 +137,23 @@
                 getEventInformation(targetPage -1)
             }
         } // end changePage
-    function redirectToLoadInfo() {
-        // 이벤트의 상세 정보를 전달
-        let event = document.getElementById("getDetailEvent");
-        let eventId = document.getElementById("eventId");
-        console.log(eventId.value);
-        event.submit();
+
+    function redirectToLoadInfo(clickedElement) {
+        const eventIdInput = clickedElement.querySelector('.eventId');
+        console.log(eventIdInput.value);
+        // 나머지 동작 수행
+        clickedElement.querySelector('.getDetailEvent').submit();
 
     }
-    //
-    // <input id="countyCode" type="hidden" name="countryCode" value="${countryCode}">
+
+    // function redirectToLoadInfo() {
+    //     // 이벤트의 상세 정보를 전달
+    //     const event = document.getElementsByClassName("getDetailEvent")
+    //     const eventId = document.getElementsByClassName("eventId")
+    //     console.log(eventId);
+    //     event.submit();
+    // }
+
 </script>
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>
