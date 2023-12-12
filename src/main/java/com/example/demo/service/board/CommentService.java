@@ -13,4 +13,5 @@ public interface CommentService {
     // 특정 댓글(id) 삭제
     QryResult delete(Long id);
 
+    QryResult replyWrite(Long postId, Long parentId, Long userId, String content);
 }

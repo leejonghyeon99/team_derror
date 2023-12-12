@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 
 
 <th:block th:fragment="comment">
@@ -10,47 +11,42 @@
         <div class="mb-3 mt-3">
             <label>댓글: <span id="cmt_cnt"></span> 개</label>
 
+                <input type="text" class="form-control" id="input_comment">
+                <button type="button" class="btn btn-outline-primary" id="btn_comment">작성</button>
 
             <table class="table table-hover mt-3" id="cmt_table">
                 <thead>
                 <tr>
                     <th style="width: 16.66%">작성자</th>
                     <th>내용</th>
+                    <th></th> <!-- 여기에 답글 버튼을 넣을 공간 -->
                     <th style="width: 16.66%">작성일</th>
                 </tr>
                 </thead>
                 <tbody id="cmt_list">
-                <!-- 각 댓글 아이템 -->
-                <tr class="comment-item">
-                    <td>작성자명</td>
+                <!-- 각 댓글 행에 답글 버튼 공간 추가 -->
+                <tr>
+                    <td>대댓글 작성자</td>
+                    <td>내용</td>
                     <td>
-                        <!-- 댓글 내용 -->
-                        <span class="comment-content">댓글 내용</span>
-                        <!-- 대댓글 작성 버튼 -->
-                        <button class="btn-reply">답글 달기</button>
-                        <!-- 대댓글 입력 폼 -->
-                        <div class="reply-form">
-                            <button class="btn-submit-reply">등록</button>
-                        </div>
-                        <!-- 대댓글 목록 -->
-                        <div class="replies" style="margin-left: 20px;">
-                            <!-- 대댓글 아이템 -->
-                            <div class="reply-item">
-                                <div class="reply-header">
-                                    <span class="reply-author">작성자명</span>
-                                    <span class="reply-date">작성일자</span>
-                                </div>
-                                <div class="reply-content">대댓글 내용</div>
-                            </div>
-                            <!-- 대댓글 아이템 반복 -->
-                        </div>
+                        <!-- 답글 버튼 -->
+                        <button class="btn btn-sm btn-outline-primary reply-btn" style="display: none;">답글</button>
                     </td>
-                    <td>작성일자</td>
+                    <td>작성일</td>
                 </tr>
-                <!-- 각 댓글 아이템 반복 -->
+                <!-- 다른 댓글들도 유사한 방식으로 추가 -->
                 </tbody>
-
             </table>
+
+            <!-- 대댓글 작성란 -->
+            <div class="mt-3">
+                <button type="button" id="recommentButton">답글</button>
+                <div class="recommentForm" style="display: none;">
+                    <input type="text" class="form-control" id="recomment">
+                    <button type="button">작성</button>
+                </div>
+            </div>
+
         </div>
     </div>
 

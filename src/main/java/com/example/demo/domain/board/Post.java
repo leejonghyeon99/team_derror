@@ -31,5 +31,6 @@ public class Post {
     @Builder.Default
     private List<Attachment> fileList = new ArrayList<>();
 
+    private String keyword;
 
 }
