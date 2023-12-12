@@ -24,6 +24,8 @@ public interface BoardService {
 
     List<Post> list(Integer page, Model model);
 
+    List<Post> findByUserName(String username);
+
     List<Post> listDescByViewCnt(Integer page, Model model);
 
     Post selectById(Long id);
@@ -34,5 +36,5 @@ public interface BoardService {
 
     int deleteById(Long id);
 
-    List<Post> searchByTitle(String keyword);
+    List<Post> serchByList(String keyword, Integer page, Model model);
 } // end Service

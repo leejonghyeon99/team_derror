@@ -76,7 +76,30 @@ public class CommentServiceImpl implements CommentService {
 
         return result;
     }
-}
+
+    @Override
+    public QryResult replyWrite(Long postId, Long parentId, Long memberId, String content) {
+        Member member = userRepository.findId(memberId);
+        System.out.println("comment test: ");
+        Comment reply = Comment.builder()
+                .comment_id(parentId)
+                .member(member)
+                .content(content)
+                .post_id(postId)
+                .build();
+
+        commentRepository.save(reply);
+
+        QryResult result = QryResult.builder()
+                .count(1)
+                .status("OK")
+                .build();
+
+
+        return result;
+    }
+
+}// end serviceimpl
 
 
 
