@@ -88,10 +88,8 @@ public class BoardController {
 
     // 공유 최신순
     @GetMapping("/share")
-    public void share(String sort, Integer page, Model model){
-        System.out.println(sort);
+    public void share(Integer page, Model model){
         boardService.list(page, model);
-
     }
 
     // 페이징 - pageRows 변경시 동작
@@ -150,9 +148,9 @@ public class BoardController {
     }
 
 
+    // 검색창
     @GetMapping("/search")
     public String getSerchList(String keyword,Integer page, Model model){
-        System.out.println("서어어어어치");
         boardService.serchByList(keyword,page,model);
         return "board/notice";
 

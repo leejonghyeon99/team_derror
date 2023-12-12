@@ -443,13 +443,15 @@ public class BoardServiceImpl implements BoardService {
 
             // 해당페이지의 글 목록 읽어오기
             if (keyword == null || keyword.trim().isEmpty()) {
-                return null; // 빈 리스트 반환
+                model.addAttribute("noSearchResults", true);
+
             } else {
-                list = postRepository.findByList(keyword,fromRow, pageRows); // 게시글 제목으로 검색하여 결과 반환
+                list = postRepository.findByList(keyword,fromRow, pageRows);
             }
             model.addAttribute("notice", list);
         } else {
             page = 0;
+            model.addAttribute("noSearchResults", true);
         }
         model.addAttribute("sort","id");
         model.addAttribute("cnt", cnt);  // 전체 글 개수

@@ -91,25 +91,6 @@
     </select>
 
 
-<!--    <select id="findByTitle" resultMap="mapPost">-->
-<!--        <include refid="SELECT_BASE"/>-->
-<!--        <where>-->
-<!--            <if test="keyword != null and keyword != ''">-->
-<!--                AND p.title LIKE CONCAT('%', #{keyword}, '%')-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
-
-<!--    <select id="findCnt" resultType="java.lang.Integer">-->
-<!--        SELECT count(*) FROM post p-->
-<!--        <where>-->
-<!--            <if test="keyword != null and keyword != ''">-->
-<!--                AND p.title LIKE CONCAT('%', #{keyword}, '%')-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
-<!--    -->
-
     <select id="findByList" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
                 AND p.title LIKE CONCAT('%', #{keyword}, '%')
