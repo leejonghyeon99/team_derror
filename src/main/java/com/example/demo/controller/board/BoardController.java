@@ -75,26 +75,21 @@ public class BoardController {
 
     // 페이징 사용 공지 최신순
     @GetMapping("/notice")
-    public void list(String sort, Integer page, Model model){
-        System.out.println(sort);
+    public void list(Integer page, Model model){
         boardService.list(page, model);
-
     }
 
     // 페이징 사용 공지 조회순
     @GetMapping("/notice/desc")
-    public String listDesc(Integer page,String sort, Model model){
-        System.out.println(sort);
+    public String listDesc(Integer page, Model model){
         boardService.listDescByViewCnt(page, model);
         return "board/notice";
     }
 
     // 공유 최신순
     @GetMapping("/share")
-    public void share(String sort, Integer page, Model model){
-        System.out.println(sort);
+    public void share(Integer page, Model model){
         boardService.list(page, model);
-
     }
 
     // 페이징 - pageRows 변경시 동작
@@ -152,13 +147,13 @@ public class BoardController {
         binder.setValidator(new PostValidator());
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<Post>> searchByTitle(@RequestParam("keyword") String keyword) {
-        // 키워드를 이용하여 게시글의 제목을 검색하는 서비스 메서드 호출
-        List<Post> searchResult = boardService.searchByTitle(keyword);
 
-        // 검색 결과를 클라이언트에 반환
-        return ResponseEntity.ok(searchResult);
+    // 검색창
+    @GetMapping("/search")
+    public String getSerchList(String keyword,Integer page, Model model){
+        boardService.serchByList(keyword,page,model);
+        return "board/notice";
+
     }
 
 
