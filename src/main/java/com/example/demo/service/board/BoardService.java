@@ -24,6 +24,8 @@ public interface BoardService {
 
     List<Post> list(Integer page, Model model);
 
+    List<Post> findByUserName(String username);
+
     List<Post> listDescByViewCnt(Integer page, Model model);
 
     Post selectById(Long id);

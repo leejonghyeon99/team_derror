@@ -1,8 +1,11 @@
 package com.example.demo.controller.user;
 
+import com.example.demo.domain.board.Post;
 import com.example.demo.domain.user.Member;
 import com.example.demo.domain.user.MemberValidator;
+import com.example.demo.repository.PostRepository;
 import com.example.demo.service.UserService;
+import com.example.demo.service.board.BoardService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,7 +20,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -25,6 +30,8 @@ public class UserController {
 
 
     private UserService userService;
+    private  BoardService boardService;
+
 
     private MemberValidator memberValidator;
 
@@ -34,11 +41,12 @@ public class UserController {
     }
 
     @Autowired
-    public UserController(UserService userService, MemberValidator memberValidator) {
+    public UserController(UserService userService, BoardService boardService, MemberValidator memberValidator) {
         this.userService = userService;
         this.memberValidator = memberValidator;
+        this.boardService = boardService;
     }
-
+//
     @RequestMapping("/auth")
     @ResponseBody
     public Authentication auth() {
@@ -47,6 +55,7 @@ public class UserController {
 
     @RequestMapping("/test")
     public void test(Model model){}
+
 
     @GetMapping("/login")
     public void login(Model model){}
@@ -58,6 +67,8 @@ public class UserController {
 
     @GetMapping("/signup")
     public void signup(){}
+
+
 
 
 
@@ -92,6 +103,18 @@ public class UserController {
         int cnt = userService.signup(member);
         model.addAttribute("result", cnt);
         return page;
+    }
+
+    @GetMapping("/detail")
+    public String detail(Principal principal, Model model){
+        String loginId = principal.getName();
+        List<Post> list = boardService.findByUserName(loginId);
+        Member member = userService.findUsername(loginId);
+        model.addAttribute("member", member);
+        model.addAttribute("list", list);
+
+
+        return "user/detail";
     }
 
 

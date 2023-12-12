@@ -64,7 +64,7 @@ public class OAuth2Controller {
       Member kakaoMember = signupKakao(kakaoProfile);
       loginKakao(kakaoMember);
 
-        return "redirect:/view/";
+        return "redirect:/";
     }
 
     private void loginKakao(Member kakaoMember){

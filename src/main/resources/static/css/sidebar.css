@@ -1,5 +1,35 @@
-a{
+a {
     text-decoration: none;
+}
+
+.dropdownMember, .dropdownLogout {
+    background-color: #666666;
+}
+
+
+.dropdownLogout {
+    display: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+}
+
+.btn {
+    color: white;
+    width: 200px;
+    text-align: left;
+    padding-left: 20px;
+
+}
+
+.navi {
+    cursor: pointer;
+}
+
+.dropdownLogout:hover {
+    background-color: #111111;
+    color: #f9f9f9;
+    padding-right: 20px;
 }
 
 .navbar-global {
@@ -10,8 +40,7 @@ a{
     color: white;
 }
 
-.navbar-global .navbar-user > li > a
-{
+.navbar-global .navbar-user > li > a {
     color: white;
 }
 
@@ -45,10 +74,10 @@ a{
     position: absolute;
     display: block;
     left: 0px;
-    bottom:0;
+    bottom: 0;
     width: 100%;
     padding: 8px 0;
-    border-top:solid 1px #666;
+    border-top: solid 1px #666;
     color: grey;
     font-size: 20px;
     text-align: center;
@@ -66,7 +95,8 @@ a{
 
 .navbar-primary-menu,
 .navbar-primary-menu li {
-    margin:0; padding:0;
+    margin: 0;
+    padding: 0;
     list-style: none;
 }
 
@@ -74,7 +104,7 @@ a{
     display: block;
     padding: 10px 18px;
     text-align: left;
-    border-bottom:solid 1px #444;
+    border-bottom: solid 1px #444;
     color: #ccc;
 }
 

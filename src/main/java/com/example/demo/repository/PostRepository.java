@@ -17,6 +17,8 @@ public interface PostRepository {
     // 만약 해당 id 의 글 없으면 null 리턴함
     Post findById(Long id);
 
+    List<Post> findByUserName(String username);
+
     // 특정 id 글 조회수 +1 증가 (UPDATE)
     int viewCnt(Long id);
 
