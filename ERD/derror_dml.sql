@@ -2,6 +2,7 @@ INSERT INTO authority (id,name) VALUES (1,'ROLE_USER'), (2,'ROLE_ADMIN');
 select * from authority;
 select * from member;
 
+
 update authority set name = 'ROLE_USER' where id = 1;
 update authority set name = 'ROLE_ADMIN' where id = 2;
 
