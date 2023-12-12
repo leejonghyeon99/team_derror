@@ -14,22 +14,23 @@ $("#keyword").on("keyup", function(event) {
 
 function requestApi() {
     let $keyword = $("#keyword").val();
-    $.ajax({
-        url: "http://localhost:8080/openai/api/recommendation?keyword=" + $keyword,
-        method: "GET",
-        dataType: "json",
-        success: function (data) {
-            imagesFunc(data);
-
-
-            $("#imageCarousel").show();
-            $("#place").show();
-        },
-        error: function (error) {
-            // 실패 시 실행되는 콜백 함수
-            console.error("에러 발생: ", error);
-        }
-    });
+    console.log("next")
+    // $.ajax({
+    //     url: "http://localhost:8080/openai/api/recommendation?keyword=" + $keyword,
+    //     method: "GET",
+    //     dataType: "json",
+    //     success: function (data) {
+    //         imagesFunc(data);
+    //
+    //
+    //         $("#imageCarousel").show();
+    //         $("#place").show();
+    //     },
+    //     error: function (error) {
+    //         // 실패 시 실행되는 콜백 함수
+    //         console.error("에러 발생: ", error);
+    //     }
+    // });
 }
 
 
