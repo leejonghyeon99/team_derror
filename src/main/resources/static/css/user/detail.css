@@ -2,8 +2,46 @@
     background-color: #5CFFD1;
 }
 
+.memberInfo {
+    margin-bottom: 20px;
+}
+
+
+.postList table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.postList th, .postList td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+
+.postList th {
+    background-color: #f2f2f2;
+}
+
+
+.postList tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+
+a:hover {
+    color: blue;
+}
+
 
 .memberForm {
+    margin: 0 auto;
     position: fixed;
     top: 33%;
     left: 45%;

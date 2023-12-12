@@ -49,6 +49,7 @@ public class BoardServiceImpl implements BoardService {
     private UserRepository userRepository;
     private AttachmentRepository attachmentRepository;
 
+
     @Autowired
     public BoardServiceImpl(SqlSession sqlSession){ // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
         postRepository = sqlSession.getMapper(PostRepository.class);
@@ -73,6 +74,10 @@ public class BoardServiceImpl implements BoardService {
         return cnt;
     }
 
+    @Override
+   public List<Post> findByUserName(String username){
+        return postRepository.findByUserName(username);
+    }
     // 특정 글(id) 첨부파일(들) 추가
     private void addFiles(Map<String, MultipartFile> files, Long id) {
         if(files != null){
@@ -263,6 +268,8 @@ public class BoardServiceImpl implements BoardService {
 
         return list;
     }
+
+
 
     @Override
     public Post selectById(Long id) {
