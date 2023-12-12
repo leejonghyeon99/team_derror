@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import com.example.demo.domain.board.Post;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 /**
@@ -38,9 +37,10 @@ public interface PostRepository {
 
     List<Post> selectFromRowByViewCnt(int from, int rows);
 
-
     // 전체 글의 개수
     int countAll();
 
-    List<Post> findByTitle(String keyword);
+    int countAllKeyword(String keyword);
+
+    List<Post> findByList(String keyword,int from, int rows);
 }
