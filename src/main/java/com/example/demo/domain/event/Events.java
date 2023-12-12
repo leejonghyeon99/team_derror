@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Events {
-
     private String id;
     private String name;
     private String type;

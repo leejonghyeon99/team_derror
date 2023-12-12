@@ -50,7 +50,7 @@ public class CountryController {
     @GetMapping("/list")
     @ResponseBody
     public CountryInfo list(@RequestParam String countryCode, @RequestParam(defaultValue = "1") Integer page, @RequestParam String classificationName) {
-        String apiUrl = API_BASE_URL     + "&countryCode=" + countryCode + "&page=" + page + "&classificationName=" + classificationName;
+        String apiUrl = API_BASE_URL + "&countryCode=" + countryCode + "&page=" + page + "&classificationName=" + classificationName;
         System.out.println(apiUrl);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -80,6 +80,7 @@ public class CountryController {
 
 
         model.addAttribute("info", countryInfo.getEmbedded().getEvents().get(0));
+        model.addAttribute("attr", countryInfo.getEmbedded().getEvents().get(0).getEmbed().getAttractions().get(0));
     }
 
 
