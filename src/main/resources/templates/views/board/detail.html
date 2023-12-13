@@ -31,7 +31,7 @@
     <body>
 
     <div class>
-        <div class>
+        <div class ="container mt-3">
             <h2>조회 - [[${post.title}]]</h2>
             <hr>
 
@@ -40,23 +40,23 @@
                     <input type="hidden" name="id" th:value="${post.id}">
                 </form>
 
-                <div class>
+                <div class ="mb-3 mt-3">
                     <label>제목:</label>
                     <span class="form-control" th:text="${post.title}"></span>
                 </div>
-                <div class>
+                <div class ="mb-3">
                     <label>작성자: </label>
                     <span class="float-start" th:text="${post.member.username}"></span>
                     <span class="float-start">작성일: [[${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}]]</span>
                 </div>
-                <div class>
+                <div class ="mb-3 mt-3">
                     <label>내용:</label>
                     <div class th:utext="${post.content}"></div>
                 </div>
 
                 <!-- 첨부파일목록 -->
-                <div class>
-                    <div class>
+                <div class ="container mt-3 mb-3 border rounded">
+                    <div class ="mb-3 mt-3">
                         <label>첨부파일:</label>
                         <ul class="list-group mb-1">
                             <li class="list-group-item" th:each="attach : ${post.fileList}">

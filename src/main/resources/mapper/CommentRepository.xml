@@ -35,7 +35,7 @@
         WHERE
             c.member_id = m.id
           AND c.post_id = #{post_id}
-        ORDER BY c.id DESC
+        ORDER BY c.id ASC
     </select>
 
     <select id="findByComment" resultMap="mapComment">
@@ -54,7 +54,7 @@
         WHERE
             c.member_id = m.id
           AND c.comment_id = #{comment_id}
-        ORDER BY c.id DESC
+        ORDER BY c.id ASC
     </select>
 
     <insert id="save" flushCache="true"
@@ -73,5 +73,9 @@
 
     <delete id="deleteById" flushCache="true">
         DELETE FROM comment WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByCommentId" flushCache="true">
+        DELETE FROM comment WHERE comment_id = #{id}
     </delete>
 </mapper>
