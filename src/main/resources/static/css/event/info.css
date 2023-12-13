@@ -1,0 +1,17 @@
+.main_one {
+    font-size: 30px;
+    font-family: "Mongolian Baiti";
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+.main_two {
+    float: right;
+    width: 50%;
+    height: 50%;
+}
+.main_three {
+    float: left;
+    width: 50%;
+    height: 50%;
+}

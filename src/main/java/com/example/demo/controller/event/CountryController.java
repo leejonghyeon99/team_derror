@@ -68,6 +68,7 @@ public class CountryController {
 //        });
 
         return countryInfo;
+        //return "redirect:/countryinfo/search?continue";
     } // end CountryInfo
 
     @GetMapping("/info")
