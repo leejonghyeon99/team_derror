@@ -73,30 +73,27 @@ public class BoardController {
         return "board/detail";
     }
 
-    // 페이징 사용 공지 최신순
-    @GetMapping("/notice")
-    public void list(Integer page, Model model){
-        boardService.list(page, model);
+    // 리스트 최신순
+    @GetMapping("/{category}")
+    public String list(Integer page, Model model, @PathVariable String category){
+        boardService.list(page, model, category);
+        model.addAttribute("category",category);
+        return "board/list";
     }
 
-    // 페이징 사용 공지 조회순
-    @GetMapping("/notice/desc")
-    public String listDesc(Integer page, Model model){
-        boardService.listDescByViewCnt(page, model);
-        return "board/notice";
-    }
-
-    // 공유 최신순
-    @GetMapping("/share")
-    public void share(Integer page, Model model){
-        boardService.list(page, model);
+    // 공지사항 조회순
+    @GetMapping("/{category}/desc")
+    public String listDesc(Integer page, Model model, @PathVariable String category){
+        boardService.listDescByViewCnt(page, model, category);
+        return "board/list";
     }
 
     // 페이징 - pageRows 변경시 동작
-    @PostMapping("/pageRows")
-    public String pageRows(Integer page, Integer pageRows){
+    @PostMapping("/{category}/pageRows")
+    public String pageRows(@PathVariable String category, Integer page, Integer pageRows){
+        System.out.println(category+","+page+","+pageRows);
         U.getSession().setAttribute("pageRows", pageRows);
-        return "redirect:/board/notice?page=" + page;
+        return "redirect:/board/"+category+"?page=" + page;
     }
 
     // 수정페이지
@@ -152,7 +149,7 @@ public class BoardController {
     @GetMapping("/search")
     public String getSerchList(String keyword,Integer page, Model model){
         boardService.serchByList(keyword,page,model);
-        return "board/notice";
+        return "board/list";
 
     }
 

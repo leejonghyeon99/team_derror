@@ -3,7 +3,9 @@ package com.example.demo.domain.board;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
+/**
+ @Author 장고운
+ */
 public class PostValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {

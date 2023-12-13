@@ -204,9 +204,9 @@ public class BoardServiceImpl implements BoardService {
         return postRepository.findAll();
     }
 
-    // 공지사항 최신순
+    // 리스트 최신순
     @Override
-    public List<Post> list(Integer page, Model model) {
+    public List<Post> list(Integer page, Model model, String category) {
         // 현재 페이지 parameter
         if(page == null) page = 1;  // 디폴트는 1page
         if(page < 1) page = 1;
@@ -245,10 +245,11 @@ public class BoardServiceImpl implements BoardService {
             endPage = startPage + writePages - 1;
             if (endPage >= totalPage) endPage = totalPage;
 
-            // 해당페이지의 글 목록 읽어오기
-            list = postRepository.selectFromRow(fromRow, pageRows);
+            System.out.println(fromRow+", " + pageRows+", "+ category);
 
-            model.addAttribute("notice", list);
+            list = postRepository.selectFromRow(fromRow, pageRows, category);
+
+            model.addAttribute("list", list);
         } else {
             page = 0;
         }
@@ -267,9 +268,9 @@ public class BoardServiceImpl implements BoardService {
         return list;
     }
 
-    // 공지사항 조회순
+    // 리스트 조회순
     @Override
-    public List<Post> listDescByViewCnt(Integer page, Model model) {
+    public List<Post> listDescByViewCnt(Integer page, Model model, String category) {
         if(page == null) page = 1;  // 디폴트는 1page
         if(page < 1) page = 1;
 
@@ -308,14 +309,14 @@ public class BoardServiceImpl implements BoardService {
             if (endPage >= totalPage) endPage = totalPage;
 
             // 해당페이지의 글 목록 읽어오기
-            list = postRepository.selectFromRowByViewCnt(fromRow, pageRows);
+            list = postRepository.selectFromRowByViewCnt(fromRow, pageRows, category);
 
-            model.addAttribute("notice", list);
+            model.addAttribute("list", list);
         } else {
             page = 0;
         }
-        model.addAttribute("sort","view");
 
+        model.addAttribute("sort","view");
         model.addAttribute("cnt", cnt);  // 전체 글 개수
         model.addAttribute("page", page); // 현재 페이지
         model.addAttribute("totalPage", totalPage);  // 총 '페이지' 수
@@ -455,7 +456,7 @@ public class BoardServiceImpl implements BoardService {
             } else {
                 list = postRepository.findByList(keyword,fromRow, pageRows);
             }
-            model.addAttribute("notice", list);
+            model.addAttribute("list", list);
         } else {
             page = 0;
             model.addAttribute("noSearchResults", true);
