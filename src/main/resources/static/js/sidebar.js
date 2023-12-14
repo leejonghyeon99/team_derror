@@ -2,7 +2,7 @@ const dropdownMember = $(".dropdownMember");
 const dropdownLogout = $(".dropdownLogout");
 const navbarPrimary = $('.navbar-primary');
 
-$('.btn-expand-collapse').click(function (e) {
+$('.btn-expand-collapse').click(function () {
     navbarPrimary.toggleClass('collapsed');
     hideDropdowns();
 });
