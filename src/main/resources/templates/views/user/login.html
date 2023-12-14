@@ -3,48 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/user/login.css}">
     <title>로그인</title>
 </head>
 <body>
 
 <th:block th:insert="~{common/sidebar::sidebar}"/>
 
-<div class="main-content" id="login">
-    <form th:action="@{/user/login}" method="POST">
-        <div class="col-12 text-danger"  th:text="${errmsg}">
-        </div>
-
-        <label for="username">아이디:</label>
-        <input type="text" name="username" id="username" placeholder="아이디입력" required><br>
-
-        <label for="password">비밀번호:</label>
-        <input type="password" name="password" id="password" placeholder="비밀번호입력" required><br>
-
-
+<div id="signup">
+    <h2 class="form_title" >로그인</h2>
+    <form th:action="@{/user/signup}" method="POST" id="sign-frm">
+        <input type="text" name="username" class="input" id="username" placeholder="아이디 입력" th:value="${username}" ><br>
+        <div class="col-12 text-danger" th:text="${errusername}"></div>
+        <input type="password" name="password" class="input" id="password" placeholder="비밀번호 입력" ><br>
+        <div class="col-12 text-danger" th:text="${errpassword}"></div>
         <div class="button-container">
-            <input type="submit" th:value="로그인">
-            <a th:href="@{/user/signup}"><input type="button" th:value="회원가입"></a>
+            <input class="btn-login" type="submit" th:value="로그인">
+            <a th:href="@{/user/signup}"><input class="btn-signup" type="button" th:value="회원가입"></a>
         </div>
-
-        <a class="btn btn-lg my-1" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+        <a id="kabtn" class="btn btn-lg my-1" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
             <img th:src="@{/img/kakao_login_button.png}" width="240" height="35">
         </a>
 
-        <a class="btn btn-lg my-1" th:href="@{/oauth2/authorization/google}">
+        <a id="gobtn" class="btn btn-lg my-1" th:href="@{/oauth2/authorization/google}">
             <img th:src="@{/img/google_login_button.png}" width="240" height="35">
         </a>
-        <br>
     </form>
 </div>
-
-
 <script th:src="@{/js/sidebar.js}"></script>
+<link rel="stylesheet" th:href="@{/css/sidebar.css}">
 </body>
 </html>

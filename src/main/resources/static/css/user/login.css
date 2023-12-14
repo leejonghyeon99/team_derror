@@ -57,26 +57,35 @@ body {
     padding: 0;
     display: flex;
     align-items: center;
+
 }
 #kabtn{
     position: relative;
-    left: 70%;
-    width: 160px;
-    transform: translateX(-70%);
-     top: 9%;
-}
-#gobtn{
-    position: relative;
-    left: 120%;
-    top: 2.5%;
-    width: 160px;
-    transform: translateX(-120%);
+    left: 8%;
+    transform: translateX(-8%);
+    top: 20%;
 
 }
-#kabtn img,
+
+#gobtn{
+    position: relative;
+    left: 9%;
+    transform: translateX(-9%);
+    top: 20%;
+}
+
 #gobtn img {
-    width: 20%;
+    width: 280px;
     height: auto;
+}
+
+#kabtn img{
+    width: 280px;
+    height: 55px;
+    border: 2px solid #868e96;
+    border-radius: 5px;
+
+
 }
 
 .form_title {
@@ -86,12 +95,29 @@ body {
     text-align: center;
 }
 
+.btn-login {
+    position: absolute;
+    left: 32%;
+    width: 145px;
+    transform: translateX(-32%);
+    background-color: var(--blue);
+    background-image: linear-gradient(90deg, var(--blue) 0%, var(--lightblue) 74%);
+    border-radius: 20px;
+    border: 1px solid var(--blue);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    padding: 0.9rem 1rem;
+
+}
 
 .btn-signup {
     position: absolute;
-    left: 50%;
-    width: 160px;
-    transform: translateX(-50%);
+    left: 68%;
+    width: 145px;
+    transform: translateX(-68%);
     background-color: var(--blue);
     background-image: linear-gradient(90deg, var(--blue) 0%, var(--lightblue) 74%);
     border-radius: 20px;
