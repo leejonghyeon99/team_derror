@@ -28,10 +28,8 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-
     private UserService userService;
     private  BoardService boardService;
-
 
     private MemberValidator memberValidator;
 
@@ -69,9 +67,6 @@ public class UserController {
     public void signup(){}
 
 
-
-
-
     @PostMapping("/signup")
     public String signupOk(@Valid Member member
             , BindingResult result
@@ -82,19 +77,23 @@ public class UserController {
         if(result.hasErrors()){
             redirectAttrs.addFlashAttribute("username", member.getUsername());
             redirectAttrs.addFlashAttribute("password", member.getPassword());
+            redirectAttrs.addFlashAttribute("re_password", member.getRe_password());
             redirectAttrs.addFlashAttribute("name", member.getName());
             redirectAttrs.addFlashAttribute("email", member.getEmail());
             redirectAttrs.addFlashAttribute("age", member.getAge());
             redirectAttrs.addFlashAttribute("phone", member.getPhone());
 
             List<FieldError> errList = result.getFieldErrors();
+            redirectAttrs.addFlashAttribute("errors", errList);
+            for (int i = 0; i < errList.size(); i++) {
 
-            for(FieldError err : errList) {
-                redirectAttrs.addFlashAttribute("error", err.getDefaultMessage());
-
-
-                break;
+                redirectAttrs.addFlashAttribute("err"+errList.get(i).getField(), errList.get(i).getCode());
             }
+
+//            for(FieldError err : errList) {
+//                redirectAttrs.addFlashAttribute("errors", err.getCode());
+//                break;
+//            }
 
             return "redirect:/user/signup";
         }

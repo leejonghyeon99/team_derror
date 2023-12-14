@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     navbar.addEventListener("mouseleave", function () {
-            dropdownMember.style.display = "none";
-            dropdownLogout.style.display = "none";
+            dropdownMember.hide();
+            dropdownLogout.hide();
     });
 });

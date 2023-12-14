@@ -6,6 +6,11 @@
     margin-bottom: 20px;
 }
 
+.postList {
+    max-height: 300px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
 
 .postList table {
     width: 100%;
