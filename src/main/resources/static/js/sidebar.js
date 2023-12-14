@@ -1,25 +1,38 @@
 const dropdownMember = $(".dropdownMember");
 const dropdownLogout = $(".dropdownLogout");
+const navbarPrimary = $('.navbar-primary');
 
 $('.btn-expand-collapse').click(function (e) {
-    $('.navbar-primary').toggleClass('collapsed');
-    dropdownMember.hide();
-    dropdownLogout.hide();
+    navbarPrimary.toggleClass('collapsed');
+    hideDropdowns();
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    var navbar = document.querySelector(".navbar-primary-menu");
-    var navi = document.querySelector(".navi");
-
+    const navbar = document.querySelector(".navbar-primary-menu");
+    const navi = document.querySelector(".navi");
 
     navi.addEventListener("click", function () {
-        $('.navbar-primary').toggleClass('collapsed');
-            dropdownMember.toggle();
-            dropdownLogout.toggle();
+        if (!navbarPrimary.hasClass('collapsed')) {
+            updateDropdownVisibility();
+        }
     });
 
     navbar.addEventListener("mouseleave", function () {
-            dropdownMember.hide();
-            dropdownLogout.hide();
+        hideDropdowns();
     });
 });
+
+function updateDropdownVisibility() {
+    if (!navbarPrimary.hasClass('collapsed')) {
+        dropdownMember.show();
+        dropdownLogout.show();
+    } else {
+
+        hideDropdowns();
+    }
+}
+
+function hideDropdowns() {
+    dropdownMember.hide();
+    dropdownLogout.hide();
+}
