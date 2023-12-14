@@ -24,7 +24,6 @@ public interface PostRepository {
     // 전체 글 목록 : 최신순 (SELECT)
     List<Post> findAll();
 
-
     // 특정 id 글 수정 (제목, 내용) (UPDATE)
     int update(Post post);
 
@@ -33,14 +32,18 @@ public interface PostRepository {
 
     // 페이징
     // from 부터 rows 개 만큼 SELECT
-    List<Post> selectFromRow(int from, int rows);
+    List<Post> selectFromRow(int from, int rows, String category);
 
-    List<Post> selectFromRowByViewCnt(int from, int rows);
+    // 최신순 조회
+    List<Post> selectFromRowByViewCnt(int from, int rows, String category);
 
     // 전체 글의 개수
     int countAll();
 
+    // 키워드 검색 수
     int countAllKeyword(String keyword);
 
+    // 검색 리스트 불러오기
     List<Post> findByList(String keyword,int from, int rows);
+
 }

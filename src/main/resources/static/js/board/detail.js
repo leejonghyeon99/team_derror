@@ -24,7 +24,7 @@ $(function(){
 
         // 검증
         if(!content){
-            alert("댓글을 입력을 하세요");
+            alert("댓글 입력을 하세요");
             $("#input_comment").focus();
             return;
         }
@@ -56,6 +56,46 @@ $(function(){
     });
 
 });
+
+$(".replySubmit").click(function(){
+    // 입력한 댓글
+    const content = $("#input_comment").val().trim();
+
+    // 검증
+    if(!content){
+        alert("댓글 입력을 하세요");
+        $("#input_comment").focus();
+        return;
+    }
+
+    // submit 할 parameter 들 준비
+    const data = {
+        "parent_id": parentId,
+        "post_id": id,
+        "user_id": logged_id,
+        "content": content,
+    };
+
+    $.ajax({
+        url: "/comment/reply",
+        type: "POST",
+        data: data,
+        cache: false,
+        success: function(data, status) {
+            if(status == "success"){
+                if(data.status !== "OK"){
+                    alert(data.status);
+                    return;
+                }
+                loadComment(id);  // 댓글 목록 다시 업데이트
+                $("#input_comment").val('');   // 입력칸 리셋
+            }
+        },
+    });
+
+});
+
+
 
 // 특정 글(post_id) 의 댓글 목록 읽어오기
 function loadComment(post_id){
@@ -107,6 +147,11 @@ function buildComment(result) {
             <td><span><strong>${username}</strong><br><small class="text-secondary">(${name})</small></span></td>
             <td>
                <span>${content}</span>${delBtn}
+                       <button type="button" class="replyButton">답글</button>
+            <div class="replyForm" style="display: none;">
+                <input type="text" class="form-control replyInput">
+                <button type="button" class="replySubmit">작성</button>
+            </div>
             </td>
             <td><span><small class="text-secondary">${regdate}</small></span></td>
             </tr>
@@ -146,6 +191,13 @@ function addDelete(){
             },
         });
     });
+
+    $('.replyButton').click(function() {
+        // 답글 입력창 토글
+        $(this).siblings('.replyForm').toggle();
+    });
+
+
 }
 
 
