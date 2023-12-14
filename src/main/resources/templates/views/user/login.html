@@ -16,11 +16,10 @@
 
 <div id="signup">
     <h2 class="form_title" >로그인</h2>
-    <form th:action="@{/user/signup}" method="POST" id="sign-frm">
+    <form th:action="@{/user/login}" method="POST" id="sign-frm">
         <input type="text" name="username" class="input" id="username" placeholder="아이디 입력" th:value="${username}" ><br>
-        <div class="col-12 text-danger" th:text="${errusername}"></div>
         <input type="password" name="password" class="input" id="password" placeholder="비밀번호 입력" ><br>
-        <div class="col-12 text-danger" th:text="${errpassword}"></div>
+        <div class="col-12 text-danger" th:text="${errmsg}"></div>
         <div class="button-container">
             <input class="btn-login" type="submit" th:value="로그인">
             <a th:href="@{/user/signup}"><input class="btn-signup" type="button" th:value="회원가입"></a>
