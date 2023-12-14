@@ -22,11 +22,11 @@ public interface BoardService {
 
     List<Post> list();
 
-    List<Post> list(Integer page, Model model);
+    List<Post> list(Integer page, Model model, String category);
 
     List<Post> findByUserName(String username);
 
-    List<Post> listDescByViewCnt(Integer page, Model model);
+    List<Post> listDescByViewCnt(Integer page, Model model, String category);
 
     Post selectById(Long id);
 
