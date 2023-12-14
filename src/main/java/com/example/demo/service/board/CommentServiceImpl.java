@@ -88,7 +88,7 @@ public class CommentServiceImpl implements CommentService {
                 .post_id(postId)
                 .build();
 
-        commentRepository.save(reply);
+        commentRepository.replySave(reply);
 
         QryResult result = QryResult.builder()
                 .count(1)
