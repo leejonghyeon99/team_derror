@@ -30,6 +30,8 @@
         <div>
             <h2 id="notice" style="display: none;">공지사항</h2>
             <h2 id="free" style="display: none;">자유게시판</h2>
+            <h2 id="share" style="display: none;">공유게시판</h2>
+
             <hr>
             <div sec:authorize="isAuthenticated()">
                 <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -46,7 +48,7 @@
                 <span class="float-end">
         <form name="frmPageRows">
             <input type="hidden" name="page" th:value="${page}">
-            <input id="category" type="hidden"th:value="${category}">
+            <input id="category" type="hidden" th:value="${category}">
             <select class="form-select" name="pageRows">
                 <option value="10" th:selected="${pageRows==10}">10</option>
                 <option value="15" th:selected="${pageRows==15}">15</option>

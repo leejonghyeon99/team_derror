@@ -1,6 +1,6 @@
 $(function () {
 
-
+    // 페이지 목록 조회
     $("[name='pageRows']").change(function () {
         let $category = $("#category").val();
         let frm = $("[name = 'frmPageRows']");
@@ -46,8 +46,10 @@ $(function () {
 
         if (path === '/board/notice') {
             $("#notice").show(); // 공지사항을 보여줌
-        } else if (path === '/board/free') {
+        } if (path === '/board/free') {
             $("#free").show(); // 자유게시판을 보여줌
+        } if (path === '/board/share') {
+            $("#share").show(); // 공유게시판을 보여줌
         }
     }
 

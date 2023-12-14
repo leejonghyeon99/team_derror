@@ -81,17 +81,14 @@
                     </button>
                     <a class="btn btn-outline-dark ms-2" th:href="@{/board/write}" sec:authorize="hasAnyRole('ADMIN')"
                        th:class="writeButton">작성</a>
-                    <a class="btn btn-outline-dark ms-2" th:href="@{/board/notice(page=${session.page})}">목록</a>
+                    <a class="btn btn-outline-dark ms-2" th:href="@{/board/${category}(page=${session.page})}">목록</a>
                 </div>
                 <!-- 하단 링크 -->
 
                 <!-- 댓글 -->
-<!--                <th:block th:if="${post.category == 'notice'}">-->
-                    <!-- 댓글 폼을 숨기는 로직 -->
+                <th:block th:unless="${post.category == 'notice'}">
                     <th:block th:insert="~{board/comment::comment}"></th:block>
-<!--                </th:block>-->
-
-
+                </th:block>
                 <!-- 댓글 -->
 
             </section>
