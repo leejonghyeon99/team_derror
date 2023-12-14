@@ -20,7 +20,6 @@
 <div class="main-content">
 <h1>이벤트 정보 조회</h1>
 
-
 <label for="countryCode">국가 코드:</label>
     <select id="countryCode">
         <option>선택하세요</option>
@@ -37,8 +36,11 @@
     </select>
 
 <label for="city">도시:</label>
-<input id="city" placeholder="도시를 입력하세요" type="text">
-
+    <select id="city" placeholder="도시를 선택하세요">
+        <option th:each="city : ${citys}">
+            <span th:text="${city.name}"></span>
+        </option>
+    </select>>
 <button onclick="getEventInformation(0)">확인</button>
 
 <hr>
@@ -140,7 +142,6 @@
 
         } // end renderPagination()
 
-
     function changePage(targetPage) {
             if (targetPage >= 1 && targetPage <= totalPages){
                 currentPage = targetPage;
@@ -163,11 +164,10 @@
         });
     };
 
-
     function redirectToLoadInfo(clickedElement) {
-        // 클릭된 요소에서 .eventId 클래스를 가진 하위 요소를 찾기
+        //클릭된 요소에서 .eventId 클래스를 가진 하위 요소를 찾기
         const eventIdInput = clickedElement.querySelector('.eventId');
-        // 이벤트 ID 값 확인
+        //이벤트 ID 값 확인
         const eventId = eventIdInput.value;
         if (!eventId) {
             console.error('이벤트 ID를 찾을 수 없거나 비어 있습니다.');
@@ -186,15 +186,6 @@
         // 폼 서브밋
         detailEventForm.submit();
     }
-
-
-    // function redirectToLoadInfo(clickedElement) {
-    //     const eventIdInput = clickedElement.querySelector('.eventId');
-    //     console.log(eventIdInput.value);
-    //     // 나머지 동작 수행
-    //     clickedElement.querySelector('.getDetailEvent').submit();
-    // }
-
 
 </script>
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">

@@ -1,17 +1,30 @@
-.main_one {
-    font-size: 30px;
-    font-family: "Mongolian Baiti";
-    float: left;
-    width: 50%;
+* {
+    box-sizing: border-box;
+}
+.main-content {
+    border: 1px solid blue;
     height: 100%;
 }
+.container-fluid {
+    border: 1px solid brown;
+}
+.main_one {
+    border: 1px solid aqua;
+    font-size: 35px;
+    font-family: "Mongolian Baiti";
+}
 .main_two {
-    float: right;
-    width: 50%;
-    height: 50%;
+    border: 1px solid red;
+    width: 100%;
+    height: 100%;
 }
 .main_three {
-    float: left;
-    width: 50%;
-    height: 50%;
+    margin-top: 20px;
+    border: 1px solid chartreuse;
+    width: 100%;
+    height: 400px;
+}
+.main_four {
+    float: right;
+    border: 1px solid darkgray;
 }

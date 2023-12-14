@@ -19,7 +19,6 @@ import java.util.*;
 @RequestMapping("/countryinfo")
 public class CountryController {
     public static final String API_BASE_URL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*&size=21";
-    //public static final String API_BASE_URLE = "https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&id=G5v0Z9Yc3DYBk&locale=*&countryCode=US";
 
     public static final String API_BASE_URLA = "https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*";
 
@@ -29,6 +28,12 @@ public class CountryController {
 
     @GetMapping("/search")
     public void search(Model model) {
+        String apiUrl = API_BASE_URL;
+
+        RestTemplate restTemplate = new RestTemplate();
+        CountryInfo countryInfo = restTemplate.getForObject(apiUrl, CountryInfo.class);
+
+
 
         Map<String, String> codeMap = Arrays.stream(CountryCode.values()).collect(
                 HashMap::new,
@@ -40,6 +45,8 @@ public class CountryController {
                 (map, ClassificationName) -> map.put(ClassificationName.getClassificationName(), ClassificationName.getValue()),
                 HashMap::putAll
         );
+
+        model.addAttribute("citys", countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0));
         model.addAttribute("codes", codeMap);
         model.addAttribute("classifications", classMap);
     }; // end search
@@ -68,7 +75,6 @@ public class CountryController {
 //        });
 
         return countryInfo;
-        //return "redirect:/countryinfo/search?continue";
     } // end CountryInfo
 
     @GetMapping("/info")
@@ -82,6 +88,7 @@ public class CountryController {
 
         model.addAttribute("info", countryInfo.getEmbedded().getEvents().get(0));
         model.addAttribute("attr", countryInfo.getEmbedded().getEvents().get(0).getEmbed().getAttractions().get(0));
+        model.addAttribute("loc", countryInfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0));
     }
 
 
