@@ -2,80 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.repository.CommentRepository">
 
-    <resultMap id="mapMember" type="com.example.demo.domain.user.Member">
-        <result column="m_id" property="id"/>
-        <result column="m_username" property="username"/>
-        <result column="m_password" property="password"/>
-        <result column="m_name" property="name"/>
-        <result column="m_email" property="email"/>
-        <result column="m_created_date" property="created_date"/>
+    <resultMap id="commentMap" type="com.example.demo.domain.board.Comment">
+        <id property="id" column="id"/>
+        <id property="postId" column="post_id"/>
+        <id property="commentId" column="comment_id"/>
+        <id property="content" column="content"/>
+        <id property="createdDate" column="created_date"/>
+
+        <association property="member" column="member_id" javaType="com.example.demo.domain.user.Member">
+            <id property="id" column="member_id"/>
+            <id property="name" column="name"/>
+            <id property="thumnail_img" column="thumnail_img"/>
+        </association>
     </resultMap>
 
-    <resultMap id="mapComment" type="com.example.demo.domain.board.Comment">
-        <result column="c_id" property="id"/>
-        <result column="c_content" property="content"/>
-        <result column="c_created_date" property="created_date"/>
-        <result column="c_post_id" property="post_id"/>
-        <collection property="member" resultMap="mapMember"/>
-    </resultMap>
 
-    <select id="findByPost" resultMap="mapComment">
-        SELECT
-            c.id "c_id",
-            c.content "c_content",
-            c.created_date "c_created_Date",
-            c.post_id "c_post_id",
-            m.id "m_id",
-            m.username "m_username",
-            m.password "m_password",
-            m.name "m_name",
-            m.email "m_email",
-            m.created_date "m_created_date"
-        FROM comment c, member m
-        WHERE
-            c.member_id = m.id
-          AND c.post_id = #{post_id}
-        ORDER BY c.id ASC
+    <select id="findAllParents" resultMap="commentMap">
+        select *
+        from comment
+        where post_id = #{postId}
+        order by id desc
+    </select>
+    <select id="findAllChilds" resultMap="commentMap">
+        select *
+        from comment
+        where comment_id = #{commentId}
+        order by id desc
     </select>
 
-    <select id="findByComment" resultMap="mapComment">
-        SELECT
-            c.id "c_id",
-            c.content "c_content",
-            c.created_date "c_created_Date",
-            c.post_id "c_post_id",
-            m.id "m_id",
-            m.username "m_username",
-            m.password "m_password",
-            m.name "m_name",
-            m.email "m_email",
-            m.created_date "m_created_date"
-        FROM comment c, member m
-        WHERE
-            c.member_id = m.id
-          AND c.comment_id = #{comment_id}
-        ORDER BY c.id ASC
-    </select>
 
-    <insert id="save" flushCache="true"
+    <insert id="saveParent" flushCache="true"
             parameterType="com.example.demo.domain.board.Comment"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO comment(member_id, post_id, content)
-        VALUES(#{member.id}, #{post_id}, #{content})
+        VALUES(#{member.id}, #{postId}, #{content})
     </insert>
 
-    <insert id="replySave" flushCache="true"
+    <insert id="saveChild" flushCache="true"
             parameterType="com.example.demo.domain.board.Comment"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO comment(member_id, post_id, comment_id, content)
-        VALUES(#{member.id}, #{post_id}, #{comment_id}, #{content} )
+        VALUES(#{member.id}, #{postId}, #{commentId}, #{content} )
     </insert>
 
     <delete id="deleteById" flushCache="true">
         DELETE FROM comment WHERE id = #{id}
     </delete>
 
-    <delete id="deleteByCommentId" flushCache="true">
-        DELETE FROM comment WHERE comment_id = #{id}
-    </delete>
 </mapper>

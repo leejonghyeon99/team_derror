@@ -12,7 +12,7 @@ values ('1','testid', 'testpw','testname',23,'010-1234-1234','testemail@email.co
 select * from post;
 select * from comment;
 insert into post (member_id, category, title, content)
-values (2,'testcategory','testtitle','testcontent');
+values (1,'testcategory','testtitle','testcontent');
 
 INSERT INTO comment (member_id, post_id, comment_id, content)
 VALUES (4, 1, 4, '이거봐라');
