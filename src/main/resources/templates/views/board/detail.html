@@ -83,7 +83,10 @@
                     </button>
                     <a class="btn btn-outline-dark ms-2" th:href="@{/board/write}" sec:authorize="hasAnyRole('ADMIN')"
                        th:class="writeButton">작성</a>
-                    <a class="btn btn-outline-dark ms-2" th:href="@{/board/${category}(page=${session.page})}">목록</a>
+                    </span>
+                    <a class="btn btn-outline-dark ms-2" th:if="${session.category} eq notice" th:href="@{/board/notice(page=${session.page})}">목록</a>
+                    <a class="btn btn-outline-dark ms-2" th:if="${session.category} eq free" th:href="@{/board/free(page=${session.page})}">목록</a>
+                    <a class="btn btn-outline-dark ms-2" th:if="${session.category} eq share" th:href="@{/board/share(page=${session.page})}">목록</a>
                 </div>
                 <!-- 하단 링크 -->
 
