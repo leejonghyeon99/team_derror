@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/openai/main.css}">
+    <link rel="stylesheet" th:href="@{/css/openai/cat.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<th:block th:insert="~{common/sidebar::sidebar}"/>
+<div class="main-content">
+    <h1>myplan</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td>제목</td>
+                <td>국가</td>
+                <td>항공편</td>
+                <td>생성일</td>
+            </tr>
+        </thead>
+        <tbody >
+            <tr th:each="plan : ${planList}">
+                <td th:text="${plan.title}"></td>
+                <td th:text="${plan.national}"></td>
+                <td th:text="${plan.IATA}"></td>
+                <td th:text="${plan.createDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<script th:src="@{/js/sidebar.js}"></script>
+</body>
+</html>

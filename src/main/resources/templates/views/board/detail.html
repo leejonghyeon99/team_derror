@@ -21,9 +21,11 @@
         <script th:inline="javascript">
             // 나중에 댓글 작성시 필요.
             const logged_id = [[${logged_user.id}]];
+            const postId = [[${post.id}]];
         </script>
 
         <script th:src="@{/js/board/detail.js}"></script>
+        <script th:src="@{/js/board/comment.js}"></script>
 
         <title>조회 - [[${post.title}]]</title>
     </head>
@@ -37,7 +39,7 @@
 
             <section>
                 <form name="frmDelete" th:action="@{/board/delete}" method="post">
-                    <input type="hidden" name="id" th:value="${post.id}">
+                    <input type="hidden" name="postId" th:value="${post.id}">
                 </form>
 
                 <div class ="mb-3 mt-3">

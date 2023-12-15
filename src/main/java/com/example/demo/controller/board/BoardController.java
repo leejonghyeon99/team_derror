@@ -133,8 +133,8 @@ public class BoardController {
 
     // 삭제
     @PostMapping("/delete")
-    public String deleteOk(Long id, Model model){
-        int result = boardService.deleteById(id);
+    public String deleteOk(Long postId, Model model){
+        int result = boardService.deleteById(postId);
         model.addAttribute("result", result);
         return "board/deleteOk";
     }

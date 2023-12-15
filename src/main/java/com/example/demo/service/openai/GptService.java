@@ -82,7 +82,6 @@ public class GptService {
        } catch (JsonProcessingException e) {
            throw new RuntimeException(e);
        }
-
        return sight;
    }
 }

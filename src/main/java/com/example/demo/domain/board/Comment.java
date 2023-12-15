@@ -22,9 +22,10 @@ public class Comment {
     private Member member;// 댓글 작성자(FK)
 
     @JsonIgnore // JSON 변환 시 제외하는 필드
-    private Long post_id;// 어느글의 댓글(FK)
+    @JsonProperty("postId")
+    private Long postId;// 어느글의 댓글(FK)
 
-    private Long comment_id; // 부모 댓글 아이디
+    private Long commentId; // 부모 댓글 아이디
 
     private String content; // 댓글 내용
 
@@ -32,6 +33,5 @@ public class Comment {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    @JsonProperty("created_date")
-    private LocalDateTime created_date;
+    private LocalDateTime createdDate;
 }
