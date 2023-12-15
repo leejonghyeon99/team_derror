@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../../../static/css/post/list.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/post/list.css}">
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+
+    <script th:src="@{/js/sidebar.js}"></script>
+    <script th:src="@{/js/post/list.js}"></script>
     <title>Title</title>
 </head>
 <body>
     <div class="post-wrapper">
         <h1>자유 게시판</h1>
         <div class="filter-box">
-            <select name="category">
-                <option value="free">자유 게시판</option>
-                <option value="share">공유 게시판</option>
-                <option value="notice">공지사항 게시판</option>
+            <select class="filter-select" name="category">
+                <option value="free" th:selected="${category} eq free">자유 게시판</option>
+                <option value="share" th:selected="${category} eq share">공유 게시판</option>
+                <option value="notice" th:selected="${category} eq notice">공지사항 게시판</option>
             </select>
-            <select name="sort">
-                <option value="id">최신순</option>
-                <option value="view">조회순</option>
+            <select class="filter-select" name="sort">
+                <option value="id" th:selected="${sort} eq id">최신순</option>
+                <option value="view" th:selected="${sort} eq view">조회순</option>
             </select>
         </div>
         <hr>
@@ -31,7 +40,7 @@
                         <th>조회수</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="post-body">
                     <tr class="post">
                         <td><a href="#" class="member"><span>작성자</span></a></td>
                         <td><a href="#"><span>타이틀</span></a></td>
@@ -47,6 +56,6 @@
 
 
 <script src="../../../static/js/post/list.js"></script>
-<script th:src="@{/js/post/list.js}"></script>
+
 </body>
 </html>

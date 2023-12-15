@@ -1,5 +1,6 @@
 package com.example.demo.controller.board;
 
+import com.example.demo.domain.board.U;
 import com.example.demo.service.post.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,9 @@ public class PostController {
     }
 
     @GetMapping("/list")
-    public void list(){}
+    public void list(Model model){
+        model.addAttribute("category",U.getSession().getAttribute("category"));
+        model.addAttribute("sort",U.getSession().getAttribute("sort"));
+    }
 
 }
