@@ -54,70 +54,14 @@
     <hr>
 
     <h1>항공사별 운항정보</h1>
-    <div id="resultBody2" style="height: 1000px"></div>
+    <div class="container-fluid" id="cardBOX">
+        <div class="row">
+            <div class="card-container" id="resultBody2"></div>
+        </div>
+    </div>
 </div>
 
 <script>
-
-    function adjustCellWidths() {
-        if (window.innerWidth <= 1300) {
-            var upperTables = document.querySelectorAll('.uptable');
-            var lowerTables = document.querySelectorAll('.downtable');
-
-            // 각 테이블에 대해 반복
-            upperTables.forEach(function (upperTable, tableIndex) {
-                var lowerTable = lowerTables[tableIndex];
-
-                // 아래 테이블의 각 셀의 너비를 위 테이블의 각 셀과 동일하게 설정
-                upperTable.querySelectorAll('td').forEach(function (cell, index) {
-                    var upperCellWidth = getComputedStyle(cell).width;
-                    lowerTable.querySelectorAll('td')[index].style.width = upperCellWidth;
-                });
-            });
-        }
-    }
-
-    function adjustCellHeights() {
-        var upperTables = document.querySelectorAll('.uptable');
-        var lowerTables = document.querySelectorAll('.downtable');
-
-        // 각 테이블에 대해 반복
-        upperTables.forEach(function (upperTable, tableIndex) {
-            var lowerTable = lowerTables[tableIndex];
-
-            var upperCells = upperTable.querySelectorAll('th, td');
-            var lowerCells = lowerTable.querySelectorAll('th, td');
-
-            for (var i = 0; i < upperCells.length; i++) {
-                var upperHeight = upperCells[i].offsetHeight;
-                var lowerHeight = lowerCells[i].offsetHeight;
-
-                // 높이가 더 큰 쪽의 높이로 설정
-                var maxHeight = Math.max(upperHeight, lowerHeight);
-                upperCells[i].style.height = maxHeight + 'px';
-                lowerCells[i].style.height = maxHeight + 'px';
-            }
-        });
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    function handleResize() {
-        resetCellHeights();
-        adjustCellWidths();
-        adjustCellHeights();
-    }
-
-    function resetCellHeights() {
-        var allCells = document.querySelectorAll('.uptable th, .uptable td, .downtable th, .downtable td');
-
-        allCells.forEach(function (cell) {
-            cell.style.height = '';
-        });
-    }
-
-
-
 
     document.getElementById("countryName").addEventListener("keyup", function (event) {
     if (event.key === 'Enter') {
