@@ -10,39 +10,75 @@ body{
     margin: 0; /* body의 기본 마진 제거 */
 }
 
-#resultBody2 {
-    height: 1000px; /* 스크롤을 보여줄 높이 지정 */
-    overflow-y: auto; /* 수직 스크롤 활성화 */
-    border: 1px solid #ccc; /* 테두리 추가 (옵션) */
+
+#cardBOX {
+    height: 1000px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
 }
 
-
-.table-container {
+.card-container {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+    margin: 20px -10px; /* 좌우 마진을 보정 */
 }
 
-.table-bordered {
-    width: calc(50%); /* 나눌 테이블의 너비 조절 */
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
+.custom-card {
+    margin: 0 10px 20px; /* 좌우 마진 및 하단 마진 조절 */
+    width: 23%;
+    max-width: 100%; /* 최대 너비를 설정 (좌우 여백 고려) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    background: linear-gradient(to right, #9999ff, #cc99ff);
 }
 
-@media (max-width: 1300px) {
-    .table-bordered {
-        width: 100%; /* 창이 작아질 때 테이블 전체 너비로 조절 */
-        margin-top: 0;
-        margin-bottom: 0;
-        table-layout: auto; /* 텍스트 길이에 따라 셀이 자동으로 조절되도록 설정 */
+.custom-card-body {
+    padding: 1.5rem;
+    text-align: center;
+    color: white;
+}
+
+.custom-card-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 900;
+}
+
+.modal-content {
+    background: linear-gradient(to right, #9999ff, #cc99ff);
+    color: white;
+}
+
+.modal-body p{
+    font-size: 18px;
+    text-align: center;
+}
+
+.modal-body div{
+    font-size: 22px;
+    text-align: left;
+}
+
+@media (max-width: 1400px) {
+    .custom-card {
+        width: 31%;
     }
+}
 
-    .downtable {
-        margin-bottom: 30px;
+@media (max-width: 1090px) {
+    .custom-card {
+        width: 45%
     }
 }
+
+@media (max-width: 810px) {
+    .custom-card {
+        width: 100%;
+    }
+}
+
 
 /* 라벨과 입력란을 감싸는 컨테이너 */
 .input-container {
@@ -72,22 +108,6 @@ button {
     height: auto; /* 기본 높이 설정 해제 */
 }
 
-.downtable th,
-.uptable th {
-    background-color: #3498db; /* 배경색 */
-    color: #fff; /* 글자색 */
-    border: 1px solid #ddd; /* 테두리 */
-    font-weight: bold;
-}
-
-/* uptable의 th, td 스타일 */
-
-.uptable td,
-.downtable td {
-    color: #555; /* 글자색 */
-    border: 1px solid #ccc; /* 테두리 */
-}
-
 .image-container {
     width: 100%;
     height: 100%;
@@ -109,7 +129,3 @@ button {
     border-radius: 10px; /* 테두리를 둥글게 */
 }
 
-.table td{
-    text-align: center; /* 가로 중앙 정렬 */
-    vertical-align: middle; /* 세로 중앙 정렬 */
-}
