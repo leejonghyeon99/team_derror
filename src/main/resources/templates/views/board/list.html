@@ -17,13 +17,13 @@
     <script th:src="@{/js/board/list.js}"></script>
 
 
-
     <title>목록</title>
 </head>
 
 <body>
 <!-- 인증 헤더 -->
 <th:block th:insert="~{common/sidebar::sidebar}"/>
+
 
 <div>
     <div class="container mt-3">
@@ -36,7 +36,7 @@
             <div sec:authorize="isAuthenticated()">
                 <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <div>
-                            <a class="btn btn-outline-dark" th:href="@{/board/write}" th:class="writeButton">작성</a>
+                        <a class="btn btn-outline-dark" th:href="@{/board/write}" th:class="writeButton">작성</a>
                     </div>
                 </th:block>
             </div>
@@ -46,28 +46,34 @@
                 <span class="float-start me-2">총 [[${cnt}]]개</span>
                 <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
                 <span class="float-end">
-        <form name="frmPageRows">
-            <input type="hidden" name="page" th:value="${page}">
-            <input id="category" type="hidden" th:value="${category}">
-            <select class="form-select" name="pageRows">
-                <option value="10" th:selected="${pageRows==10}">10</option>
-                <option value="15" th:selected="${pageRows==15}">15</option>
-                <option value="20" th:selected="${pageRows==20}">20</option>
-                <option value="50" th:selected="${pageRows==50}">50</option>
-            </select>
-
-            <select class="form-select" name="sort">
-                <option name="sortVal" value="id" th:selected="${sort eq 'id'}">최신순</option>
-                <option name="sortVal" value="viewCnt" th:selected="${sort eq 'view'}">조회순</option>
-            </select>
-        </form>
             </span>
+            </div>
+
+            <div>
+            <form name="frmPageRows">
+                <input type="hidden" name="page" th:value="${page}">
+                <input id="category" type="hidden" th:value="${category}">
+                <select class="form-select" name="pageRows">
+                    <option value="10" th:selected="${pageRows==10}">10</option>
+                    <option value="15" th:selected="${pageRows==15}">15</option>
+                    <option value="20" th:selected="${pageRows==20}">20</option>
+                    <option value="50" th:selected="${pageRows==50}">50</option>
+                </select>
+
+                <select class="form-select" name="sortForm">
+                    <option name="id" value="id" th:selected="${sort eq 'id'}">최신순</option>
+                    <option name=view value="view" th:selected="${sort eq 'view'}">조회순</option>
+                </select>
+            </form>
+
+
+
             </div>
 
             <!-- 페이징 헤더 -->
 
             <!-- 목록 -->
-            <table class="table table-hover">
+            <table class="table table-hover" id="listTable">
                 <thead class="table-success">
                 <tr>
                     <th>#</th>
@@ -87,6 +93,15 @@
                 </tr>
                 </tbody>
             </table>
+
+            <div class="card" style="width: 18rem;" id="shareTable">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h5 class="card-title">Card username</h5>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
             <!-- 목록 -->
 
         </div>
