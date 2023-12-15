@@ -20,13 +20,12 @@ public interface BoardService {
     @Transactional
     Post detail(Long id);
 
-    List<Post> list();
+//    List<Post> list();
 
-    List<Post> list(Integer page, Model model, String category);
+    List<Post> list(Integer page, Model model, String category, String sort);
 
     List<Post> findByUserName(String username);
 
-    List<Post> listDescByViewCnt(Integer page, Model model, String category);
 
     Post selectById(Long id);
 
@@ -36,5 +35,5 @@ public interface BoardService {
 
     int deleteById(Long id);
 
-    List<Post> serchByList(String keyword, Integer page, Model model);
+    List<Post> serchByList(String keyword, Integer page, Model model, String category);
 } // end Service

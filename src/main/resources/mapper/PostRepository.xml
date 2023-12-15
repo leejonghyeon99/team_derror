@@ -72,10 +72,10 @@
         WHERE id = #{id}
     </update>
 
-    <select id="findAll" resultMap="mapPost">
-        <include refid="SELECT_BASE"/>
-        ORDER BY p.id DESC
-    </select>
+<!--    <select id="findAll" resultMap="mapPost">-->
+<!--        <include refid="SELECT_BASE"/>-->
+<!--        ORDER BY p.id DESC-->
+<!--    </select>-->
 
     <update id="update" flushCache="true" parameterType="com.example.demo.domain.board.Post">
         UPDATE post
@@ -90,28 +90,27 @@
     <select id="selectFromRow" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
         AND p.category = #{category}
-        ORDER BY p.id DESC
-        LIMIT #{param1}, #{param2}
-    </select>
-
-    <select id="selectFromRowByViewCnt" resultMap="mapPost">
-        <include refid="SELECT_BASE"/>
-        AND p.category = #{category}
-        ORDER BY p.view_cnt DESC
+        ORDER BY #{sort} DESC
         LIMIT #{param1}, #{param2}
     </select>
 
     <select id="countAll" resultType="java.lang.Integer">
-        SELECT count(*) FROM post
+        SELECT count(*) FROM post p WHERE p.category = #{category}
     </select>
 
     <select id="findByList" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
-                AND p.title LIKE CONCAT('%', #{keyword}, '%')
+        AND p.category = #{category}
+        AND p.title LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="countAllKeyword" resultType="java.lang.Integer">
-        SELECT count(distinct p.id) FROM member m join post p on m.auth_id = 2 and p.title like concat('%',#{keyword},'%');
+        SELECT count(distinct p.id)
+        FROM member m
+            JOIN post p
+                ON m.auth_id = 2
+                    AND p.title LIKE concat('%',#{keyword},'%')
+                    AND p.category = #{category};
     </select>
 
 

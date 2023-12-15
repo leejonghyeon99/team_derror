@@ -6,6 +6,8 @@ import com.example.demo.service.board.CommentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -17,5 +19,11 @@ class BoardControllerTest {
     @Test
     public void pageRows(){
         System.out.println("작동 가능?"+ U.getSession().toString());
+    }
+
+    @Test
+    @PostMapping("/{category}/desc?pageRows")
+    public void viewCntpageRows(){
+        System.out.println("두번째 테스트");
     }
 }
