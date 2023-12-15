@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../static/css/post/list.css">
+    <link rel="stylesheet" th:href="@{/css/post/list.css}">
+    <title>Title</title>
+</head>
+<body>
+    <div class="post-wrapper">
+        <h1>자유 게시판</h1>
+        <div class="filter-box">
+            <select name="category">
+                <option value="free">자유 게시판</option>
+                <option value="share">공유 게시판</option>
+                <option value="notice">공지사항 게시판</option>
+            </select>
+            <select name="sort">
+                <option value="id">최신순</option>
+                <option value="view">조회순</option>
+            </select>
+        </div>
+        <hr>
+        <div class="post-list">
+            <table>
+                <thead>
+                    <tr class="th-header">
+                        <th>작성자</th>
+                        <th>타이틀</th>
+                        <th>작성일자</th>
+                        <th>조회수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="post">
+                        <td><a href="#" class="member"><span>작성자</span></a></td>
+                        <td><a href="#"><span>타이틀</span></a></td>
+                        <td><span>2023-01-01</span></td>
+                        <td><span>30</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+<script src="../../../static/js/post/list.js"></script>
+<script th:src="@{/js/post/list.js}"></script>
+</body>
+</html>

@@ -27,7 +27,7 @@ class PostRepositoryTest {
     @Test
     public void test(){
         List<Post> posts = null;
-        posts = postRepository.findAll();
+//        posts = postRepository.findAll();
 
         posts.stream().forEach(System.out::println);
     }
