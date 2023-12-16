@@ -109,7 +109,7 @@
                 <div class="col-md-12">
                     <div class="main_four">
                         <a href="/airandhotel/airport">항공정보조회</a>
-                        <a>일정 추가</a>
+                        <button id="addEventButton" onclick="showEventDetails()">일정 추가</button>
                     </div>
                 </div>
         </div> <!-- 맨위에 row -->
@@ -137,7 +137,21 @@
         let marker1 = new google.maps.Marker({position: myPos1});
         marker1.setMap(map);
     };
+
+
+    // var requestOptions = {
+    //     method: 'GET',
+    //     redirect: 'follow'
+    // };
+    // fetch("https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*", requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));
+
+
+
 </script>
+
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>
 </body>

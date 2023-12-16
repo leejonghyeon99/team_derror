@@ -44,8 +44,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("modalOpen2").addEventListener("click", function () {
-        openModal("modal2");
+        showEventDetails();
     });
+    function showEventDetails() {
+        // 이벤트 데이터를 가져오거나 미리 정의
+        var eventData = {
+            name: "이벤트 이름",
+            time: "2023-12-31 18:30:00",
+            imageUrl: "https://example.com/image.jpg"
+        };
+        // 모달 내용 업데이트
+        document.getElementById('eventName').textContent = eventData.name;
+        document.getElementById('eventTime').textContent = eventData.time;
+        // 이미지 업데이트
+        var imgElement = document.getElementById('eventImage');
+        imgElement.src = eventData.imageUrl;
+        imgElement.alt = "이벤트 이미지";
+        // 모달 열기
+        openModal('modal2');
+    }
 
     document.getElementById("modalOpen3").addEventListener("click", function () {
         openModal("modal3");
@@ -58,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var closeBtn = document.getElementsByClassName("close");
     for(var i = 0; i<closeBtn.length; i++){
         closeBtn[i].addEventListener("click",function (){
-            var madalId = this.parentElement.parentElement.id;
+            var modalId = this.parentElement.parentElement.id;
             closeModal(modalId);
         })
     }

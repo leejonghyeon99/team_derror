@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.event.EventRepository">
+
+    <resultMap id="eventResultMap" type="com.example.demo.domain.event.Events">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+    <insert id="insertEvent" parameterType="com.example.demo.domain.event.Events">
+        INSERT INTO events (id, name)
+        VALUES (#{id}, #{name});
+
+        INSERT INTO images (event_id, images_url)
+        VALUES
+            <foreach collection="images" item="image" separator=",">
+                (#{id}, #{image.imageUrl})
+            </foreach>;
+
+        INSERT INTO dates (event_id, start_local_date, start_local_time) VALUES
+        (#{id}, #{dates.start.localDate}, #{dates.start.localTime});
+    </insert>
+
+    <select id="getAllEvents" resultMap="eventResultMap">
+        SELECT * FROM events;
+    </select>
+
+    <select id="getEventById" parameterType="String" resultMap="eventResultMap">
+        SELECT * FROM events WHERE id = #{id};
+    </select>
+</mapper>
