@@ -1,43 +1,74 @@
 $(function () {
 
-    // 최신순 조회순/ 몇개 뽑을건지
-    $("[name='pageRows']").change(function () {
-        let $category = $("#category").val();
-        let frm = $("[name = 'frmPageRows']");
-        frm.attr("method", "POST");
 
-        let sort = $("[name='sortForm']").val();
-        console.log("목록에"+sort) // 목록에 id
-        if (sort === 'id') {
-            frm.attr("action", `${$category}/pageRows`)
-            frm.submit();
-        }
-        if (sort === 'view') {
-            frm.attr("action", `${$category}/pageRows`)
-            frm.submit();
-        }
-    });
+    const postList = $('.post-body');
 
 
-    // 최신순, 조회순 정렬
-    $("[name='sortForm']").change(function () {
-        let $category = $("#category").val();
-        let sort = $(this).val();
-        console.log("정렬에"+sort) // 정렬에 view
-        // 여기서 새로고침 왜????
-        let frm = $("[name = 'frmPageRows']");
-        frm.attr("method", "GET");
+    //최초 로딩
+    getList();
 
-        if (sort === 'id') {
-            frm.attr("action", `/board/${$category}`);
-            frm.submit();
-        }
+    $(".form-select").change(function (){
+        getList();
+    })
 
-        if (sort === 'view') {
-            frm.attr("action", `/board/${$category}`);
-            frm.submit();
-        }
-    });
+    function getList(){
+        let  category = $('[name="category"]').val();
+        let sort = $('[name="sort"]').val();
+
+        $.ajax({
+            url: `api/list/${category}?sort=${sort}`,
+            method : "GET",
+            success : function (data,status){
+
+                if (status === "success"){
+                    listRendering(data)
+                }
+            }
+
+        })
+    }
+    // // 최신순 조회순/ 몇개 뽑을건지
+    // $("[name='pageRows']").change(function () {
+    //     let $category = $("#category").val();
+    //     let frm = $("[name = 'frmPageRows']");
+    //     frm.attr("method", "POST");
+    //
+    //     let sort = $("[name='sortForm']").val();
+    //     console.log("목록에"+sort) // 목록에 id
+    //     if (sort === 'id') {
+    //         frm.attr("action", `${$category}/pageRows`)
+    //         frm.submit();
+    //     }
+    //     if (sort === 'view') {
+    //         frm.attr("action", `${$category}/pageRows`)
+    //         frm.submit();
+    //     }
+    // });
+    //
+    //
+    // // 최신순, 조회순 정렬
+    // $("[name='sortForm']").change(function () {
+    //     let $category = $("#category").val();
+    //     let sort = $(this).val();
+    //     console.log("정렬에"+sort) // 정렬에 view
+    //     // 여기서 새로고침 왜????
+    //     let frm = $("[name = 'frmPageRows']");
+    //     frm.attr("method", "GET");
+    //
+    //     if (sort === 'id') {
+    //         frm.attr("action", `/board/${$category}`);
+    //         frm.submit();
+    //     }
+    //
+    //     if (sort === 'view') {
+    //         frm.attr("action", `/board/${$category}`);
+    //         frm.submit();
+    //     }
+    // });
+
+
+
+    //*************************************************************************************
 
 
     // 검색창 검색 결과가 없을때
