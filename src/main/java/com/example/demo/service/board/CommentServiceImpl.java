@@ -67,7 +67,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * @Author 이종현
+     *
      * @param memberId
      * @param postId
      * @param content
@@ -101,7 +101,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * @Author 이종현
+     *
      * @param memberId
      * @param postId
      * @param commentId
