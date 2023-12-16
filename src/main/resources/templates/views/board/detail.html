@@ -66,7 +66,7 @@
                             </li>
                         </ul>
                         <!--/* 이미지인 경우 보여주기 */-->
-                        <div th:each="attach : ${post.fileList}" th:if="${attach.image}">
+                        <div id="image-container" th:each="attach : ${post.fileList}" th:if="${attach.image}">
                             <img th:src="@{'/upload/' + ${attach.filename}}" class="img-thumbnail" alt="첨부파일">
                         </div>
                     </div>
@@ -81,9 +81,10 @@
                     <button type="button" class="btn btn-outline-danger ms-2" id="btnDel"
                             th:if="${logged_user.id == post.member.id}">삭제
                     </button>
+
                     <a class="btn btn-outline-dark ms-2" th:href="@{/board/write}" sec:authorize="hasAnyRole('ADMIN')"
                        th:class="writeButton">작성</a>
-                    </span>
+
                     <a class="btn btn-outline-dark ms-2" th:if="${session.category} eq notice" th:href="@{/board/notice(page=${session.page})}">목록</a>
                     <a class="btn btn-outline-dark ms-2" th:if="${session.category} eq free" th:href="@{/board/free(page=${session.page})}">목록</a>
                     <a class="btn btn-outline-dark ms-2" th:if="${session.category} eq share" th:href="@{/board/share(page=${session.page})}">목록</a>

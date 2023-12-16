@@ -55,13 +55,15 @@ $(function () {
 
         if (path === '/board/notice') {
             $("#notice").show(); // 공지사항을 보여줌
+            $('#shareCards').hide(); // 공유게시판 보이기
         }
         if (path === '/board/free') {
             $("#free").show(); // 자유게시판을 보여줌
+            $('#shareCards').hide(); // 공유게시판 보이기
         }
         if (path === '/board/share') {
             $('#listTable').hide(); // 테이블 숨기기
-            $('#shareTable').show(); // 공유게시판 보이기
+            $('#shareCards').show(); // 공유게시판 보이기
             $("#share").show();
         }
     }
