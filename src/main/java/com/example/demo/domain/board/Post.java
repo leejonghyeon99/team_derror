@@ -21,6 +21,7 @@ public class Post {
     private String category;    // 카테고리
     private String title;   // 제목
     private String content; // 내용
+
     private LocalDateTime createdDate;  // 작성일자
     private Long viewCnt;   // 조회수
 

@@ -24,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 /**
@@ -170,7 +171,7 @@ public class BoardServiceImpl implements BoardService {
         if(post != null){
             // 첨부파일(들) 정보 가져오기
             List<Attachment> fileList = attachmentRepository.findByPost(post.getId());
-            System.out.println(fileList);
+            System.out.println("파일리스트" + fileList);
             setImage(fileList);   // 이미지 파일 여부 세팅
             post.setFileList(fileList);
         }

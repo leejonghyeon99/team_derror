@@ -26,7 +26,6 @@ public interface BoardService {
 
     List<Post> findByUserName(String username);
 
-
     Post selectById(Long id);
 
     int update(Post post,
