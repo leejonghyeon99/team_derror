@@ -28,9 +28,16 @@ public class PostController {
         return "post/detail";
     }
 
-    @GetMapping("/list")
-    public void list(Model model){
-        model.addAttribute("category",U.getSession().getAttribute("category"));
+    @GetMapping("/free")
+    public void free(Model model){
+        model.addAttribute("category","free");
+        model.addAttribute("pageRows","free");
+        model.addAttribute("sort",U.getSession().getAttribute("sort"));
+    }
+
+    @GetMapping("/notice")
+    public void notice(Model model){
+        model.addAttribute("category","notice");
         model.addAttribute("sort",U.getSession().getAttribute("sort"));
     }
 

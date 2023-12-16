@@ -23,9 +23,10 @@ public class PostApiController {
 
 
 
-    @GetMapping("/list/{category}")
+    @GetMapping("/{category}/list")
     public ResponseEntity<PostPage> list(
             Integer page,
+            Integer pageRows,
             @RequestParam(defaultValue = "id") String sort,
             @PathVariable String category
             ){
