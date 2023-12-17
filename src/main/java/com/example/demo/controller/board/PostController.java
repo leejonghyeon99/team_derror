@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/post")
+@RequestMapping("/board")
 public class PostController {
 
 
@@ -51,17 +51,17 @@ public class PostController {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
 
-            return "redirect:/post/write";
+            return "redirect:/board/write";
         }
 
         model.addAttribute("result", postService.write(post, files));
-        return "post/writeOk";
+        return "board/writeOk";
     }
 
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable Long id){
         model.addAttribute("post",postService.detail(id));
-        return "post/detail";
+        return "board/detail";
     }
 
 
@@ -89,7 +89,7 @@ public class PostController {
     ){
         U.getSession().setAttribute("pageRows",pageRows);
         postService.findListByKeyWord(keyword,page,model,category,sort);
-        return "post/"+category;
+        return "board/"+category;
     }
 
     // 수정페이지
@@ -97,7 +97,7 @@ public class PostController {
     public String update(@PathVariable Long id, Model model){
         Post post = postService.findById(id);
         model.addAttribute("post", post);
-        return "post/update";
+        return "board/update";
     }
 
     // 수정완료
@@ -119,12 +119,12 @@ public class PostController {
                 redirectAttrs.addFlashAttribute("error_" + err.getField(), err.getCode());
             }
 
-            return "redirect:/post/update/" + post.getId();
+            return "redirect:/board/update/" + post.getId();
         }
 
 
         model.addAttribute("result", postService.update(post, files, delfile));
-        return "post/updateOk";
+        return "board/updateOk";
     }
 
     // 삭제
@@ -132,6 +132,6 @@ public class PostController {
     public String deleteOk(Long postId, Model model){
         int result = postService.deleteById(postId);
         model.addAttribute("result", result);
-        return "post/deleteOk";
+        return "board/deleteOk";
     }
 }

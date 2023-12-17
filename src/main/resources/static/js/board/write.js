@@ -1,7 +1,4 @@
 $(function(){
-    // TODO
-    // 검증코드등...
-
     // [추가] 버튼 누르면 첨부파일 추가
     var i = 0;
     $("#btnAdd").click(function(){
@@ -13,6 +10,7 @@ $(function(){
         `);
         i++;
     });
+
     // Summernote 추가
     $("#content").summernote({
         height: 300,
@@ -27,5 +25,13 @@ $(function(){
             ['view', ['fullscreen', 'codeview', 'help']]
         ]
     });
+
+    // const isAdmin = sessionStorage.getItem('isAdmin');
+    // const isAdmin = true;
+    //
+    // if (!isAdmin) {
+    //     $('input[value="notice"]').parent().hide();
+    // }
+
 
 });
