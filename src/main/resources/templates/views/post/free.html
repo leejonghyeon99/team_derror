@@ -33,7 +33,10 @@
 
 
 <div>
+    <h1>자유 게시판</h1>
+
     <div class="container mt-3">
+        <p th:each="post : ${postPage}" th:text="${post}">
         <div>
             <h2 id="notice" style="display: none;">공지사항</h2>
             <h2 id="free" style="display: none;">자유게시판</h2>

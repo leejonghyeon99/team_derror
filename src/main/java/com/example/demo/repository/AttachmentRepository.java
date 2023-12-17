@@ -20,6 +20,12 @@ public interface AttachmentRepository {
 
     // 첨부파일 저장
     int save(Attachment file);
+    
+    //첨부파일 저장시 첫번째 이미지를 썸네일로 post 테이블의 저장
+    int updateForThumbnail(Long id);
+
+    //첨부파일 삭제시 null이면 기본이미지로 이미지 존재시 첫번째 이미지로 변경
+    int updateForThumbnailWhenDelete(Long id);
 
     // 특정 글(postId) 의 첨부파일들
     List<Attachment> findByPost(Long postId);
