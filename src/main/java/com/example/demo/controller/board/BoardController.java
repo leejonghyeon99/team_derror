@@ -25,7 +25,7 @@ import java.util.Map;
  * @Author 장고운
  */
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/sample")
 public class BoardController {
 
 
