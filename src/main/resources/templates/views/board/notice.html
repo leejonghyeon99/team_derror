@@ -26,13 +26,9 @@
 
 
 <div>
-    <h1>공지사항 게시판</h1>
     <div class="container mt-3">
         <div>
             <h2 id="notice" style="display: none;">공지사항</h2>
-            <h2 id="free" style="display: none;">자유게시판</h2>
-            <h2 id="share" style="display: none;">공유게시판</h2>
-
             <hr>
             <div sec:authorize="isAuthenticated()">
                 <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
@@ -44,26 +40,26 @@
 
             <!-- 페이징 헤더 -->
             <div class="mb-3 mt-3 clearfix">
-                <span class="float-start me-2">총 [[${cnt}]]개</span>
-                <span class="float-start">page [[${page}]]/[[${totalPage}]]</span>
+                <span class="float-start me-2">총 [[${postPage.cnt}]]개</span>
+                <span class="float-start">page [[${postPage.page}]]/[[${postPage.totalPage}]]</span>
                 <span class="float-end">
             </span>
             </div>
 
             <div>
                 <form name="frmPageRows">
-                    <input type="hidden" name="page" th:value="${page}">
-                    <input id="category" type="hidden" th:value="${category}">
+                    <input type="hidden" name="page" th:value="${postPage.page}">
+                    <input id="category" type="hidden" th:value="${postPage.category}">
                     <select class="form-select" name="pageRows">
-                        <option value="10" th:selected="${pageRows==10}">10</option>
-                        <option value="15" th:selected="${pageRows==15}">15</option>
-                        <option value="20" th:selected="${pageRows==20}">20</option>
-                        <option value="50" th:selected="${pageRows==50}">50</option>
+                        <option value="10" th:selected="${postPage.pageRows==10}">10</option>
+                        <option value="15" th:selected="${postPage.pageRows==15}">15</option>
+                        <option value="20" th:selected="${postPage.pageRows==20}">20</option>
+                        <option value="50" th:selected="${postPage.pageRows==50}">50</option>
                     </select>
 
-                    <select class="form-select" name="sortForm">
-                        <option name="id" value="id" th:selected="${sort eq 'id'}">최신순</option>
-                        <option name=view value="view" th:selected="${sort eq 'view'}">조회순</option>
+                    <select class="form-select" name="sort">
+                        <option name="id" value="id" th:selected="${postPage.sort eq 'id'}">최신순</option>
+                        <option name=view value="view" th:selected="${postPage.sort eq 'view'}">조회순</option>
                     </select>
                 </form>
 
@@ -84,53 +80,15 @@
                 </tr>
                 </thead>
                 <tbody id="th_body">
-                <tr th:each="post : ${list}">
+                <tr th:each="post : ${postPage.posts}">
                     <td><span th:text="${post.id}"></span></td>
                     <td><span><a th:href="@{'/board/detail/' + ${post.id}}" th:text="${post.title}"></a></span></td>
-                    <td><span th:text="${post.member.username}"></span></td>
+                    <td><span th:text="${post.member.name}"></span></td>
                     <td><span th:text="${post.viewCnt}"></span></td>
                     <td><span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
                 </tr>
                 </tbody>
             </table>
-
-            <!-- 공유게시판 카드 -->
-            <div id="shareCards" class="row row-cols-2 row-cols-md-5 g-4">
-                <div th:each="post: ${list}" class="col">
-                    <div class="card h-100">
-                        <div class="card-head">
-                            <a th:href="@{'/board/detail/' + ${post.id}}">
-                                <!-- 이미지가 있는 경우 이미지 표시 -->
-                                <div th:if="${post.fileList != null and not #lists.isEmpty(post.fileList)}">
-                                    <!-- 첫 번째 이미지만 갤러리에 표시 -->
-                                    <div th:with="firstImage=${post.fileList[0]}">
-                                        <div th:if="${firstImage.image}">
-                                            <img th:src="@{'/upload/' + ${firstImage.filename}}" class="card-img-top" alt="첨부파일">
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- 이미지가 없는 경우 또는 이미지 파일이 아닌 경우 기본 이미지 표시 -->
-                                <div th:if="${post.fileList == null}">
-                                    <img th:src="@{'/upload/디즈니랜드.jpeg'}" class="card-img-top" alt="기본이미지"/>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <a th:href="@{'/board/detail/' + ${post.id}}">
-                                <h5 class="card-title" th:text="${post.title}">Card title</h5>
-                            </a>
-                            <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${post.member.username}">Card
-                                subtitle</h6>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary"
-                                   th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}">Card
-                                createdDate</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
             <!-- pagination -->
             <th:block th:insert="~{board/pagination::pagination}"></th:block>
