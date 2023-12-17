@@ -66,6 +66,7 @@ public class PostController {
         model.addAttribute("post",postService.detail(id));
         model.addAttribute("commentCnt", commentService.commentCntByPostId(id));
         model.addAttribute("parentComment",commentService.listbyParents(id));
+
         return "board/detail";
     }
 
