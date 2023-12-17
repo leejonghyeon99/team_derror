@@ -13,8 +13,31 @@
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.board.Attachment">
         INSERT INTO attach(sourcename, filename, post_id)
         VALUES
-            (#{sourcename}, #{filename}, #{post_id})
+            (#{sourcename}, #{filename}, #{postId})
     </insert>
+
+    <update id="updateForThumbnail">
+        UPDATE post
+        SET thumbnail = (
+            SELECT filename
+            FROM attach
+            WHERE post_id = post.id
+            ORDER BY id ASC
+            LIMIT 1
+        )
+        WHERE id = #{id}
+    </update>
+    <update id="updateForThumbnailWhenDelete">
+        UPDATE post
+        SET thumbnail = IFNULL((
+               SELECT filename
+               FROM attach
+               WHERE post_id = post.id
+               ORDER BY id ASC
+               LIMIT 1
+           ), 'defaulta.jpg')
+        where id = #{id}
+    </update>
 
     <sql id="SELECTFILE">
         SELECT id, sourcename, filename, post_id

@@ -51,10 +51,10 @@
         <collection property="fileList" resultMap="mapAttachment"/><!-- Attachment 객체와의 매핑 -->
     </resultMap>
 
-<!--    <select id="findById" resultMap="mapPost">-->
-<!--        <include refid="SELECT_BASE"/>-->
-<!--        AND p.id = #{id}-->
-<!--    </select>-->
+    <select id="findById" resultMap="mapPost">
+        <include refid="SELECT_BASE"/>
+        AND p.id = #{id}
+    </select>
 
     <select id="findByUserName" resultMap="mapPost">
         SELECT p.id           "p_id",
@@ -119,7 +119,7 @@
                           AND p.category = #{category};
     </select>
 
-    <select id="findById" resultMap="mapPost">
+    <select id="findByCategory" resultMap="mapPost">
         SELECT p.id "p_id",
                p.title "p_title",
                p.category "p_category",
@@ -135,8 +135,10 @@
                m.email "m_email"
         FROM post p
                  LEFT JOIN attach a ON p.id = a.post_id
-                 INNER JOIN member m ON p.member_id = m.id
-        WHERE p.id = #{id}
+                 left JOIN member m ON p.member_id = m.id
+        WHERE p.category = #{category}
+        ORDER BY p.id DESC
+        LIMIT #{param1}, #{param2}
     </select>
 
 

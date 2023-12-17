@@ -14,9 +14,12 @@ public interface PostRepository {
 
     // 특정 id 글 내용 읽기 (SELECT)
     // 만약 해당 id 의 글 없으면 null 리턴함
+
     Post findById(Long id);
 
-    Post findByImage(Long id);
+    List<Post> findByCategory(int from, int rows, String category);
+
+//    Post findByImage(Long id);
 
     List<Post> findByUserName(String username);
 
