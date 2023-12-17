@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CommentRepository {
 
+    //게시글번호의 댓글 총 갯수
+    int commentCnt(Long id);
 
     // 게시글 번호의 부모 댓글 목록
     List<Comment> findAllParents(Long postId);

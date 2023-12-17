@@ -33,6 +33,16 @@ public class CommentServiceImpl implements CommentService {
 
 
     /**
+     * 
+     * @param id 게시글 번호
+     * @return 게시글번호의 댓글 총 개수
+     */
+    @Override
+    public int commentCntByPostId(Long id) {
+        return commentRepository.commentCnt(id);
+    }
+
+    /**
      *
      * @param postId 게시글 번호(id)
      * @return list[게시글의 부모 댓글 목록 반환]

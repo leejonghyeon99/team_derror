@@ -1,12 +1,72 @@
-/* 이미지를 감싸는 부모 요소에 대한 스타일 */
-#image-container {
-    max-width: 100%; /* 이미지 컨테이너의 최대 너비를 지정합니다. */
+* {
+    box-sizing: border-box;
+    border-collapse: collapse;
 }
 
-/* 실제 이미지에 대한 스타일 */
-#image-container img {
-    max-width: 100%; /* 이미지의 최대 너비를 100%로 지정하여 부모 요소에 맞게 조절합니다. */
-    height: auto; /* 높이를 자동으로 조절하여 가로 세로 비율을 유지합니다. */
-    display: block; /* 이미지를 블록 요소로 표시합니다. */
-    margin: 0 auto; /* 가운데 정렬을 위해 좌우 여백을 자동으로 설정합니다. */
+a{
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.container{
+    width: 900px;
+    padding: 30px 25px;
+    border: 1px solid rgba(208, 208, 208, 0.97);
+    border-radius: 5px;
+}
+
+.user-logo {
+    width: 100px; /* 이미지 너비 조절 */
+    height: auto; /* 높이 자동 조절 */
+    margin-right: 10px; /* 이미지 오른쪽 여백 */
+    width: 30px;
+    border-radius: 50%;
+}
+
+.post-sub {
+    position: relative;
+    display: flex;
+    align-items: center; /* 수직 정렬 중앙 */
+}
+
+.post-info{
+    display: flex;
+    flex-direction: column;
+    font-size: 0.7em;
+}
+
+
+.info-member {
+    font-weight: bold; /* 멤버 이름에 굵게 표시 */
+}
+
+.post-link-comment{
+    position: absolute;
+    right: 15px;
+}
+
+.post-body{
+    margin: 20px 0;
+    min-height: 500px;
+}
+
+.post-body-bottom{
+    display: flex;
+    align-items: center;
+    color: black;
+}
+
+
+
+.post-comment{
+    margin: 20px 0;
+    min-height: 50px;
+}
+
+.post-comment{
+
 }

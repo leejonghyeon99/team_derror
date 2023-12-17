@@ -8,6 +8,7 @@
         <id property="commentId" column="comment_id"/>
         <id property="content" column="content"/>
         <id property="createdDate" column="created_date"/>
+        <id property="childCnt" column="childCnt"></id>
 
         <association property="member" column="member_id" javaType="com.example.demo.domain.user.Member">
             <id property="id" column="member_id"/>
@@ -18,8 +19,12 @@
 
 
     <select id="findAllParents" resultMap="commentMap">
-        select *
-        from comment
+        select * from comment c1
+                          left join (
+            select c2.comment_id, count(c2.comment_id) as childCnt from comment c1
+                                                                            join comment c2 on c1.id = c2.comment_id
+            group by c2.comment_id
+        ) as c2 on c1.id = c2.comment_id
         where post_id = #{postId}
         order by id desc
     </select>
@@ -28,6 +33,11 @@
         from comment
         where comment_id = #{commentId}
         order by id desc
+    </select>
+
+    <select id="commentCnt" resultType="java.lang.Integer">
+        select count(*)
+        from comment;
     </select>
 
 

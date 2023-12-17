@@ -3,6 +3,7 @@ package com.example.demo.controller.board;
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.PostPage;
 import com.example.demo.domain.board.U;
+import com.example.demo.service.board.CommentService;
 import com.example.demo.service.post.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,12 @@ public class PostController {
 
 
     private PostService postService;
+    private CommentService commentService;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, CommentService commentService) {
         this.postService = postService;
+        this.commentService = commentService;
     }
 
 
@@ -61,6 +64,8 @@ public class PostController {
     @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable Long id){
         model.addAttribute("post",postService.detail(id));
+        model.addAttribute("commentCnt", commentService.commentCntByPostId(id));
+        model.addAttribute("parentComment",commentService.listbyParents(id));
         return "board/detail";
     }
 

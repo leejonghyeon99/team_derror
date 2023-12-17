@@ -5,6 +5,9 @@ import com.example.demo.domain.board.QryCommentList;
 import com.example.demo.domain.board.QryResult;
 
 public interface CommentService {
+
+    int commentCntByPostId(Long id);
+
     // 게시글번호의 부모 댓글 목록
     QryCommentList listbyParents(Long postId);
 
