@@ -249,11 +249,13 @@ public class BoardServiceImpl implements BoardService {
             if (endPage >= totalPage) endPage = totalPage;
 
 
-            list = postRepository.selectFromRow(fromRow, pageRows, category, sort);
+//            list = postRepository.selectFromRow(fromRow, pageRows, category, sort);
+            list = postRepository.findByCategory(fromRow, pageRows, category);
 
             System.out.println("serviceimpl, "+fromRow+", " + pageRows+", "+ category+ "," +sort);
 
             model.addAttribute("list", list);
+
         } else {
             page = 0;
         }

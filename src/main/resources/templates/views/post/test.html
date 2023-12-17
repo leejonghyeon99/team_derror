@@ -33,12 +33,12 @@
             <h2 id="share" style="display: none;">공유게시판</h2>
 
             <hr>
-<!--            <div sec:authorize="isAuthenticated()">-->
-<!--                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">-->
+            <div sec:authorize="isAuthenticated()">
+                <th:block sec:authorize="hasAuthority('ROLE_ADMIN')">
                     <div>
                         <a class="btn btn-outline-dark" th:href="@{/board/write}" th:class="writeButton">작성</a>
                     </div>
-<!--                </th:block>-->
+                </th:block>
             </div>
 
             <!-- 페이징 헤더 -->

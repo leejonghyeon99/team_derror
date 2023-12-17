@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostService {
 
     Post detail(Long id);
-    PostPage list(Integer page, String category, String sort);
+    PostPage list(Integer page, String category, String sort, Model model);
 
 
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -82,7 +83,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostPage list(Integer page, String category, String sort) {
+    public PostPage list(Integer page, String category, String sort, Model model) {
         if(page == null) page = 1;  // 디폴트는 1page
         if(page < 1) page = 1;
 
@@ -147,6 +148,8 @@ public class PostServiceImpl implements PostService {
                 .endPage(endPage)
                 .posts(list)
                 .build();
+
+        model.addAttribute("postPage",postPage);
         return postPage;
     }
 

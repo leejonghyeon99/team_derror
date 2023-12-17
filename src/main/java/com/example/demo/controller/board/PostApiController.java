@@ -22,16 +22,16 @@ public class PostApiController {
     }
 
 
-
-    @GetMapping("/{category}/list")
-    public ResponseEntity<PostPage> list(
-            Integer page,
-            Integer pageRows,
-            @RequestParam(defaultValue = "id") String sort,
-            @PathVariable String category
-            ){
-
-        return new ResponseEntity<>(postService.list(page,category,sort), HttpStatus.OK);
-    }
+//
+//    @GetMapping("/{category}/list")
+//    public ResponseEntity<PostPage> list(
+//            Integer page,
+//            Integer pageRows,
+//            @RequestParam(defaultValue = "id") String sort,
+//            @PathVariable String category
+//            ){
+//
+//        return new ResponseEntity<>(postService.list(page,category,sort), HttpStatus.OK);
+//    }
 
 }
