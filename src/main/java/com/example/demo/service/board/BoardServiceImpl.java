@@ -94,7 +94,7 @@ public class BoardServiceImpl implements BoardService {
 
                 // 성공하면 DB 에도 저장
                 if(file != null){
-                    file.setPost_id(id);   // FK 설정
+                    file.setPostId(id);   // FK 설정
                     attachmentRepository.save(file);   // INSERT
                 }
             }
@@ -288,6 +288,8 @@ public class BoardServiceImpl implements BoardService {
         }
         return post;
     }
+
+
 
     @Override
     public int update(Post post
