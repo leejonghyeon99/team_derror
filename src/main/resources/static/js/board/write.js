@@ -26,12 +26,5 @@ $(function(){
         ]
     });
 
-    // const isAdmin = sessionStorage.getItem('isAdmin');
-    // const isAdmin = true;
-    //
-    // if (!isAdmin) {
-    //     $('input[value="notice"]').parent().hide();
-    // }
-
 
 });
