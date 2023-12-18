@@ -39,7 +39,6 @@ public interface PostRepository {
     // from 부터 rows 개 만큼 SELECT
     List<Post> selectFromRow(int from, int rows, String category, String sort);
 
-
     // 전체 글의 개수
     int countAll(String category);
 
