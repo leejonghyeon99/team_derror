@@ -42,7 +42,7 @@
                     </div>
                </div>
                <hr>
-               <div class="post-body">
+               <div class="post-body" th:text="${post.content}">
 
                </div>
                <div class="post-body-bottom">
@@ -81,6 +81,7 @@
                                    </div>
                                </div>
                            </div>
+                           <hr class="child-hr" th:if="${parent.childComment}"/>
                            <div class="child" th:if="${parent.childComment}" th:each="child, iterStat  : ${parent.childComment}">
                                <div class="comment-item">
                                    <div class="comment-logo">
@@ -95,8 +96,9 @@
                                        </div>
                                    </div>
                                </div>
+                               <hr th:unless="${iterStat.last}" />
                            </div>
-                           <hr th:if="${parent.childComment}"/>
+
                        </div>
                        <hr th:unless="${iterStat.last}" />
 

@@ -84,6 +84,10 @@ a:hover{
     margin-left: 50px;
     display: none;
 }
+.child-hr{
+    display: none;
+}
+
 
 
 .comment-body{

@@ -1,16 +1,11 @@
 $(document).ready(function (){
 
     $(".uiChilds").click(function (){
-        $(".child").toggle();
 
-        let ui = $('.child').css('display');
-        if (ui === 'block'){
-            $('.hideChilds').show();
-            $('.showChilds').hide();
-        }else{
-            $('.hideChilds').hide();
-            $('.showChilds').show();
-        }
+        $(this).closest(".comment-item").find(".child").toggle();
+        $(this).closest(".comment-item").find(".child-hr").toggle();
+        $('.hideChilds').toggle();
+        $('.showChilds').toggle();
     })
 })
 
