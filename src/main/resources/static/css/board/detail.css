@@ -57,6 +57,13 @@ a:hover{
     display: flex;
     align-items: center;
     color: black;
+    position: relative;
+}
+
+.crud-btn{
+    position: absolute;
+    right: 30px;
+    margin: 3px 8px;
 }
 
 .post-comment{
@@ -66,7 +73,18 @@ a:hover{
 
 .comment-item{
     display: flex;
+    flex-direction: column;
 }
+
+.parent{
+    display: flex;
+}
+
+.child{
+    margin-left: 50px;
+    display: none;
+}
+
 
 .comment-body{
     display: flex;
@@ -83,10 +101,6 @@ a:hover{
     font-size: 0.7em;
 }
 
-.comment-item.child{
-    margin-left: 50px;
-    display: none;
-}
 
 .uiChilds{
     font-size: 0.8em;

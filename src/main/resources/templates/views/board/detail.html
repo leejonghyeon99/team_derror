@@ -50,6 +50,12 @@
                    <div class="post-info">
                        <a href="#"><strong>[[${post.member.name}]]</strong>님의 게시글 더보기 ></a>
                    </div>
+                   <div class="crud-btn">
+                       <a th:href="@{board/write}"><strong>작성</strong></a>
+                       <a th:href="@{board/update}"><strong>수정</strong></a>
+                       <a th:href="@{board/delete}"><strong>삭제</strong></a>
+                       <a th:href="@{board/list}"><strong>목록</strong></a>
+                   </div>
                </div>
                <div>
 
@@ -58,35 +64,39 @@
                <div id="commentBody" class="post-comment">
                    <div class="comment-list" th:each="parent, iterStat : ${parentComment.list}">
                        <div class="comment-item">
-                           <div class="comment-logo">
-                               <img class="user-logo" th:if="${parent.member.thumnail_img}" th:src="@{parent.member.thumnail_img}">
-                               <img class="user-logo" th:unless="${parent.member.thumnail_img}" th:src="@{/img/bird.jpg}">
-                           </div>
-                           <div class="comment-body">
-                               <span class="comment-item-user" th:text="${parent.member.name}"></span>
-                               <span class="comment-item-content" th:text="${parent.content}"></span>
-                               <div>
-                                   <span class="comment-item-created" th:text="${#temporals.format(parent.createdDate,'yyyy-MM-dd HH:mm')}"></span>
-                                   <div th:if="${parent.childComment}">
-                                       <a class="uiChilds showChilds"><span>[[${parent.childCnt}]]개 답글 더보기...</span></a>
-                                       <a class="uiChilds hideChilds"><span>닫기</span></a>
+                           <div class="parent">
+                               <div class="comment-logo">
+                                   <img class="user-logo" th:if="${parent.member.thumnail_img}" th:src="@{parent.member.thumnail_img}">
+                                   <img class="user-logo" th:unless="${parent.member.thumnail_img}" th:src="@{/img/bird.jpg}">
+                               </div>
+                               <div class="comment-body">
+                                   <span class="comment-item-user" th:text="${parent.member.name}"></span>
+                                   <span class="comment-item-content" th:text="${parent.content}"></span>
+                                   <div>
+                                       <span class="comment-item-created" th:text="${#temporals.format(parent.createdDate,'yyyy-MM-dd HH:mm')}"></span>
+                                       <div th:if="${parent.childComment}">
+                                           <a class="uiChilds showChilds"><span>[[${parent.childCnt}]]개 답글 더보기...</span></a>
+                                           <a class="uiChilds hideChilds"><span>닫기</span></a>
+                                       </div>
                                    </div>
                                </div>
                            </div>
-                       </div>
-                       <hr th:if="${parent.childComment}"/>
-                       <div class="comment-item child" th:if="${parent.childComment}" th:each="child, iterStat  : ${parent.childComment}">
-                           <div class="comment-logo">
-                               <img class="user-logo" th:if="${child.member.thumnail_img}" th:src="@{child.member.thumnail_img}">
-                               <img class="user-logo" th:unless="${child.member.thumnail_img}" th:src="@{/img/bird.jpg}">
-                           </div>
-                           <div class="comment-body">
-                               <span class="comment-item-user" th:text="${child.member.name}"></span>
-                               <span class="comment-item-content" th:text="${child.content}"></span>
-                               <div>
-                                   <span class="comment-item-created" th:text="${#temporals.format(child.createdDate,'yyyy-MM-dd HH:mm')}"></span>
+                           <div class="child" th:if="${parent.childComment}" th:each="child, iterStat  : ${parent.childComment}">
+                               <div class="comment-item">
+                                   <div class="comment-logo">
+                                       <img class="user-logo" th:if="${child.member.thumnail_img}" th:src="@{child.member.thumnail_img}">
+                                       <img class="user-logo" th:unless="${child.member.thumnail_img}" th:src="@{/img/bird.jpg}">
+                                   </div>
+                                   <div class="comment-body">
+                                       <span class="comment-item-user" th:text="${child.member.name}"></span>
+                                       <span class="comment-item-content" th:text="${child.content}"></span>
+                                       <div>
+                                           <span class="comment-item-created" th:text="${#temporals.format(child.createdDate,'yyyy-MM-dd HH:mm')}"></span>
+                                       </div>
+                                   </div>
                                </div>
                            </div>
+                           <hr th:if="${parent.childComment}"/>
                        </div>
                        <hr th:unless="${iterStat.last}" />
 
