@@ -94,7 +94,9 @@ public class PostServiceImpl implements PostService {
                 }
             }
             Attachment attachment = attachmentRepository.findById(id);
+
             if (attachment != null){
+                System.out.println("ttt");
                 //첫번째 이미지를 썸네일 설정
                 attachmentRepository.updateForThumbnail(id);
             }

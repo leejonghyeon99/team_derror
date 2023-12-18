@@ -47,7 +47,7 @@
 
     <select id="findById" resultType="com.example.demo.domain.board.Attachment">
         <include refid="SELECTFILE"/>
-        AND id = #{id}
+        AND post_id = #{id}
     </select>
 
     <select id="findByPost" resultType="com.example.demo.domain.board.Attachment">
