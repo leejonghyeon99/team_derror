@@ -1,6 +1,7 @@
 package com.example.demo.controller.board;
 
 
+import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.PostPage;
 import com.example.demo.domain.board.U;
 import com.example.demo.service.post.PostService;
@@ -23,7 +24,10 @@ public class PostApiController {
         this.postService = postService;
     }
 
-
+    @GetMapping("/detail/{id}")
+    public Post detail(@PathVariable Long id){
+        return postService.detail(id);
+    }
 
     @GetMapping("/{category}")
     public ResponseEntity<PostPage> list(

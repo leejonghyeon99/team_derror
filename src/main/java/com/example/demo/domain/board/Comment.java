@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +29,9 @@ public class Comment {
     private Long commentId; // 부모 댓글 아이디
 
     private String content; // 댓글 내용
+    private int childCnt; //자식 댓글 개수
+
+    private List<Comment> childComment;
 
     // java.time.* 객체 변환을 위한 annotation  들
     @JsonSerialize(using = LocalDateTimeSerializer.class)

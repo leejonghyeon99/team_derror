@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -33,6 +34,16 @@ public class CommentServiceImpl implements CommentService {
 
 
     /**
+     * 
+     * @param id 게시글 번호
+     * @return 게시글번호의 댓글 총 개수
+     */
+    @Override
+    public int commentCntByPostId(Long id) {
+        return commentRepository.commentCnt(id);
+    }
+
+    /**
      *
      * @param postId 게시글 번호(id)
      * @return list[게시글의 부모 댓글 목록 반환]
@@ -41,10 +52,16 @@ public class CommentServiceImpl implements CommentService {
     public QryCommentList listbyParents(Long postId) {
         QryCommentList list = new QryCommentList();
 
-        List<Comment> comments = commentRepository.findAllParents(postId);
+        List<Comment> parents = commentRepository.findAllParents(postId);
 
-        list.setCount(comments.size());
-        list.setList(comments);
+        List<Comment> resultComments = parents.stream()
+                .peek(p -> p.setChildComment(commentRepository.findAllChilds(p.getId())))
+                .collect(Collectors.toList());
+
+
+        System.out.println(resultComments.toString());
+        list.setCount(resultComments.size());
+        list.setList(resultComments);
         list.setStatus("OK");
         return list;
     }
