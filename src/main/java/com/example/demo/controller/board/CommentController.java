@@ -25,6 +25,15 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    /**
+     * 
+     * @param postId 게시글 번호
+     * @return 게시글 번호의 총 댓글 개수
+     */
+    @GetMapping("/cnt/{postId}")
+    public ResponseEntity<Integer> getCnt(@PathVariable Long postId){
+        return new ResponseEntity<>(commentService.commentCntByPostId(postId),HttpStatus.OK);
+    }
 
     /**
      * @param postId 게시글 번호
