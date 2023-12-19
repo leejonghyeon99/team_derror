@@ -6,6 +6,8 @@ import com.example.demo.domain.board.QryResult;
 
 public interface CommentService {
 
+    Comment getCommentById(Long id);
+
     int commentCntByPostId(Long id);
 
     // 게시글번호의 부모 댓글 목록

@@ -105,6 +105,38 @@ a:hover{
     font-size: 0.7em;
 }
 
+.comment-reply{
+    color: #00498C;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.reply-form{
+    display: none;
+    margin-left: 50px;
+}
+
+.reply-form input{
+    width: 600px;
+    height: 55px;
+    border-radius: 5px;
+    border: 1px solid #555555;
+}
+
+.reply-form button{
+    width: 80px;
+    height: 57px;
+    border-radius: 5px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border: none;
+    background-color: #adb5bd;
+}
+
+.hideReply{
+    display: none;
+}
+
 
 .uiChilds{
     font-size: 0.8em;

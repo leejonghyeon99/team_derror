@@ -2,6 +2,7 @@ package com.example.demo.controller.board;
 
 
 
+import com.example.demo.domain.board.Comment;
 import com.example.demo.domain.board.QryCommentList;
 import com.example.demo.domain.board.QryResult;
 import com.example.demo.service.board.CommentService;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 
 
 @RestController
@@ -72,20 +74,25 @@ public class CommentController {
 
     /**
      *
-     * @param memberId 댓글 작성자 번호
-     * @param postId 댓글이 작성되는 게시글 번호
-     * @param commentId 댓글이 작성되는 부모 댓글 번호
-     * @param content 내용
+     * @param requestBody memberId, postId, commentId, content
      * @return
      */
     @PostMapping("/child/write")
-    public ResponseEntity<QryResult> parentCommentSaveByPostId(
-            Long memberId,
-            Long postId,
-            Long commentId,
-            String content
+    public ResponseEntity<QryCommentList> parentCommentSaveByPostId(
+            @RequestBody Map<String, Object> requestBody
     ){
-        return new ResponseEntity<>(commentService.writeChildComment(memberId,postId,commentId, content),HttpStatus.OK);
+        Long commentId = Long.valueOf(requestBody.get("commentId").toString());
+        Long memberId = Long.valueOf(requestBody.get("memberId").toString());
+        Long postId = Long.valueOf(requestBody.get("postId").toString());
+        String content = (String) requestBody.get("content");
+        System.out.println("test: "+memberId+", "+postId+", "+commentId+", "+content);
+        QryResult qryResult = commentService.writeChildComment(memberId,postId,commentId, content);
+        QryCommentList commentList = null;
+        if(qryResult.getStatus().equals("OK")){
+            System.out.println(qryResult.getId());
+             commentList= commentService.listbyChilds(commentId);
+        }
+        return new ResponseEntity<>(commentList,HttpStatus.OK);
     }
 
     /**
