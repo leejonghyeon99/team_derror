@@ -11,7 +11,8 @@
     <script th:src="@{/js/user/detail.js}"></script>
     <script >function confirmDelete(){
             let confirmMsg = confirm("회원 탈퇴를 진행하시겠습니까?")
-            return confirmMsg;        }
+            return confirmMsg;
+    }
     </script>
     <title>회원정보</title>
 
@@ -101,7 +102,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="post : ${list}">
+                <tr th:each="post : ${list}" >
                     <td>
                         <a th:href="@{/board/detail/{postId}(postId=${post.id})}" th:text="${post.title}"></a>
                     </td>

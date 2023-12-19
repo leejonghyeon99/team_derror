@@ -7,12 +7,15 @@ import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.user.UserRepository;
 import com.example.demo.service.UserService;
 import com.example.demo.service.board.BoardService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -128,7 +131,7 @@ public class UserController {
     }
 
         @PostMapping("/signout")
-        public String removeUser(Model model) {
+        public String removeUser(Model model, HttpServletRequest request, HttpServletResponse response) {
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -140,6 +143,7 @@ public class UserController {
 
                 if (member != null) {
                     int result = userService.removeById(member.getId());
+                    new SecurityContextLogoutHandler().logout(request, response, authentication);
                     model.addAttribute("result", result);
                     return "/user/signout";
                 }
