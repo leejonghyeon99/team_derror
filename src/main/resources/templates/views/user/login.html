@@ -14,12 +14,13 @@
 
 <th:block th:insert="~{common/sidebar::sidebar}"/>
 
-<div id="signup">
-    <h2 class="form_title" >로그인</h2>
-    <form th:action="@{/user/login}" method="POST" id="sign-frm">
+<div id="login">
+    <h2 class="form_title">로그인</h2>
+    <form th:action="@{/user/login}" method="POST" id="login-frm">
+        <div id="err" th:text="${errmsg}"></div>
         <input type="text" name="username" class="input" id="username" placeholder="아이디 입력" th:value="${username}" ><br>
         <input type="password" name="password" class="input" id="password" placeholder="비밀번호 입력" ><br>
-        <div id="err" class="col-12 text-danger" th:text="${errmsg}"></div>
+
         <div class="button-container">
             <input class="btn-login" type="submit" th:value="로그인">
             <a th:href="@{/user/signup}"><input class="btn-signup" type="button" th:value="회원가입"></a>

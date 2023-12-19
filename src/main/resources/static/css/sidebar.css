@@ -9,28 +9,32 @@ a {
 
 .dropdownLogout {
     display: none;
-    padding-top: 4px;
-    padding-bottom: 4px;
+}
 
+.dropdownLogout:hover {
+    background-color: #111111;
+    padding-right: 20px;
 }
 
 .btn-logout {
-    color: white;
+    background-color: #666666;
     width: 200px;
     text-align: left;
-    padding-left: 20px;
+    padding-left: 18px;
+    color: white;
+    border: none;
+    padding-top: 8px;
+    padding-bottom: 8px;
 
+}
+.btn-logout:hover{
+    background-color: black;
 }
 
 .navi {
     cursor: pointer;
 }
 
-.dropdownLogout:hover {
-    background-color: #111111;
-    color: #f9f9f9;
-    padding-right: 20px;
-}
 
 .navbar-global {
     background-color: indigo;

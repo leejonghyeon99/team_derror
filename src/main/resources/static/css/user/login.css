@@ -29,7 +29,7 @@ body {
 }
 
 
-#signup {
+#login {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -47,10 +47,22 @@ body {
     border: 1px solid #add8e6;
 }
 
-#sign-frm{
-    width: 300px;
-
+#login::before{
+    position: absolute;
+    content: "";
+    top:0px;
+    left:0px;
+    width: 100%;
+    height: 100%;
+      background-color: rgba(255,255,255,0.55);
+    border-radius: 10px;
 }
+
+#login-frm, #login h2{
+    width: 300px;
+   z-index: 100;
+}
+
 
 #kabtn,#gobtn{
     margin: 0;
@@ -61,7 +73,7 @@ body {
 }
 #kabtn{
     position: relative;
-    left: 8%;
+    left: 11%;
     transform: translateX(-8%);
     top: 20%;
 
@@ -69,7 +81,7 @@ body {
 
 #gobtn{
     position: relative;
-    left: 9%;
+    left: 12%;
     transform: translateX(-9%);
     top: 20%;
 }
@@ -97,7 +109,7 @@ body {
 
 .btn-login {
     position: absolute;
-    left: 32%;
+    left: 31%;
     width: 145px;
     transform: translateX(-32%);
     background-color: var(--blue);
@@ -115,7 +127,7 @@ body {
 
 .btn-signup {
     position: absolute;
-    left: 68%;
+    left: 69%;
     width: 145px;
     transform: translateX(-68%);
     background-color: var(--blue);
@@ -132,6 +144,8 @@ body {
 }
 #err{
     padding-left: 20px;
+    color: red;
+    font-weight: bold;
 }
 .input {
     background-color: rgba(0, 0, 0, 0.5);
