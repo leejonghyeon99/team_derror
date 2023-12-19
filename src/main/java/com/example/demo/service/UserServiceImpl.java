@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.domain.board.Attachment;
+import com.example.demo.domain.board.Post;
 import com.example.demo.domain.user.Authority;
 import com.example.demo.domain.user.Member;
 import com.example.demo.repository.user.AuthorityRepository;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -49,6 +52,17 @@ public class UserServiceImpl implements UserService {
         return 1;
     }
 
+
+    @Override
+    public int removeById(Long id){
+
+      Member member = userRepository.findId(id);
+       if(member != null){
+           userRepository.remove(member);
+           return 1;
+       }
+        return 0;
+    }
     @Override
     public List<Authority> selectAuthoritiesById(Long id) {
 

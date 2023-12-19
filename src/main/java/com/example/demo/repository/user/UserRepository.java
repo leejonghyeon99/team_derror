@@ -7,4 +7,5 @@ public interface UserRepository {
     Member findUsername(String username);
     int save(Member member);
     int update(Member member);
+    int remove(Member member);
 }

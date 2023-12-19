@@ -4,8 +4,10 @@ import com.example.demo.domain.board.Post;
 import com.example.demo.domain.user.Member;
 import com.example.demo.domain.user.MemberValidator;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.repository.user.UserRepository;
 import com.example.demo.service.UserService;
 import com.example.demo.service.board.BoardService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,9 +31,12 @@ import java.util.Map;
 public class UserController {
 
     private UserService userService;
-    private  BoardService boardService;
+    private BoardService boardService;
 
     private MemberValidator memberValidator;
+    @Autowired
+    private  HttpSession httpSession;
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -39,12 +44,15 @@ public class UserController {
     }
 
     @Autowired
-    public UserController(UserService userService, BoardService boardService, MemberValidator memberValidator) {
+    public UserController(UserService userService, BoardService boardService, MemberValidator memberValidator
+                            ) {
         this.userService = userService;
         this.memberValidator = memberValidator;
         this.boardService = boardService;
+
     }
-//
+
+    //
     @RequestMapping("/auth")
     @ResponseBody
     public Authentication auth() {
@@ -52,19 +60,26 @@ public class UserController {
     }
 
     @RequestMapping("/test")
-    public void test(Model model){}
+    public void test(Model model) {
+    }
 
 
     @GetMapping("/login")
-    public void login(Model model){}
+    public void login(Model model) {
+    }
 
     @PostMapping("/loginError")
-    public String loginError(){
+    public String loginError() {
         return "user/login";
     }
 
     @GetMapping("/signup")
-    public void signup(){}
+    public void signup() {
+    }
+
+    @GetMapping("/signout")
+    public void signout() {
+    }
 
 
     @PostMapping("/signup")
@@ -72,9 +87,9 @@ public class UserController {
             , BindingResult result
             , Model model
             , RedirectAttributes redirectAttrs
-    ){
+    ) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             redirectAttrs.addFlashAttribute("username", member.getUsername());
             redirectAttrs.addFlashAttribute("password", member.getPassword());
             redirectAttrs.addFlashAttribute("re_password", member.getRe_password());
@@ -87,13 +102,9 @@ public class UserController {
             redirectAttrs.addFlashAttribute("errors", errList);
             for (int i = 0; i < errList.size(); i++) {
 
-                redirectAttrs.addFlashAttribute("err"+errList.get(i).getField(), errList.get(i).getCode());
+                redirectAttrs.addFlashAttribute("err" + errList.get(i).getField(), errList.get(i).getCode());
             }
 
-//            for(FieldError err : errList) {
-//                redirectAttrs.addFlashAttribute("errors", err.getCode());
-//                break;
-//            }
 
             return "redirect:/user/signup";
         }
@@ -105,7 +116,7 @@ public class UserController {
     }
 
     @GetMapping("/detail")
-    public String detail(Principal principal, Model model){
+    public String detail(Principal principal, Model model) {
         String loginId = principal.getName();
         List<Post> list = boardService.findByUserName(loginId);
         Member member = userService.findUsername(loginId);
@@ -116,8 +127,27 @@ public class UserController {
         return "user/detail";
     }
 
+        @PostMapping("/signout")
+        public String removeUser(Model model) {
 
-} // end Controller
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+
+            if (authentication != null && authentication.isAuthenticated()) {
+
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                Member member = userService.findUsername(userDetails.getUsername());
+
+                if (member != null) {
+                    int result = userService.removeById(member.getId());
+                    model.addAttribute("result", result);
+                    return "/user/signout";
+                }
+            }
+            return "/user/login";
+        }
+
+}
 
 
 

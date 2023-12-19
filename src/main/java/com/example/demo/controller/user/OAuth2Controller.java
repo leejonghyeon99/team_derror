@@ -91,8 +91,8 @@ public class OAuth2Controller {
         String name = kakaoProfile.getKakaoAccount().getProfile().getNickname();
         String password = oauth2Password;
         Long age =20L;
-        String phone = "010-1234-5678";
-        String email = String.valueOf(kakaoProfile.getKakaoAccount().getHasEmail());
+        String phone = "010-4444-5555";
+        String email = "imsen12@naver.com";
         Member member = userService.findUsername(username);
 
         System.out.println("""
