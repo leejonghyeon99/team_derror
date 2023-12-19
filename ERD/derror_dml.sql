@@ -1,7 +1,9 @@
 INSERT INTO authority (id,name) VALUES (1,'ROLE_USER'), (2,'ROLE_ADMIN');
+INSERT INTO event_plan
 select * from authority;
 select * from member;
 select * from post;
+select * from event_plan;
 
 update authority set name = 'ROLE_USER' where id = 1;
 update authority set name = 'ROLE_ADMIN' where id = 2;
