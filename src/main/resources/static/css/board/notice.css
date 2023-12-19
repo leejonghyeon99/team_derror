@@ -1,0 +1,75 @@
+body {
+    background-image: url('background.jpg');
+    background-size: cover; /* 또는 다른 % 값으로 시도해보세요 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+#notice {
+    text-align: center;
+    font-size: 120px;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+}
+
+.board-filter {
+    display: flex;
+    flex-direction: column; /* 요소들을 세로로 배치합니다 */
+    align-items: flex-start; /* 왼쪽 정렬로 변경합니다 */
+    height: 50px;
+}
+
+#pageNumber {
+    color: white;
+}
+
+.serchForm {
+    order: 2; /* 중간에 위치하도록 순서를 변경합니다 */
+}
+
+.form-select {
+    flex-basis: 100%;
+    margin-bottom: 10px; /* 각 select 요소 사이의 간격 조절 */
+    /*order: 3;*/
+    /*flex-basis: calc(50% - 10px);*/
+    /*margin-right: 10px;*/
+}
+
+form[name="frmPageRows"] {
+    display: flex;
+    flex-wrap: wrap;
+    order: 3; /* 맨 뒤에 위치하도록 설정 */
+}
+
+form[name="frmPageRows"] .form-select {
+    flex-basis: 50%; /* 한 줄에 두 개의 select 요소가 표시되도록 설정 */
+    margin-bottom: 10px; /* 간격 조절 */
+}
+
+
+
+
+#pageNumber {
+    color: white;
+}
+
+
+#boardTabel {
+    border: 1px solid black;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid darkgray;
+    padding: 8px;
+    text-align: center;
+}
+

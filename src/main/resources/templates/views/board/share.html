@@ -13,7 +13,7 @@
     <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-    <script th:src="@{/js/board/list.js}"></script>
+    <script th:src="@{/js/board/share.js}"></script>
 
     <title>목록</title>
 </head>
@@ -22,7 +22,7 @@
 <!-- 인증 헤더 -->
 <th:block th:insert="~{common/sidebar::sidebar}"/>
 
-<div>
+<div class="board-content">
     <div class="container mt-3">
         <div>
             <h2 id="share">공유게시판</h2>
@@ -68,7 +68,7 @@
                     <!-- 썸네일 이미지 -->
                         <a th:href="@{'/board/detail/' + ${post.id}}">
 
-                                <div th:with="firstImage=${post.thumbnail}">-->
+                                <div th:with="firstImage=${post.thumbnail}">
                                     <div>
                                         <img th:src="@{'/upload/' + ${firstImage}}" class="card-img-top"
                                              alt="첨부파일">

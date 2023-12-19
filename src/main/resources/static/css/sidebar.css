@@ -128,6 +128,16 @@ a {
     padding: 20px;
 }
 
+.board-content {
+    /*margin-top: 20px;*/
+    /*margin-left: 180px;*/
+    /*padding: 20px;*/
+}
+
 .collapsed + .main-content {
+    margin-left: 60px;
+}
+
+.collapsed + .board-content {
     margin-left: 60px;
 }

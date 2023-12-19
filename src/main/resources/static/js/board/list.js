@@ -20,6 +20,15 @@ $(function () {
         }
     });
 
+    $('#searchForm').submit(function(event) {
+        event.preventDefault(); // 기본 동작(페이지 리로드) 방지
+        const keyword = $('#keyword').val().trim();
+        if (keyword !== '') {
+            // 검색 동작: window.location.href = '/search?keyword=' + keyword;
+            // 혹은 AJAX를 사용하여 검색 요청을 서버에 보낼 수 있습니다.
+            console.log('검색어:', keyword);
+        }
+    });
 
 
 }); // end script
