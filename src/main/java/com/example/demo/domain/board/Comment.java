@@ -21,13 +21,8 @@ public class Comment {
     private Long id;    //  PK
     @ToString.Exclude
     private Member member;// 댓글 작성자(FK)
-
-    @JsonIgnore // JSON 변환 시 제외하는 필드
-    @JsonProperty("postId")
     private Long postId;// 어느글의 댓글(FK)
-
     private Long commentId; // 부모 댓글 아이디
-
     private String content; // 댓글 내용
     private int childCnt; //자식 댓글 개수
 

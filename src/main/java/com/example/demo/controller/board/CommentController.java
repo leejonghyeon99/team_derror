@@ -64,35 +64,32 @@ public class CommentController {
      * @return
      */
     @PostMapping("/parent/write")
-    public ResponseEntity<QryResult> parentCommentSaveByPostId(
-            Long memberId,
-            Long postId,
-            String content
+    public ResponseEntity<QryResult> parentCommentSave(
+           @RequestParam Long memberId,
+           @RequestParam Long postId,
+           @RequestParam String content
     ){
         return new ResponseEntity<>(commentService.writeParentComment(memberId,postId,content),HttpStatus.OK);
     }
 
     /**
      *
-     * @param requestBody memberId, postId, commentId, content
+     * @param memberId
+     * @param postId
+     * @param commentId
+     * @param content
      * @return
      */
     @PostMapping("/child/write")
-    public ResponseEntity<QryCommentList> parentCommentSaveByPostId(
-            @RequestBody Map<String, Object> requestBody
+    public ResponseEntity<QryResult> parentCommentSave(
+            @RequestParam Long memberId,
+            @RequestParam Long postId,
+            @RequestParam Long commentId,
+            @RequestParam String content
     ){
-        Long commentId = Long.valueOf(requestBody.get("commentId").toString());
-        Long memberId = Long.valueOf(requestBody.get("memberId").toString());
-        Long postId = Long.valueOf(requestBody.get("postId").toString());
-        String content = (String) requestBody.get("content");
-        System.out.println("test: "+memberId+", "+postId+", "+commentId+", "+content);
-        QryResult qryResult = commentService.writeChildComment(memberId,postId,commentId, content);
-        QryCommentList commentList = null;
-        if(qryResult.getStatus().equals("OK")){
-            System.out.println(qryResult.getId());
-             commentList= commentService.listbyChilds(commentId);
-        }
-        return new ResponseEntity<>(commentList,HttpStatus.OK);
+
+
+        return new ResponseEntity<>(commentService.writeChildComment(memberId,postId,commentId,content),HttpStatus.OK);
     }
 
     /**

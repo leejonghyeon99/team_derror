@@ -1,19 +1,29 @@
+@font-face {
+    font-family: 'black'; /* 사용하고자 하는 폰트 이름 설정 */
+    src: url('/Noto_Sans_KR/static/NotoSansKR-Black.ttf') format('truetype'); /* 폰트 파일의 경로 설정 */
+    /* 추가로 필요한 속성들 (예: font-weight, font-style 등)도 설정할 수 있습니다. */
+}
+
+
 * {
     box-sizing: border-box;
     border-collapse: collapse;
+    font-family: black;
 }
 
 a{
     color: black;
+    cursor: pointer;
     text-decoration: none;
 }
 
-a:hover{
+a span:hover{
     text-decoration: underline;
 }
 
 .container{
-    width: 900px;
+    position: relative;
+    width: 1200px;
     padding: 30px 25px;
     border: 1px solid rgba(208, 208, 208, 0.97);
     border-radius: 5px;
@@ -67,83 +77,66 @@ a:hover{
 }
 
 .post-comment{
+    height: auto;
     margin: 20px 0;
     min-height: 50px;
 }
 
-.comment-item{
-    display: flex;
-    flex-direction: column;
+.comment-content{
+    padding-left: 30px;
+
 }
 
-.parent{
-    display: flex;
-}
-
-.child{
-    margin-left: 50px;
-    display: none;
-}
-.child-hr{
-    display: none;
-}
-
-
-
-.comment-body{
-    display: flex;
-    flex-direction: column;
-}
-
-.comment-item-user{
+.reply{
     font-weight: bold;
 }
-.comment-item-content{
-    font-size: 0.8em;
-}
-.comment-item-created{
-    font-size: 0.7em;
+
+.display-flex{
+    display: flex;
+    align-items: center;
 }
 
-.comment-reply{
-    color: #00498C;
-    font-size: 0.8em;
-    cursor: pointer;
+.child-list{
+    margin-top: 20px;
+    margin-left: 60px;
 }
 
-.reply-form{
-    display: none;
-    margin-left: 50px;
+.post-comment form{
+    display: flex;
+    margin-left: 50%;
+    width: 700px;
+    transform: translateX(-50%);
 }
 
-.reply-form input{
-    width: 600px;
-    height: 55px;
+.post-comment input{
+    width: 100%;
+    border: 0.6px solid #adb5bd;
     border-radius: 5px;
-    border: 1px solid #555555;
+    padding: 5px;
+    height: 50px;
+    overflow-y: scroll;
 }
 
-.reply-form button{
+.post-comment button{
+    margin-left: 14px;
     width: 80px;
-    height: 57px;
+    height: auto;
+    font-weight: bold;
+    border: dodgerblue 1px solid;
     border-radius: 5px;
-    font-size: 1.3em;
-    font-weight: bold;
-    border: none;
-    background-color: #adb5bd;
+    color: dodgerblue;
+    background-color: #ffffff;
+    transition: all 0.5s;
 }
 
-.hideReply{
-    display: none;
+.post-comment button:hover{
+    box-shadow: 0px 4px 6px rgba(0, 221, 255, 0.87);
 }
 
-
-.uiChilds{
-    font-size: 0.8em;
-    font-weight: bold;
-    color: lightblue;
+.down{
+   display: none;
 }
 
-.hideChilds{
+.child-list{
     display: none;
 }
