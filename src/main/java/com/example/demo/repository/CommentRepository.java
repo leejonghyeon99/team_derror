@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface CommentRepository {
 
+    Comment getCommentById(Long id);
+
     //게시글번호의 댓글 총 갯수
     int commentCnt(Long id);
 

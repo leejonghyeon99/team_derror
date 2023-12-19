@@ -33,6 +33,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
+    @Override
+    public Comment getCommentById(Long id) {
+        return commentRepository.getCommentById(id);
+    }
+
     /**
      * 
      * @param id 게시글 번호
@@ -43,6 +48,7 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.commentCnt(id);
     }
 
+
     /**
      *
      * @param postId 게시글 번호(id)
@@ -52,16 +58,16 @@ public class CommentServiceImpl implements CommentService {
     public QryCommentList listbyParents(Long postId) {
         QryCommentList list = new QryCommentList();
 
-        List<Comment> parents = commentRepository.findAllParents(postId);
+        List<Comment> comments = commentRepository.findAllParents(postId);
+        for (var p : comments) {
+            List<Comment> temp = commentRepository.findAllChilds(p.getId());
+            if (temp.size() > 0){
+                p.setChildComment(temp);
+            }
+        }
 
-        List<Comment> resultComments = parents.stream()
-                .peek(p -> p.setChildComment(commentRepository.findAllChilds(p.getId())))
-                .collect(Collectors.toList());
-
-
-        System.out.println(resultComments.toString());
-        list.setCount(resultComments.size());
-        list.setList(resultComments);
+        list.setCount(comments.size());
+        list.setList(comments);
         list.setStatus("OK");
         return list;
     }
@@ -140,6 +146,7 @@ public class CommentServiceImpl implements CommentService {
             return QryResult.builder()
                     .count(1)
                     .status("OK")
+                    .id(comment.getId())
                     .build();
         } catch (DataAccessException e) {
             // 예외 처리
