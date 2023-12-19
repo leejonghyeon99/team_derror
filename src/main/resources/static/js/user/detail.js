@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal(modalId);
         })
     }
-//-----------------회원 탈퇴------------------------
+
 
 })
 

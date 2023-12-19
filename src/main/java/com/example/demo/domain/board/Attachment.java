@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Attachment {
     private Long id;    // PK
-    private Long post_id;   // 어느 글의 첨부파일(FK)
+    private Long postId;   // 어느 글의 첨부파일(FK)
 
     private String sourcename; // 원본 파일명
     private String filename;    // 저장된 파일명 (rename 된 파일명)

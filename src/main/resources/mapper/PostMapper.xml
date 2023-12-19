@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.post.PostMapper">
+
+
+    <resultMap id="postMap" type="com.example.demo.domain.board.Post">
+        <id property="id" column="id"/>
+        <id property="memberId" column="member_id"></id>
+        <id property="category" column="category"/>
+        <id property="title" column="title"/>
+        <id property="content" column="content"/>
+        <id property="createdDate" column="created_date"/>
+        <id property="viewCnt" column="view_cnt"/>
+        <id property="thumbnail" column="thumbnail"/>
+
+        <association property="member" column="member_id" javaType="com.example.demo.domain.user.Member">
+            <id property="id" column="member_id"/>
+            <id property="name" column="name"/>
+            <id property="thumnail_img" column="thumnail_img"/>
+        </association>
+
+    </resultMap>
+
+    <insert id="save" flushCache="true" parameterType="com.example.demo.domain.board.Post"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO post
+            (category, title, content, member_id, thumbnail)
+        VALUES (#{category}, #{title}, #{content}, #{member.id}, #{thumbnail})
+    </insert>
+
+    <select id="findById" resultMap="postMap">
+        select *
+        from post as p
+        LEFT JOIN member AS m
+        ON p.member_id = m.id
+        where p.id = #{id}
+    </select>
+
+    <select id="listByRecent" resultMap="postMap">
+        SELECT *
+        FROM post as p
+                 LEFT JOIN member AS m
+                           ON p.member_id = m.id
+        WHERE category = #{category}
+        ORDER BY p.id DESC
+        LIMIT #{from}, #{rows}
+    </select>
+
+
+    <select id="listByViewCnt" resultMap="postMap">
+        SELECT *
+        FROM post AS p
+                 LEFT JOIN member AS m
+                           ON p.member_id = m.id
+        WHERE category = #{category}
+        ORDER BY p.view_cnt DESC
+        LIMIT #{from}, #{rows}
+    </select>
+
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT count(*) FROM post p WHERE p.category = #{category}
+    </select>
+
+    <select id="findListByKeyWord" resultMap="postMap">
+        SELECT *
+        FROM post AS p
+                 LEFT JOIN member AS m
+                           ON p.member_id = m.id
+        WHERE category = #{category}
+        AND p.title LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY p.view_cnt DESC
+        LIMIT #{from}, #{rows}
+    </select>
+
+    <select id="countKeyword" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM post
+        WHERE title LIKE concat('%', #{keyword} , '%')
+          AND category = #{category};
+    </select>
+
+    <update id="viewCntUpdate" flushCache="true">
+        UPDATE post
+        SET view_cnt = post.view_cnt + 1
+        WHERE id = #{id}
+    </update>
+
+    <update id="update" flushCache="true" parameterType="com.example.demo.domain.board.Post">
+        UPDATE post
+        SET title   = #{title},
+            content = #{content}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" flushCache="true">
+        DELETE
+        FROM post
+        WHERE id = #{id}
+    </delete>
+</mapper>

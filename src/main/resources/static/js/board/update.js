@@ -20,6 +20,16 @@ $(function (){
     // Summernote 추가
     $("#content").summernote({
         height: 300,
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
     });
 });
 

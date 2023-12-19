@@ -3,30 +3,27 @@
 <mapper namespace="com.example.demo.repository.PostRepository">
 
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.board.Post"
-    useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO post
-            (category, title, content, member_id )
-        VALUES
-            (#{category}, #{title}, #{content}, #{member.id})
+            (category, title, content, member_id)
+        VALUES (#{category}, #{title}, #{content}, #{member.id})
     </insert>
 
     <sql id="SELECT_BASE">
-        SELECT
-            p.id "p_id",
-            p.title "p_title",
-            p.category "p_catagoty",
-            p.content "p_content",
-            p.view_cnt "p_viewCnt",
-            p.created_date "p_createdDate",
-            p.member_id "p_memberId",
-            m.id "m_id",
-            m.username "m_username",
-            m.created_date "m_created_date",
-            m.email "m_email"
-        FROM
-            post p, member m
-        WHERE
-            p.member_id = m.id
+        SELECT p.id           "p_id",
+               p.title        "p_title",
+               p.category     "p_catagoty",
+               p.content      "p_content",
+               p.view_cnt     "p_viewCnt",
+               p.created_date "p_createdDate",
+               p.member_id    "p_memberId",
+               m.id           "m_id",
+               m.username     "m_username",
+               m.created_date "m_created_date",
+               m.email        "m_email"
+        FROM post p,
+             member m
+        WHERE p.member_id = m.id
     </sql>
 
     <resultMap id="mapMember" type="com.example.demo.domain.user.Member">
@@ -38,6 +35,11 @@
         <result column="m_email" property="email"/>
     </resultMap>
 
+    <resultMap id="mapAttachment" type="com.example.demo.domain.board.Attachment">
+        <result column="a_id" property="id"/>
+        <result column="a_filename" property="filename"/>
+    </resultMap>
+
     <resultMap id="mapPost" type="com.example.demo.domain.board.Post">
         <result column="p_id" property="id"/>
         <result column="p_category" property="category"/>
@@ -46,6 +48,7 @@
         <result column="p_viewCnt" property="viewCnt"/>
         <result column="p_createdDate" property="createdDate"/>
         <collection property="member" resultMap="mapMember"/>
+        <collection property="fileList" resultMap="mapAttachment"/><!-- Attachment 객체와의 매핑 -->
     </resultMap>
 
     <select id="findById" resultMap="mapPost">
@@ -54,16 +57,14 @@
     </select>
 
     <select id="findByUserName" resultMap="mapPost">
-        SELECT
-            p.id "p_id",
-            p.title "p_title",
-            p.view_cnt "p_viewCnt",
-            p.created_date "p_createdDate",
-            m.username "m_username"
-        FROM
-            post p, member m
-        WHERE
-            m.username = #{username}
+        SELECT p.id           "p_id",
+               p.title        "p_title",
+               p.view_cnt     "p_viewCnt",
+               p.created_date "p_createdDate",
+               m.username     "m_username"
+        FROM post p,
+             member m
+        WHERE m.username = #{username}
     </select>
 
     <update id="viewCnt" flushCache="true">
@@ -72,46 +73,72 @@
         WHERE id = #{id}
     </update>
 
-    <select id="findAll" resultMap="mapPost">
-        <include refid="SELECT_BASE"/>
-        ORDER BY p.id DESC
-    </select>
+    <!--    <select id="findAll" resultMap="mapPost">-->
+    <!--        <include refid="SELECT_BASE"/>-->
+    <!--        ORDER BY p.id DESC-->
+    <!--    </select>-->
 
     <update id="update" flushCache="true" parameterType="com.example.demo.domain.board.Post">
         UPDATE post
-        SET title = #{title}, content = #{content}
+        SET title   = #{title},
+            content = #{content}
         WHERE id = #{id}
     </update>
 
     <delete id="delete" flushCache="true" parameterType="com.example.demo.domain.board.Post">
-        DELETE FROM post WHERE id = #{id}
+        DELETE
+        FROM post
+        WHERE id = #{id}
     </delete>
 
     <select id="selectFromRow" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
         AND p.category = #{category}
-        ORDER BY p.id DESC
-        LIMIT #{param1}, #{param2}
-    </select>
-
-    <select id="selectFromRowByViewCnt" resultMap="mapPost">
-        <include refid="SELECT_BASE"/>
-        AND p.category = #{category}
-        ORDER BY p.view_cnt DESC
+        ORDER BY #{sort} DESC
         LIMIT #{param1}, #{param2}
     </select>
 
     <select id="countAll" resultType="java.lang.Integer">
-        SELECT count(*) FROM post
+        SELECT count(*)
+        FROM post p
+        WHERE p.category = #{category}
     </select>
 
     <select id="findByList" resultMap="mapPost">
         <include refid="SELECT_BASE"/>
-                AND p.title LIKE CONCAT('%', #{keyword}, '%')
+        AND p.category = #{category}
+        AND p.title LIKE CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="countAllKeyword" resultType="java.lang.Integer">
-        SELECT count(distinct p.id) FROM member m join post p on m.auth_id = 2 and p.title like concat('%',#{keyword},'%');
+        SELECT count(distinct p.id)
+        FROM member m
+                 JOIN post p
+                      ON m.auth_id = 2
+                          AND p.title LIKE concat('%', #{keyword}, '%')
+                          AND p.category = #{category};
+    </select>
+
+    <select id="findByCategory" resultMap="mapPost">
+        SELECT p.id "p_id",
+               p.title "p_title",
+               p.category "p_category",
+               p.content "p_content",
+               a.id "a_id",
+               a.filename "a_filename",
+               p.view_cnt "p_viewCnt",
+               p.created_date "p_createdDate",
+               p.member_id "p_memberId",
+               m.id "m_id",
+               m.username "m_username",
+               m.created_date "m_created_date",
+               m.email "m_email"
+        FROM post p
+                 LEFT JOIN attach a ON p.id = a.post_id
+                 left JOIN member m ON p.member_id = m.id
+        WHERE p.category = #{category}
+        ORDER BY p.id DESC
+        LIMIT #{param1}, #{param2}
     </select>
 
 

@@ -14,6 +14,7 @@ $("#keyword").on("keyup", function(event) {
 
 function requestApi() {
     let $keyword = $("#keyword").val();
+    console.log("next")
     $.ajax({
         url: "http://localhost:8080/openai/api/recommendation?keyword=" + $keyword,
         method: "GET",
@@ -81,11 +82,30 @@ async function imagesFunc(data) {
                     <h5>국가명 : ${rec.national}</h5>
                     <h5>도시 : ${rec.city}</h5>
                     <h5>장소 : ${rec.place}</h5>                   
+                    <h5>경도 : ${rec.longitude}</h5>                   
+                    <h5>위도 : ${rec.latitude}</h5>
                     <p>${rec.detail}</p>
+                    <div id="lang"></div>
+                    <h5>경찰번호 : ${rec.warn.police}</h5>                                     
+                    <h5>응급번호 : ${rec.warn.emergency}</h5>                   
+                    <div id="danger"></div>                                                                                                       
                 </div>
             `;
-
         place.html(createInfo);
+        for (let lang of rec.languages) {
+            $("#lang").append(`<h5>언어: ${lang.language} <br> 사용비율: ${lang.rate} </h5>`);
+        }
+
+        for (let danger of rec.warn.danger) {
+            $("#danger").append(`
+                <h5>장소: ${danger.name} <br> 
+                    사유: ${danger.reason} </h5> 
+                <h5>경도: ${danger.longitude}</h5> 
+                <h5>위도: ${danger.latitude}</h5>
+                <br>
+            `);
+        }
+
 
     } else {
         console.error('placeService is not initialized.');

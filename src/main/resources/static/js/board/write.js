@@ -1,7 +1,4 @@
 $(function(){
-    // TODO
-    // 검증코드등...
-
     // [추가] 버튼 누르면 첨부파일 추가
     var i = 0;
     $("#btnAdd").click(function(){
@@ -13,8 +10,21 @@ $(function(){
         `);
         i++;
     });
+
     // Summernote 추가
     $("#content").summernote({
         height: 300,
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
     });
+
+
 });

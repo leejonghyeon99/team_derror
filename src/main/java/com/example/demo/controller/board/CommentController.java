@@ -2,60 +2,101 @@ package com.example.demo.controller.board;
 
 
 
-import com.example.demo.domain.board.Comment;
 import com.example.demo.domain.board.QryCommentList;
 import com.example.demo.domain.board.QryResult;
 import com.example.demo.service.board.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 
-@RestController   // data 를 response 한다 ('View' 를 리턴하는게 아니다!)
-// @Controller + @ResponseBody 와 같다.
+
+@RestController
 @RequestMapping("/comment")
 public class CommentController {
 
-    @Autowired
+
     private CommentService commentService;
 
-    // 댓글 목록
-    @GetMapping("/list")
-    public QryCommentList list(Long id) {
-        return commentService.list(id);
+    @Autowired
+    public CommentController(CommentService commentService) {
+        this.commentService = commentService;
     }
 
-    // 댓글 작성
-    @PostMapping("/write")
-    public QryResult write(
-            @RequestParam("post_id") Long postId,
-            @RequestParam("user_id") Long userId,
+    /**
+     * 
+     * @param postId 게시글 번호
+     * @return 게시글 번호의 총 댓글 개수
+     */
+    @GetMapping("/cnt/{postId}")
+    public ResponseEntity<Integer> getCnt(@PathVariable Long postId){
+        return new ResponseEntity<>(commentService.commentCntByPostId(postId),HttpStatus.OK);
+    }
+
+    /**
+     * @param postId 게시글 번호
+     * @return 
+     */
+    @GetMapping("/parent/{postId}")
+    public ResponseEntity<QryCommentList> parentCommentByPostId(@PathVariable Long postId){
+        return new ResponseEntity<>(commentService.listbyParents(postId), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param commentId 부모댓글 번호
+     * @return
+     */
+    @GetMapping("/child/{commentId}")
+    public ResponseEntity<QryCommentList> childCommentByCommentId(@PathVariable Long commentId){
+        return new ResponseEntity<>(commentService.listbyChilds(commentId), HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param memberId 댓글 작성자 번호
+     * @param postId 댓글이 작성되는 게시글 번호
+     * @param content 내용
+     * @return
+     */
+    @PostMapping("/parent/write")
+    public ResponseEntity<QryResult> parentCommentSaveByPostId(
+            Long memberId,
+            Long postId,
             String content
-
     ){
-        return commentService.write(postId, userId, content);
-
+        return new ResponseEntity<>(commentService.writeParentComment(memberId,postId,content),HttpStatus.OK);
     }
 
+    /**
+     *
+     * @param memberId 댓글 작성자 번호
+     * @param postId 댓글이 작성되는 게시글 번호
+     * @param commentId 댓글이 작성되는 부모 댓글 번호
+     * @param content 내용
+     * @return
+     */
+    @PostMapping("/child/write")
+    public ResponseEntity<QryResult> parentCommentSaveByPostId(
+            Long memberId,
+            Long postId,
+            Long commentId,
+            String content
+    ){
+        return new ResponseEntity<>(commentService.writeChildComment(memberId,postId,commentId, content),HttpStatus.OK);
+    }
 
-    // 댓글 삭제
+    /**
+     *
+     * @param id 댓글 번호
+     * @return
+     */
     @PostMapping("/delete")
-    public QryResult delete(Long id) {
-        return commentService.delete(id);
+    public ResponseEntity<QryResult> deleteById(Long id){
+        return new ResponseEntity<>(commentService.delete(id),HttpStatus.OK);
     }
-
-    // 대댓글 작성
-    @PostMapping("/reply")
-    public QryResult write(
-            @RequestParam("post_id") Long postId,
-            @RequestParam("parent_id") Long parentId,
-            @RequestParam("user_id") Long userId,
-            String content
-
-    ){
-        return commentService.replyWrite(postId, parentId, userId, content);
-    }
-
 
 } // end controller
 
