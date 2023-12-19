@@ -6,6 +6,7 @@ select * from post;
 select * from event_plan;
 
 
+
 update authority set name = 'ROLE_USER' where id = 1;
 update authority set name = 'ROLE_ADMIN' where id = 2;
 update post set category='notice';

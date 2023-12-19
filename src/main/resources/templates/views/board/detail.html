@@ -8,7 +8,6 @@
     history.back();
 </script>
 
-<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.member}">
 
 <head>
     <meta charset="utf-8">
@@ -22,10 +21,10 @@
     <script th:src="@{/js/sidebar.js}"></script>
     <script th:src="@{/js/board/detail.js}"></script>
 
-        <title>조회 - [[${post.title}]]</title>
-    </head>
+    <title>조회 - [[${post.title}]]</title>
+</head>
 
-    <body>
+<body>
 
 <th:block th:insert="~{common/sidebar::sidebar}"/>
     <div class="main-content">
@@ -107,9 +106,7 @@
        </div>
     </div>
 
-    </body>
-
-</th:block>
+</body>
 </html>
 
 
