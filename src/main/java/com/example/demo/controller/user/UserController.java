@@ -152,6 +152,16 @@ public class UserController {
             return "/user/login";
         }
 
+
+
+
+
+
+
+
+
+        @GetMapping("/sign")
+        public void sign(){}
 }
 
 

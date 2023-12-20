@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/user/sign.css}">
+    <title>Login</title>
+</head>
+<body>
+    
+<div class="container" id="container">
+  <div class="form-container sign-up-container">
+    <form action="#">
+      <h1>회원가입</h1>
+      <div class="social-container">
+        <a href="#" class="social"><img th:src="@{/img/icon/kakao.png}"></a>
+        <a href="#" class="social"><img th:src="@{/img/icon/google.png}"></a>
+      </div>
+      <span>OR</span>
+      <input type="text" placeholder="아이디" />
+      <input type="password" placeholder="비밀번호" />
+      <input type="password" placeholder="비밀번호 재 입력" />
+      <input type="text" placeholder="이름" />
+      <input type="text" placeholder="나이" />
+      <input type="text" placeholder="연락처" />      
+      <input type="email" placeholder="이메일" />
+      
+      <button>회원가입</button>
+    </form>
+  </div>
+  <div class="form-container sign-in-container">
+    <form action="#">
+      <h1>로그인</h1>
+      <div class="social-container">
+        <a href="#" class="social"><img th:src="@{/img/icon/kakao.png}"></a>
+        <a href="#" class="social"><img th:src="@{/img/icon/google.png}"></a>
+      </div>
+      <span>OR</span>
+      <input type="text" placeholder="ID" />
+      <input type="password" placeholder="Password" />
+      <a href="#">비밀번호를 잊어버렸나요?</a>
+      <button>로그인</button>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>환영합니다.</h1>
+        <p>저희는 여러분의 정보를 스까스까해서 제공해드립니다.</p>
+        <button class="ghost" id="signIn">Sign In</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>야 너두?</h1>
+        <p>나두</p>
+        <button class="ghost" id="signUp">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script th:src="@{/js/user/sign.js}"></script>
+</body>
+</html>
