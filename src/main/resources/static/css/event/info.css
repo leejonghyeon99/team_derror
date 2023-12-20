@@ -25,6 +25,7 @@
     height: 400px;
 }
 .main_four {
-    float: right;
+
+    float: left;
     border: 1px solid darkgray;
 }

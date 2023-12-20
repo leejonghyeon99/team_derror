@@ -3,30 +3,25 @@
 <mapper namespace="com.example.demo.repository.event.EventRepository">
 
     <resultMap id="eventResultMap" type="com.example.demo.domain.event.Events">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="type" column="type"/>
+        <id property="id" column="master_id"/>
     </resultMap>
 
-    <insert id="insertEvent" parameterType="com.example.demo.domain.event.Events">
-        INSERT INTO events (id, name)
-        VALUES (#{id}, #{name});
-
-        INSERT INTO images (event_id, images_url)
-        VALUES
-            <foreach collection="images" item="image" separator=",">
-                (#{id}, #{image.imageUrl})
-            </foreach>;
-
-        INSERT INTO dates (event_id, start_local_date, start_local_time) VALUES
-        (#{id}, #{dates.start.localDate}, #{dates.start.localTime});
-    </insert>
-
     <select id="getAllEvents" resultMap="eventResultMap">
-        SELECT * FROM events;
+        SELECT * FROM event_plan
+        where master_id = #{id};
+    </select>
+
+    <select id="getEvents" resultMap="eventResultMap">
+        SELECT * FROM event_plan;
     </select>
 
     <select id="getEventById" parameterType="String" resultMap="eventResultMap">
-        SELECT * FROM events WHERE id = #{id};
+        SELECT * FROM event_plan WHERE master_id = #{id};
     </select>
+
+    <insert id="save" parameterType="com.example.demo.domain.event.Events">
+        INSERT INTO event_plan (master_id, title, member_id, created_date, national)
+        VALUES (#{master_id}, #{title}, #{member_id}, #{created_date}, #{national})
+    </insert>
+
 </mapper>

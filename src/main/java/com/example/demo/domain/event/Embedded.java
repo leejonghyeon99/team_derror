@@ -13,4 +13,5 @@ import java.util.List;
 @Builder
 public class Embedded {
     private List<Events> events;
+    private List<EventData> eventData;
 }

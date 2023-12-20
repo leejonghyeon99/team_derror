@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //----------------------모달창------------------
 
-
 function openModal(modalId) {
     var modal = document.getElementById(modalId);
 
@@ -38,31 +37,15 @@ function closeModal(modalId) {
     modal.classList.remove('show');
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("modalOpen1").addEventListener("click", function () {
         openModal("modal1");
     });
 
     document.getElementById("modalOpen2").addEventListener("click", function () {
-        showEventDetails();
+        openModal("modal2")
     });
-    function showEventDetails() {
-        // 이벤트 데이터를 가져오거나 미리 정의
-        var eventData = {
-            name: "이벤트 이름",
-            time: "2023-12-31 18:30:00",
-            imageUrl: "https://example.com/image.jpg"
-        };
-        // 모달 내용 업데이트
-        document.getElementById('eventName').textContent = eventData.name;
-        document.getElementById('eventTime').textContent = eventData.time;
-        // 이미지 업데이트
-        var imgElement = document.getElementById('eventImage');
-        imgElement.src = eventData.imageUrl;
-        imgElement.alt = "이벤트 이미지";
-        // 모달 열기
-        openModal('modal2');
-    }
 
     document.getElementById("modalOpen3").addEventListener("click", function () {
         openModal("modal3");

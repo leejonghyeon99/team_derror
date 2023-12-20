@@ -10,6 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script defer="defer" th:src="@{/js/user/detail.js}"></script>
+
 </head>
 
 <body>
@@ -18,12 +20,13 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-                    <!-- 1번 컨텐츠 -->
+            <!-- 1번 컨텐츠 -->
             <div class="col-md-6">
                 <div class="main_one">
+                    <input type="hidden" id="master_id" th:attr="master_id=${info.id}">
                     <p>
                         <label>이벤트 제목 :
-                            <span th:text="${info.name}"></span>
+                            <span id="title" th:text="${info.name}" th:attr="title=${info.name}"></span>
                         </label>
                     </p>
                     <p>
@@ -53,7 +56,7 @@
                     <th:block th:each="venu : ${info.embed.venues}">
                         <p>
                             <label>국가 이름 :
-                                <span th:text="${venu.country.name}"></span>
+                                <span  id="national" th:text="${venu.country.name}" th:attr="national=${venu.country.name}"></span>
                             </label>
                         </p>
                         <p>
@@ -75,7 +78,7 @@
 
                     <p>
                         <label>현지 시간 :
-                            <span th:text="${info.dates.start.localDate}"></span>&nbsp;
+                            <span id="created_date" th:text="${info.dates.start.localDate}" th:attr="created_date=${info.dates.start.localDate}"></span>&nbsp;
                             <span th:text="${info.dates.start.localTime}"></span>
                         </label>
                     </p>
@@ -92,10 +95,11 @@
 
             <div class="col-md-6">
                 <div class="row">
-                        <!-- 2번 -->
+                    <!-- 2번 -->
                     <div class="col-md-12">
                         <div class="main_two">
-                            <img th:each="image : ${info.images}" th:if="${image.width == 640 and image.height == 427}" style="width: 883px" height="400px"
+                            <img height="400px" style="width: 883px"
+                                 th:each="image : ${info.images}" th:if="${image.width == 640 and image.height == 427}"
                                  th:src="${image.url}"/>
                         </div>
                     </div>
@@ -105,17 +109,18 @@
                     </div>
                 </div>
             </div>
-                <!-- 4번 -->
-                <div class="col-md-12">
-                    <div class="main_four">
-                        <a href="/airandhotel/airport">항공정보조회</a>
-                        <button id="addEventButton" onclick="showEventDetails()">일정 추가</button>
-                    </div>
+            <!-- 4번 -->
+            <div class="col-md-12">
+                <div class="main_four">
+                    <a href="/airandhotel/airport">항공정보조회</a>
+                    <button id="addEventButton">일정 추가</button>
                 </div>
+            </div>
         </div> <!-- 맨위에 row -->
     </div> <!-- container-fluid -->
 </div>
 
+<!-- 지도 위도, 경도 -->
 <div id="latitude" style="display: none" th:text="${loc.location.latitude}"></div>
 <div id="longitude" style="display: none" th:text="${loc.location.longitude}"></div>
 
@@ -139,16 +144,63 @@
     };
 
 
-    // var requestOptions = {
-    //     method: 'GET',
-    //     redirect: 'follow'
-    // };
-    // fetch("https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*", requestOptions)
-    //     .then(response => response.text())
-    //     .then(result => console.log(result))
-    //     .catch(error => console.log('error', error));
+    // 일정 추가 버튼에 이벤트 리스너 추가
+    document.getElementById('addEventButton').addEventListener('click', function () {
+
+        // // API 요청으로부터 받은 정보 가져오기
+        // const storedEventData = JSON.parse(localStorage.getItem('data'));
+        // console.log("check: " , storedEventData);
+        //
+        // const embedded = storedEventData._embedded;
+        // const events = embedded.events;
 
 
+        //const events = embedded ? embedded.events : null;
+        //const events = Array.isArray(embedded ? embedded.events : null) ? embedded.events : [];
+        // console.log("events", events);
+
+        // for (var event of events) {
+        // const startData = event.dates.start.localDate;
+        // const startTime = event.dates.start.localTime;
+        //
+        // }
+
+        const eventData = {
+            master_id: document.getElementById('master_id').getAttribute('master_id'),
+            title: document.getElementById('title').getAttribute('title'),  // 이벤트 제목
+            created_date: document.getElementById("created_date").getAttribute('created_date'),  // 현지 시간
+            national: document.getElementById('national').getAttribute('national'),
+            //imageUrl: event.images.find(image => image.width === 640 && image.height === 427)?.url,  // 이미지 URL (조건에 맞는 첫 번째 이미지)
+        };
+
+        console.log("check: ", eventData)
+
+        // 데이터베이스에 저장할 데이터
+            saveEventDatabase(eventData);
+
+
+    });
+
+    // 데이터를 데이터베이스에 저장하는 함수
+    function saveEventDatabase(eventData) {
+        console.log(JSON.stringify(eventData));
+        // AJAX 또는 Fetch API를 사용하여 데이터를 백엔드로 전송
+        fetch(`/countryinfo/info`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(eventData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 성공적으로 데이터를 전송하고 나면 팝업을 표시하거나 다른 작업을 수행합니다.
+                console.log('데이터베이스에 저장 성공:', data);
+            })
+            .catch(error => {
+                console.error('데이터베이스에 저장 중 오류 발생:', error);
+            });
+    }
 
 </script>
 

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Countryinfo {
+
     @JsonProperty("_embedded")
     private Embedded embedded;
     private Page page;

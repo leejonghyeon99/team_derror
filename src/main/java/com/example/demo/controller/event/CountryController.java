@@ -1,10 +1,12 @@
 package com.example.demo.controller.event;
 
+import com.example.demo.config.PrincipalDetails;
 import com.example.demo.domain.event.*;
 import com.example.demo.service.event.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +26,20 @@ public class CountryController {
     @Autowired
     private final EventService eventService;
 
-    @PostMapping("/save")
-    public ResponseEntity<Events> registerEvent(@RequestBody Events events) {
-        Events saveEvents = eventService.save(events);
-        return new ResponseEntity<>(saveEvents, HttpStatus.CREATED);
+    @PostMapping("/info")
+    public ResponseEntity<String> saveEventData(@RequestBody EventData eventData, Authentication authentication) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Long member_id = principalDetails.getMember().getId();
+        System.out.println(member_id);
+
+        // 받은 eventData를 데이터베이스에 저장하는 서비스 메서드 호출
+        eventData.setMember_id(member_id);
+
+        eventService.save(eventData);
+
+
+        // 성공적인 응답을 클라이언트에 반환
+        return ResponseEntity.ok("Data saved successfully");
     }
 
     public static final String API_BASE_URL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*&size=21";
@@ -76,11 +88,30 @@ public class CountryController {
         RestTemplate restTemplate = new RestTemplate();
         Countryinfo countryinfo = restTemplate.getForObject(apiUrl, Countryinfo.class);
 
+//        countryinfo.getEmbedded().getEvents().forEach(events -> events.getId());
+//        System.out.println(countryinfo.getPage().getTotalPages());
+//        System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
+//        System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
+//        System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
+
         countryinfo.getEmbedded().getEvents().forEach(events -> events.getId());
         System.out.println(countryinfo.getPage().getTotalPages());
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
+
+
+        // 예외 처리: getEmbedded()의 반환값이 null이면 빈 리스트로 초기화
+        //List<Events> eventsList = countryinfo.getEmbedded() != null ? countryinfo.getEmbedded().getEvents() : Collections.emptyList();
+//        eventsList.forEach(events -> events.getId());
+//        System.out.println(countryinfo.getPage().getTotalPages());
+//
+//        // eventsList가 비어있지 않을 때에만 처리
+//        if (!eventsList.isEmpty()) {
+//            System.out.println(eventsList.get(0).getEmbed().getVenues().get(0).getCity().getName());
+//            System.out.println(eventsList.get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
+//            System.out.println(eventsList.get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
+//        }
 
 //        countryInfo.getEmbedded().getEvents().stream().reduce( (e,v) -> {
 //
@@ -91,24 +122,17 @@ public class CountryController {
     } // end Event
 
     @GetMapping("/info")
-    public void info(@RequestParam String eventId, Model model) {
+    public void info(String eventId, Model model) {
         String apiUrl = API_BASE_URLA + "&id=" + eventId;
         System.out.println(apiUrl);
 
         RestTemplate restTemplate = new RestTemplate();
         Countryinfo countryinfo = restTemplate.getForObject(apiUrl, Countryinfo.class);
 
-//        Events events = countryinfo.getEmbedded().getEvents().get(0);
-
-//        model.addAttribute("etname", events.getName());
-//        model.addAttribute("etimages", events.getImages());
-//        model.addAttribute("etdates", events.getDates().getStart().getLocalDate());
-
         model.addAttribute("info", countryinfo.getEmbedded().getEvents().get(0));
         model.addAttribute("attr", countryinfo.getEmbedded().getEvents().get(0).getEmbed().getAttractions().get(0));
         model.addAttribute("loc", countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0));
 
     }
-
 
 } // end countryController
