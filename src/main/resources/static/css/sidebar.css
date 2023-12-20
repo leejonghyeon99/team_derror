@@ -59,7 +59,7 @@ a {
 }
 
 .navbar-primary.collapsed {
-    width: 60px;
+    width: 100px;
 }
 
 .navbar-primary.collapsed .glyphicon {
@@ -129,15 +129,54 @@ a {
 }
 
 .board-content {
-    /*margin-top: 20px;*/
-    /*margin-left: 180px;*/
-    /*padding: 20px;*/
+    margin-left: 200px;
+    padding: 20px;
 }
 
 .collapsed + .main-content {
-    margin-left: 60px;
+    margin-left: 100px;
 }
 
 .collapsed + .board-content {
-    margin-left: 60px;
+    margin-left: 100px;
 }
+
+.board-list {
+    margin-left: 20px; /* 들여쓰기 적용 */
+}
+
+.board-list a {
+    display: block; /* 각 항목이 새로운 줄에 표시되도록 설정 */
+}
+
+.board-list a:nth-of-type(1)::before {
+    content: "공지사항";
+    font-size: 16px;
+}
+
+.board-list a:nth-of-type(2)::before {
+    content: "자유게시판";
+    font-size: 16px;
+}
+
+.board-list a:nth-of-type(3)::before {
+    content: "공유갤러리";
+    font-size: 16px;
+}
+
+.collapsed .board-list a:nth-of-type(1)::before {
+    content: "공지";
+    font-size: 12px;
+}
+
+.collapsed .board-list a:nth-of-type(2)::before {
+    content: "자유";
+    font-size: 12px;
+}
+
+.collapsed .board-list a:nth-of-type(3)::before {
+    content: "갤러리";
+    font-size: 12px;
+}
+
+

@@ -10,7 +10,6 @@ $(function () {
 
     //*************************************************************************************
 
-
     // 검색창 검색 결과가 없을때
     $(function () {
         var noSearchResults = $('#noSearchResults').data('no-search-results');
@@ -20,7 +19,8 @@ $(function () {
         }
     });
 
-    $('#searchForm').submit(function(event) {
+    // 엔터로 검색 가능
+    $('#serchButton').submit(function(event) {
         event.preventDefault(); // 기본 동작(페이지 리로드) 방지
         const keyword = $('#keyword').val().trim();
         if (keyword !== '') {
@@ -29,6 +29,11 @@ $(function () {
             console.log('검색어:', keyword);
         }
     });
+
+    $('#refreshButton').click(function() {
+        history.back();
+    });
+
 
 
 }); // end script

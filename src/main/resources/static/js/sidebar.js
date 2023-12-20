@@ -8,6 +8,7 @@ $(document).ready(function (){
         $('.navbar-primary').toggleClass('collapsed');
         dropdownMember.hide();
         dropdownLogout.hide();
+
     });
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -44,6 +45,5 @@ $(document).ready(function (){
                 window.location.href = destination;
             });
         });
-
 
 })
