@@ -1,11 +1,11 @@
 $(function () {
 
-  const  frmPageRows = $("[name='frmPageRows']");
-  const  select = $(".form-select");
+    const  frmPageRows = $("[name='frmPageRows']");
+    const  select = $(".form-select");
 
     select.change(function (){
-      frmPageRows.submit();
-  });
+        frmPageRows.submit();
+    });
 
 
     //*************************************************************************************
@@ -30,9 +30,7 @@ $(function () {
         }
     });
 
-    $('#refreshButton').click(function() {
-        history.back();
-    });
+
 
 
 

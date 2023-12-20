@@ -13,6 +13,8 @@
     const logged_id = /*[[${#authentication.principal.member.id}]]*/ 0;
     let commentCnt = /*[[${commentCnt}]]*/ 0;
 </script>
+
+<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.member}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,6 +32,11 @@
 
 <body>
 <th:block th:insert="~{common/sidebar::sidebar}"/>
+
+<form name="frmDelete" th:action="@{/board/delete}" method="post">
+    <input type="hidden" name="postId" th:value="${post.id}">
+</form>
+
     <div class="main-content">
        <div class="container">
            <div class="post-header">
@@ -51,10 +58,14 @@
                        <a href="#"><strong>[[${post.member.name}]]</strong>님의 게시글 더보기 ></a>
                    </div>
                    <div class="crud-btn">
-                       <a th:href="@{board/write}"><strong>작성</strong></a>
-                       <a th:href="@{board/update}"><strong>수정</strong></a>
-                       <a th:href="@{board/delete}"><strong>삭제</strong></a>
-                       <a th:href="@{board/list}"><strong>목록</strong></a>
+                       <a th:href="@{'/board/update/' + ${post.id}}" th:if="${logged_user.id == post.member.id}"><strong>수정</strong></a>
+                       <a th:if="${logged_user.id == post.member.id}" id="btnDel" ><strong>삭제</strong></a>
+                       <a th:if="${session.category} eq notice"
+                          th:href="@{/board/notice(page=${session.page})}"><strong>목록</strong></a>
+                       <a th:if="${session.category} eq free"
+                          th:href="@{/board/free(page=${session.page})}"><strong>목록</strong></a>
+                       <a th:if="${session.category} eq share"
+                          th:href="@{/board/share(page=${session.page})}"><strong>목록</strong></a>
                    </div>
                </div>
                <hr>
@@ -109,6 +120,7 @@
     </div>
 
 </body>
+</th:block>
 </html>
 
 

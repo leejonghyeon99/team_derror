@@ -2,8 +2,8 @@ a {
     text-decoration: none;
 }
 
-.dropdownMember, .dropdownLogout {
-    background-color: #666666;
+.dropdownMember, .dropdownLogout, .board-list {
+    /*background-color: #666666;*/
 }
 
 
@@ -145,7 +145,7 @@ a {
     margin-left: 100px;
 }
 
-.board-list {
+.board-list, .user-list {
     margin-left: 20px; /* 들여쓰기 적용 */
 }
 

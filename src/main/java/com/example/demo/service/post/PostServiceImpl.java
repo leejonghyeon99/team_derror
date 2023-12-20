@@ -401,6 +401,7 @@ public class PostServiceImpl implements PostService {
     public int deleteById(Long id) {
         int result = 0;
         Post post = postMapper.findById(id);  // 존재하는 데이터인지 읽어와보기
+
         if (post != null) {  // 존재한다면 삭제 진행.
             // 물리적으로 저장된 첨부파일(들) 삭제
             List<Attachment> fileList = attachmentRepository.findByPost(id);

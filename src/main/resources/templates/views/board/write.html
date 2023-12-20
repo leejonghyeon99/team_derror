@@ -27,12 +27,8 @@
 
 <div class="container mt-3"  th:with="user=${#authentication.getPrincipal().getMember()}" >
     <h2>작성</h2>
-    <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
-        <div th:with="isAdmin=${user.auth_id == 2}">
-            <label  th:if="${isAdmin}" ><input type="radio" name="category" value="notice"> 공지사항</label><br>
-            <label><input type="radio" name="category" value="free"> 자유게시판</label><br>
-            <label><input type="radio" name="category" value="share"> 공유게시판</label><br>
-        </div>
+    <form method="post">
+
         <div class="my-3">
             <label for="title">제목: </label>
             <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title" th:value="${title}">
@@ -57,12 +53,7 @@
 
 
         <button type="submit" class="btn btn-outline-dark">작성완료</button>
-        <a class="btn btn-outline-dark ms-1" th:if="${session.category} eq notice"
-           th:href="@{/board/notice(page=${session.page})}">목록</a>
-        <a class="btn btn-outline-dark ms-1" th:if="${session.category} eq free"
-           th:href="@{/board/free(page=${session.page})}">목록</a>
-        <a class="btn btn-outline-dark ms-1" th:if="${session.category} eq share"
-           th:href="@{/board/share(page=${session.page})}">목록</a>
+        <a class="btn btn-outline-dark ms-1" th:onclick="'javascript:history.back();'" >목록</a>
     </form>
 </div>
 </body>

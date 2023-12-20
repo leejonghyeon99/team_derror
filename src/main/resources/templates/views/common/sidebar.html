@@ -2,28 +2,43 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <th:block th:fragment="sidebar">
+
     <nav class="navbar-primary collapsed">
         <a href="#" class="btn-expand-collapse"><i class="bi bi-arrow-return-left"></i></a>
         <ul class="navbar-primary-menu">
             <li>
-                <a sec:authorize="!isAuthenticated()" th:href="@{/user/login}"><i class="bi bi-power"></i><span class="nav-label text-white"> 로그인</span></a>
-                <a sec:authorize="isAuthenticated()" class="navi"><i class="bi bi-person"></i><span class="nav-label text-white"> 회원</span></a>
-                <a sec:authorize="isAuthenticated()" th:href="@{/user/detail}" class="dropdownMember" style="display: none"><span class="nav-label text-white">회원정보</span></a>
-                <form sec:authorize="isAuthenticated()" th:action="@{/user/logout}" method="POST" class="dropdownLogout" th:with="member=${#authentication.getPrincipal().getMember()}">
-                            <button class="btn-logout" type="submit">Log Out</button></form>
-                <a th:href="@{/home}"><i class="bi bi-house"></i><span class="nav-label text-white"> home</span></a>
-                <a th:href="@{/countryinfo/search}"><i class="bi bi-globe-americas"></i><span class="nav-label text-white"> 이벤트</span></a>
-
-                <a class="navi" id="board-toggle" href="#" ><i class="bi bi-file-text"></i><span class="nav-label text-white"> 게시판</span></a>
-                <div class="board-list" style="display: none;">
-                <a th:href="@{/board/notice}" class="navi"><span class="nav-label text-white"></span></a>
-                <a th:href="@{/board/free}" class="navi"><span class="nav-label text-white"></span></a>
-                <a th:href="@{/board/share}" class="navi"><span class="nav-label text-white"></span></a>
+                <div class="user-toggle">
+                    <div class="user">
+                    <a sec:authorize="!isAuthenticated()" th:href="@{/user/sign}"><i class="bi bi-power"></i><span class="nav-label text-white"> 로그인</span></a>
+                    <a sec:authorize="isAuthenticated()" class="navi"><i class="bi bi-person"></i><span class="nav-label text-white"> 회원</span></a>
+                    </div>
+                    <div class="user-list" style="display: none">
+                        <a sec:authorize="isAuthenticated()" th:href="@{/user/detail}" class="dropdownMember" th:with="member=${#authentication.getPrincipal().getMember()}"><span class="nav-label text-white">회원정보</span></a>
+                        <form sec:authorize="isAuthenticated()" th:action="@{/user/logout}" method="POST" class="dropdownLogout" th:with="member=${#authentication.getPrincipal().getMember()}">
+                            <button class="btn-logout" type="submit">Log Out</button>
+                        </form>
+                    </div>
                 </div>
 
-                <a th:href="@{/openai/main}"><i class="bi bi-emoji-smile"></i><span class="nav-label text-white"> 도우미</span></a>
-                <a th:href="@{/airandhotel/airport}" class="dropdown-item"><i class="bi bi-airplane"></i><span class="nav-label text-white"> 항공</span></a>
-                <a th:href="@{/airandhotel/hotel}" class="dropdown-item"><i class="bi bi-building"></i><span class="nav-label text-white"> 숙박</span></a>
+                <a th:href="@{/home}"><i class="bi bi-house"></i><span class="nav-label text-white"> home</span></a>
+                <a th:href="@{/countryinfo/search}"><i class="bi bi-globe-americas"></i><span
+                        class="nav-label text-white"> 이벤트</span></a>
+
+                <div class="board-toggle">
+                <a class="navi"><i class="bi bi-file-text"></i><span class="nav-label text-white"> 게시판</span></a>
+                <div class="board-list" style="display: none;">
+                    <a th:href="@{/board/notice}" class="navi"><span class="nav-label text-white"></span></a>
+                    <a th:href="@{/board/free}" class="navi"><span class="nav-label text-white"></span></a>
+                    <a th:href="@{/board/share}" class="navi"><span class="nav-label text-white"></span></a>
+                </div>
+                </div>
+
+                <a th:href="@{/openai/main}"><i class="bi bi-emoji-smile"></i><span
+                        class="nav-label text-white"> 도우미</span></a>
+                <a th:href="@{/airandhotel/airport}" class="dropdown-item"><i class="bi bi-airplane"></i><span
+                        class="nav-label text-white"> 항공</span></a>
+                <a th:href="@{/airandhotel/hotel}" class="dropdown-item"><i class="bi bi-building"></i><span
+                        class="nav-label text-white"> 숙박</span></a>
 
             </li>
         </ul>

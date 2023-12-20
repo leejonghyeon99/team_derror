@@ -3,7 +3,10 @@ package com.example.demo.controller.user;
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.user.Member;
 import com.example.demo.domain.user.MemberValidator;
+import com.example.demo.repository.PostRepository;
+import com.example.demo.repository.user.UserRepository;
 import com.example.demo.service.UserService;
+import com.example.demo.service.board.BoardService;
 import com.example.demo.service.post.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -62,17 +66,9 @@ public class UserController {
     public void test(Model model) {
     }
 
-    @GetMapping("/login")
-    public void login(Model model) {
-    }
-
     @PostMapping("/loginError")
     public String loginError() {
-        return "user/login";
-    }
-
-    @GetMapping("/signup")
-    public void signup() {
+        return "user/sign";
     }
 
     @GetMapping("/signout")
@@ -98,18 +94,20 @@ public class UserController {
 
             List<FieldError> errList = result.getFieldErrors();
             redirectAttrs.addFlashAttribute("errors", errList);
+            redirectAttrs.addFlashAttribute("error", "signup");
+
             for (int i = 0; i < errList.size(); i++) {
 
                 redirectAttrs.addFlashAttribute("err" + errList.get(i).getField(), errList.get(i).getCode());
             }
 
-
-            return "redirect:/user/signup";
+            return "redirect:/user/sign";
         }
 
         String page = "/user/signupOk";
         int cnt = userService.signup(member);
         model.addAttribute("result", cnt);
+
         return page;
     }
 
@@ -143,15 +141,8 @@ public class UserController {
                     return "/user/signout";
                 }
             }
-            return "/user/login";
+            return "/user/sign";
         }
-
-
-
-
-
-
-
 
 
         @GetMapping("/sign")

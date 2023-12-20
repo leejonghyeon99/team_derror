@@ -1,4 +1,14 @@
 $(document).ready(function (){
+
+    // 글 [삭제] 버튼
+    $("#btnDel").click(function(){
+        let answer = confirm("삭제하시겠습니까?");
+        if(answer){
+            $("form[name='frmDelete']").submit();
+        }
+    });
+
+    // 댓글 대댓글
     const commentBody = $('.comment-body');
     const replyComment = $("#replyComment");
     let childList;
@@ -137,6 +147,9 @@ $(document).ready(function (){
         $(this).find('i').toggle();
         $(this).closest('.parent').find('.child-list').toggle();
     })
+
+
+
 })
 
 
