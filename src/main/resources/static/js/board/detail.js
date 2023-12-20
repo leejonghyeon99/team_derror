@@ -4,10 +4,9 @@ $(document).ready(function (){
     let childList;
 
     $(".reply-comment-btn").click(function() {
-        // 폼 데이터 수집
+
         var formData = new FormData(replyComment[0]);
 
-        // Ajax 요청 보내기
         $.ajax({
             url: '/comment/parent/write',
             type: 'POST',
@@ -15,10 +14,9 @@ $(document).ready(function (){
             contentType: false,
             processData: false,
             success: function(data, status) {
-                console.log(status);
-                console.log(data);
                 updateParent(data);
                 replyComment.find('[name="content"]').val('');
+
             },
             error: function(error) {
                 console.error(error);

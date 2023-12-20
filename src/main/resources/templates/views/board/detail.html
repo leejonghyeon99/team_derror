@@ -11,7 +11,7 @@
     // 나중에 댓글 작성시 필요.
     const post_id = [[${post.id}]];
     const logged_id = /*[[${#authentication.principal.member.id}]]*/ 0;
-
+    let commentCnt = /*[[${commentCnt}]]*/ 0;
 </script>
 <head>
     <meta charset="utf-8">
@@ -39,9 +39,6 @@
                     <div class="post-info">
                         <span class="info-member" th:text="${post.member.name}"></span>
                         <span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-                    </div>
-                    <div class="post-link-comment">
-                        <a href="#commentBody"><span></span>댓글 [[${commentCnt}]]</a>
                     </div>
                </div>
                <hr>
