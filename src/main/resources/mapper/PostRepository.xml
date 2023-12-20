@@ -56,6 +56,7 @@
         AND p.id = #{id}
     </select>
 
+
     <select id="findByUserName" resultMap="mapPost">
         SELECT p.id           "p_id",
                p.title        "p_title",

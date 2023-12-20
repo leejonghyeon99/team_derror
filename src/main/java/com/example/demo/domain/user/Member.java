@@ -27,9 +27,4 @@ public class Member {
     private String thumbnail_img;
     private String provider;
     private String provider_id ;
-
-
-
-
-
 }
