@@ -27,7 +27,7 @@ class PostRepositoryTest {
     @Test
     public void test(){
         List<Post> posts = null;
-        posts = postRepository.findAll();
+//        posts = postRepository.findAll();
 
         posts.stream().forEach(System.out::println);
     }
@@ -36,7 +36,7 @@ class PostRepositoryTest {
     public void test2(int from, int rows, String category) {
 
         List<Post> posts = null;
-        posts = postRepository.selectFromRow(from, rows, "notice");
+//        posts = postRepository.selectFromRow(from, rows, "notice");
 
         posts.stream().forEach(System.out::println);
 

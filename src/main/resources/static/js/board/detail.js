@@ -1,210 +1,144 @@
-$(function(){
-    // 글 [삭제] 버튼
-    $("#btnDel").click(function(){
-        let answer = confirm("삭제하시겠습니까?");
-        if(answer){
-            $("form[name='frmDelete']").submit();
-        }
-    });
+$(document).ready(function (){
+    const commentBody = $('.comment-body');
+    const replyComment = $("#replyComment");
+    let childList;
 
-    // 현재 글의 id 값
-    const id = $("input[name='id']").val().trim();
+    $(".reply-comment-btn").click(function() {
+        // 폼 데이터 수집
+        var formData = new FormData(replyComment[0]);
 
-    // 현재 글의 댓글을 불러온다
-    loadComment(id);
-
-    // 댓글 작성 버튼 누르면 댓글 등록 하기.
-    // 1. 어느글에 대한 댓글인지? --> 위에 id 변수에 담겨있다
-    // 2. 어느 사용자가 작성한 댓글인지? --> logged_id 값
-    // 3. 댓글 내용은 무엇인지?  --> 아래 content
-
-    $("#btn_comment").click(function(){
-        // 입력한 댓글
-        const content = $("#input_comment").val().trim();
-
-        // 검증
-        if(!content){
-            alert("댓글 입력을 하세요");
-            $("#input_comment").focus();
-            return;
-        }
-
-        // submit 할 parameter 들 준비
-        const data = {
-            "post_id": id,
-            "user_id": logged_id,
-            "content": content,
-        };
-
+        // Ajax 요청 보내기
         $.ajax({
-            url: "/comment/write",
-            type: "POST",
-            data: data,
-            cache: false,
+            url: '/comment/parent/write',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function(data, status) {
-                if(status == "success"){
-                    if(data.status !== "OK"){
-                        alert(data.status);
-                        return;
-                    }
-                    loadComment(id);  // 댓글 목록 다시 업데이트
-                    $("#input_comment").val('');   // 입력칸 리셋
-                }
+                console.log(status);
+                console.log(data);
+                updateParent(data);
+                replyComment.find('[name="content"]').val('');
             },
+            error: function(error) {
+                console.error(error);
+            }
         });
-
     });
 
-});
 
-$(".replySubmit").click(function(){
-    // 입력한 댓글
-    const content = $("#input_comment").val().trim();
-
-    // 검증
-    if(!content){
-        alert("댓글 입력을 하세요");
-        $("#input_comment").focus();
-        return;
+    function updateParent(data){
+        console.log(data)
+        let date = new Date(data.comment.createdDate);
+        let dateToString = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
+        let html = `<div class="parent" data-commentid="${data.comment.id}">
+                           <div class="display-flex">
+                               <img class="user-logo" src="/upload/thumbnail/${data.comment.member.thumbnail_img}">
+                               <div class="post-info">
+                                   <span class="info-member">${data.comment.member.name}</span>
+                                   <span> ${dateToString} </span>
+                                   <div class="toggleChild">
+                                       <a><span class="reply">답글</span></a>
+                                       <a>
+                                       <span class="comment-icon">댓글 <strong class="child-cnt">${data.comment.childCnt}</strong>개
+                                        <i class="bi bi-caret-down up"></i>
+                                        <i class="bi bi-caret-up down"></i>
+                                       </span>
+                                        </a>
+                                   </div>                                 
+                               </div>
+                               <span class="comment-content">${data.comment.content}</span>
+                           </div> 
+                           <div class="parent-form"></div>
+                           <div class="child-list"></div>
+                        </div>
+                        <br>
+                        `
+        commentBody.prepend(html);
     }
 
-    // submit 할 parameter 들 준비
-    const data = {
-        "parent_id": parentId,
-        "post_id": id,
-        "user_id": logged_id,
-        "content": content,
-    };
 
-    $.ajax({
-        url: "/comment/reply",
-        type: "POST",
-        data: data,
-        cache: false,
-        success: function(data, status) {
-            if(status == "success"){
-                if(data.status !== "OK"){
-                    alert(data.status);
-                    return;
+    $(document).on('click','.reply', function (){
+        childList = $(this).closest('.parent').find('.child-list');
+        let commentId = $(this).closest('.parent').data('commentid');
+        let form = $(this).closest('.parent').find('.parent-form');
+        let data = `
+                <form>
+                    <input type="hidden" name="memberId" value="${logged_id}">
+                    <input type="hidden" name="postId" value="${post_id}">
+                    <input type="hidden" name="commentId" value="${commentId}">                         
+                    <input type="text" name="content" required>
+                    <button class="child-reply-btn" type="button">작성</button>
+                </form>`
+
+        if(!(form.children().length > 0)){
+            form.html(data);
+            childReply(form);
+        }else{
+            form.html('');
+        }
+
+    })
+
+
+
+
+
+    let childCnt;
+    function childReply(parentForm){
+        childCnt = parentForm.closest('.parent').find('.child-cnt')[0];
+        let cnt = parseInt(childCnt.innerText,10);
+        parentForm.find('form').find('.child-reply-btn').click(function (){
+            var formData = new FormData(parentForm.find('form')[0]);
+
+
+            $.ajax({
+                url: '/comment/child/write',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data, status) {
+                    updateChild(data);
+                    cnt++;
+                    childCnt.innerHTML = cnt;
+                    console.log(childCnt,cnt)
+                    parentForm.find('input').val('');
+                    parentForm.html('');
+                },
+                error: function(error) {
+                    console.error(error);
                 }
-                loadComment(id);  // 댓글 목록 다시 업데이트
-                $("#input_comment").val('');   // 입력칸 리셋
-            }
-        },
-    });
-
-});
-
-
-
-// 특정 글(post_id) 의 댓글 목록 읽어오기
-function loadComment(post_id){
-    $.ajax({
-        url: "/comment/list?id=" + post_id,
-        type: "GET",
-        cache: false,
-        success: function(data, status){
-            if(status == "success"){
-
-                // 서버쪽에서 에러가 있는 경우.
-                if(data.status !== "OK"){
-                    alert(data.status);
-                    return;
-                }
-
-                // 댓글 화면 렌더링
-                buildComment(data);
-
-                // 댓글 목록을 불러오고 난 뒤에 삭제에 대한 이벤트 리스너 등록해야 한다.
-                addDelete();
-            }
-        },
-    });
-}
-
-function buildComment(result) {
-    $("#cmt_cnt").text(result.count);   // 댓글 총 개수
-
-    const out = [];
-
-    result.data.forEach(comment => {
-        let id = comment.id;
-        let content = comment.content.trim();
-        let regdate = comment.created_date;
-
-        let user_id = comment.member.id;
-        let username = comment.member.username;
-        let name = comment.member.name;
-
-        // 삭제버튼 여부: 작성자 본인인 경우만 삭제 버튼 보이게 하기
-        const delBtn = (logged_id !== user_id) ? '' : `
-            <i class="btn fa-solid fa-delete-left text-danger" data-bs-toggle="tooltip"
-                            data-cmtdel-id="${id}" title="삭제"></i>
-        `;
-
-        const row = `
-            <tr>
-            <td><span><strong>${username}</strong><br><small class="text-secondary">(${name})</small></span></td>
-            <td>
-               <span>${content}</span>${delBtn}
-                       <button type="button" class="replyButton">답글</button>
-            <div class="replyForm" style="display: none;">
-                <input type="text" class="form-control replyInput">
-                <button type="button" class="replySubmit">작성</button>
-            </div>
-            </td>
-            <td><span><small class="text-secondary">${regdate}</small></span></td>
-            </tr>
-        `;
-        out.push(row);
-    });
-
-    $("#cmt_list").html(out.join("\n"));
-}
-
-// 댓글 삭제 버튼이 눌렸을때.  해당 댓글 삭제하는 동작을 이벤트 핸들러로 등록
-function addDelete(){
-    // 현재 글의 id
-    const id = $("input[name='id']").val().trim();
-
-    $("[data-cmtdel-id]").click(function(){
-        if(!confirm("댓글을 삭제하시겠습니까?")) return;
-
-        // 삭제할 댓글의 comment_id
-        const comment_id = $(this).attr("data-cmtdel-id");
-
-        $.ajax({
-            url: "/comment/delete",
-            type: "POST",
-            cache: false,
-            data: {"id": comment_id},
-            success: function(data, status){
-                if(status == "success"){
-                    if(data.status !== "OK"){
-                        alert(data.status);
-                        return;
-                    }
-
-                    // 삭제후에도 다시 목록을 불러와야 한다 (갱신)
-                    loadComment(id);
-                }
-            },
+            });
         });
-    });
 
-    $('.replyButton').click(function() {
-        // 답글 입력창 토글
-        $(this).siblings('.replyForm').toggle();
-    });
+    }
+
+    function updateChild(data){
+        console.log(data)
+        let date = new Date(data.comment.createdDate);
+        let dateToString = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
+        let html = `<div class="child">
+                           <div class="display-flex">
+                               <img class="user-logo" src="/upload/thumbnail/${data.comment.member.thumbnail_img}">
+                               <div class="post-info">
+                                   <span class="info-member">${data.comment.member.name}</span>
+                                   <span> ${dateToString} </span>
+                               </div>
+                               <span class="comment-content">${data.comment.content}</span>
+                           </div> 
+                        </div>
+                        <br>
+                        `
+        childList.prepend(html);
+    }
 
 
-}
 
-
-
-
-
-
-
+    $(document).on('click','.comment-icon', function (){
+        $(this).find('i').toggle();
+        $(this).closest('.parent').find('.child-list').toggle();
+    })
+})
 
 

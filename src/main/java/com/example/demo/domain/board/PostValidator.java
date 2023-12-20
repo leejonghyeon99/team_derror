@@ -9,7 +9,6 @@ import org.springframework.validation.Validator;
 public class PostValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
-        System.out.println("supports(" + clazz.getName() + ")");
         boolean result = Post.class.isAssignableFrom(clazz);
         return result;
     }

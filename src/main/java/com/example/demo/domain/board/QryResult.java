@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class QryResult {
     int count;
     String status;
+    Long id;
+    private Comment comment;
 }

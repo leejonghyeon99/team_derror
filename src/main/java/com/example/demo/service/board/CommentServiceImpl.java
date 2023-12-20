@@ -6,13 +6,19 @@ import com.example.demo.domain.board.QryResult;
 import com.example.demo.domain.user.Member;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.user.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
+@Slf4j
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -28,76 +34,156 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public QryCommentList list(Long id) {
+    public Comment getCommentById(Long id) {
+        return commentRepository.getCommentById(id);
+    }
+
+    /**
+     * 
+     * @param id 게시글 번호
+     * @return 게시글번호의 댓글 총 개수
+     */
+    @Override
+    public int commentCntByPostId(Long id) {
+        return commentRepository.commentCnt(id);
+    }
+
+
+    /**
+     *
+     * @param postId 게시글 번호(id)
+     * @return list[게시글의 부모 댓글 목록 반환]
+     */
+    @Override
+    public QryCommentList listbyParents(Long postId) {
         QryCommentList list = new QryCommentList();
 
-        List<Comment> comments = commentRepository.findByPost(id);
+        List<Comment> comments = commentRepository.findAllParents(postId);
+        for (var p : comments) {
+            List<Comment> temp = commentRepository.findAllChilds(p.getId());
+            if (temp.size() > 0){
+                p.setChildComment(temp);
+            }
+        }
 
-        list.setCount(comments.size());   // 댓글의 개수
+        list.setCount(comments.size());
         list.setList(comments);
         list.setStatus("OK");
-
         return list;
     }
 
+    /**
+     *
+     * @param commentId 부모 댓글 번호
+     * @return list[부모 댓글의 자식댓글 목록 반환]
+     */
     @Override
-    public QryResult write(Long postId, Long memberId, String content) {
+    public QryCommentList listbyChilds(Long commentId) {
+        QryCommentList list = new QryCommentList();
 
-        Member member = userRepository.findId(memberId);
-        System.out.println("comment test: ");
-        Comment comment = Comment.builder()
-                .member(member)
-                .content(content)
-                .post_id(postId)
-                .build();
+        List<Comment> comments = commentRepository.findAllChilds(commentId);
 
-        commentRepository.save(comment);
-
-        QryResult result = QryResult.builder()
-                .count(1)
-                .status("OK")
-                .build();
-
-
-        return result;
+        list.setCount(comments.size());
+        list.setList(comments);
+        list.setStatus("OK");
+        return list;
     }
 
+    /**
+     *
+     * @param memberId
+     * @param postId
+     * @param content
+     * @return
+     */
+    @Transactional
+    @Override
+    public QryResult writeParentComment(Long memberId, Long postId, String content) {
+        try {
+            Member member = userRepository.findId(memberId);
+            Comment comment = Comment.builder()
+                    .member(member)
+                    .postId(postId)
+                    .content(content)
+                    .build();
+            commentRepository.saveParent(comment);
+            return QryResult.builder()
+                    .count(1)
+                    .status("OK")
+                    .comment(commentRepository.getCommentById(comment.getId()))
+                    .build();
+        } catch (DataAccessException e) {
+            // 예외 처리
+            log.error("부모 댓글 작성 에러", e);
+
+            return QryResult.builder()
+                    .count(0)
+                    .status("FAIL")
+                    .build();
+        }
+    }
+
+    /**
+     *
+     * @param memberId
+     * @param postId
+     * @param commentId
+     * @param content
+     * @return
+     */
+    @Override
+    public QryResult writeChildComment(Long memberId, Long postId, Long commentId, String content) {
+        try {
+            Member member = userRepository.findId(memberId);
+            Comment comment = Comment.builder()
+                    .member(member)
+                    .postId(postId)
+                    .commentId(commentId)
+                    .content(content)
+                    .build();
+            commentRepository.saveChild(comment);
+
+            return QryResult.builder()
+                    .count(1)
+                    .status("OK")
+                    .comment(commentRepository.getCommentById(comment.getId()))
+                    .id(comment.getId())
+                    .build();
+        } catch (DataAccessException e) {
+            // 예외 처리
+            log.error("자식 댓글 작성 에러", e);
+
+            return QryResult.builder()
+                    .count(0)
+                    .status("FAIL")
+                    .build();
+        }
+    }
+
+
+    /**
+     * 
+     * @param id 삭제할 댓글 번호
+     * @return
+     */
     @Override
     public QryResult delete(Long id) {
-        int count = commentRepository.deleteById(id);
-        String status = "FAIL";
+        int count = 0;
+        try {
+            count = commentRepository.deleteById(id);
+            return QryResult.builder()
+                    .count(count)
+                    .status("OK")
+                    .build();
 
-        if(count > 0) status = "OK";
-
-        QryResult result = QryResult.builder()
-                .count(count)
-                .status(status)
-                .build();
-
-        return result;
+        }catch (DataAccessException  e){
+            return QryResult.builder()
+                    .count(count)
+                    .status("OK")
+                    .build();
+        }
     }
 
-    @Override
-    public QryResult replyWrite(Long postId, Long parentId, Long memberId, String content) {
-        Member member = userRepository.findId(memberId);
-        System.out.println("comment test: ");
-        Comment reply = Comment.builder()
-                .comment_id(parentId)
-                .member(member)
-                .content(content)
-                .post_id(postId)
-                .build();
-
-        commentRepository.replySave(reply);
-
-        QryResult result = QryResult.builder()
-                .count(1)
-                .status("OK")
-                .build();
-
-
-        return result;
-    }
 
 }// end serviceimpl
 

@@ -1,12 +1,159 @@
 .active {
     background-color: #5CFFD1;
 }
-
-.memberInfo {
-    margin-bottom: 20px;
+body {
+    background-color: rgba(173, 181, 189, 0.1);
+}
+.memberForm {
+    margin: 0 auto;
+    margin-top: 210px;
+    position: fixed;
+    width: 700px;
+    height: 600px;
+    top: 30%;
+    left: 45%;
+    transform: translate(-33%, -45%);
+    border: 1px solid #00498C;
+    background-color: #fff;
+    padding: 10px;
+    max-width: 60%;
+    max-height: 60%;
+    box-sizing: border-box;
+    box-shadow: 0 0 19px rgba(0, 0, 0, 0.02);
+    border-radius: 5px;
+}
+img {
+    border-radius: 50%;
+}
+.profile_area {
+    padding: 12px 39px 20px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, .1);
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    border-top: 1px solid rgba(0, 0, 0, .08);
+    margin-top: 10px;
 }
 
+.profile_inner {
+ margin-left: 35px;
+}
 
+.profileName {
+    font-weight: bold;
+}
+
+.profileEmail {
+    font-size: 13px;
+}
+
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+}
+
+.w-btn-skin {
+    background-color: rgba(51, 153, 255, 0.2);
+    color: #6e6e6e;
+}
+
+.w-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    outline: 1px solid #00498C;
+}
+
+.memberInfo{
+    margin: 0 auto;
+    margin-top: 30px;
+    position: fixed;
+    width: 700px;
+    height: 300px;
+    top: 33%;
+    left: 45%;
+    transform: translate(-33%, -45%);
+    border: 1px solid #00498C;
+    background-color: #fff;
+    padding: 10px;
+    max-width: 60%;
+    max-height: 60%;
+    box-sizing: border-box;
+    box-shadow: 0 0 19px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+
+
+}
+
+#name, #age, #email, #phone {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+#name {
+    margin-top: 45px;
+}
+
+label {
+    font-weight: bold;
+}
+#phone img, #age img {
+    width: 30px;
+    height: 30px;
+    margin-right: 2px;
+}
+
+#email img {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    margin-left: 5px
+}
+
+#name img {
+    width: 25px;
+    height: 20px;
+    margin-right: 2px;
+    margin-left: 4px
+}
+
+.postList {
+    margin: 0 auto;
+    margin-top: 360px;
+    position: fixed;
+    width: 700px;
+    height: 300px;
+    top: 33%;
+    left: 45%;
+    transform: translate(-33%, -45%);
+    border: 1px solid #00498C;
+    background-color: #fff;
+    padding: 10px;
+    max-width: 60%;
+    max-height: 300px;
+    box-sizing: border-box;
+    box-shadow: 0 0 19px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.tbl {
+    max-height: 80%;
+    overflow: auto;
+}
+
+h5 {
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 10px;
+}
 .postList table {
     width: 100%;
     border-collapse: collapse;
@@ -30,46 +177,35 @@
 
 a {
     color: black;
-    text-decoration: none;
     transition: color 0.3s ease;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 
 a:hover {
     color: blue;
-}
-
-
-.memberForm {
-    margin: 0 auto;
-    position: fixed;
-    top: 33%;
-    left: 45%;
-    transform: translate(-33%, -45%);
-    border: 1px solid #00498C;
-    background-color: #fff;
-    padding: 10px;
-    max-width: 30%;
-    max-height: 60%;
-    box-sizing: border-box;
-    box-shadow: 0 0 19px rgba(0,0,0,0.3);
-}
-
-.memberInfo, .postList {
-    height:50%;
-    border: 1px solid #adb5bd;
-}
-
-.postList {
-    margin-top: 2px;
+    text-underline: blue;
 }
 
 .modalbtn {
     position: fixed;
-    top: 28%;
-    left: 30%;
+    top: 33%;
+    left: 28%;
     transform: translate(-28%, -30%);
     box-sizing: border-box;
+
+}
+
+#memberSignOut{
+    border: none;
+    background-color: rgba(173, 181, 189, 0.01);
+    text-decoration: underline;
+    font-size: 12px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
 }
 
 .modal {
@@ -84,7 +220,7 @@ a:hover {
     max-width: 30%;
     max-height: 60%;
     box-sizing: border-box;
-    box-shadow: 0 0 19px rgba(0,0,0,0.3);
+    box-shadow: 0 0 19px rgba(0, 0, 0, 0.3);
 
 }
 
@@ -94,6 +230,14 @@ a:hover {
 
 }
 
+#modalbtn input {
+    margin-bottom: 20px;
+}
+
+#modalOpen1, #modalOpen2, #modalOpen3,#modalOpen4,#btn1 {
+    padding : 10px 20px;
+    font-size: 16px;
+}
 .close {
     color: #aaa;
     font-size: 15px;
@@ -105,11 +249,10 @@ a:hover {
 }
 
 
-
 .close:hover,
 .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }

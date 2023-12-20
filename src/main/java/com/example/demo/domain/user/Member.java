@@ -24,12 +24,7 @@ public class Member {
     private String phone;
     private String name;
     private String email;
-    private String thumnail_img;
+    private String thumbnail_img;
     private String provider;
     private String provider_id ;
-
-
-
-
-
 }
