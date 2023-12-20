@@ -39,7 +39,7 @@
 
     <select id="commentCnt" resultType="java.lang.Integer">
         select count(*)
-        from comment;
+        from comment where post_id = #{id};
     </select>
 
     <select id="getCommentById" resultMap="commentMap">

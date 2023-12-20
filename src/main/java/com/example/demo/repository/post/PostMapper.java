@@ -8,6 +8,7 @@ public interface PostMapper {
 
     int save(Post post);
 
+    List<Post> findByUsername(String username);
 
     Post findById(Long id);
 

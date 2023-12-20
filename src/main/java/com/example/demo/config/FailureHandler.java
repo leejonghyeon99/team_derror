@@ -24,7 +24,7 @@ public class FailureHandler implements AuthenticationFailureHandler {
         String errmsg = null;
 
         if(exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
-            errmsg = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해 주십시오.";
+            errmsg = "아이디나 비밀번호가 맞지 않습니다.";
         }
 
         else if(exception instanceof DisabledException) {

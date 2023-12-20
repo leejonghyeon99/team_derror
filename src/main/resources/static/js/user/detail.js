@@ -39,6 +39,15 @@ function closeModal(modalId) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    document.getElementById("btn1").addEventListener("click", function () {
+
+        var openModals = document.querySelectorAll('.modal.show');
+        openModals.forEach(function (openModal) {
+            closeModal(openModal.id);
+        });
+    });
+
     document.getElementById("modalOpen1").addEventListener("click", function () {
         openModal("modal1");
     });
@@ -56,10 +65,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     var closeBtn = document.getElementsByClassName("close");
-    for(var i = 0; i<closeBtn.length; i++){
-        closeBtn[i].addEventListener("click",function (){
+    for (var i = 0; i < closeBtn.length; i++) {
+        closeBtn[i].addEventListener("click", function () {
             var madalId = this.parentElement.parentElement.id;
             closeModal(modalId);
         })
     }
-});
+
+
+})
+
