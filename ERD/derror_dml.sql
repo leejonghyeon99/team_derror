@@ -1,5 +1,4 @@
 INSERT INTO authority (id,name) VALUES (1,'ROLE_USER'), (2,'ROLE_ADMIN');
-INSERT INTO event_plan
 select * from authority;
 select * from member;
 select * from post;
@@ -33,5 +32,4 @@ select * from post;
 select * from post where post.member_id in (3,4,5);
 SELECT count(distinct p.id) FROM member m join post p on m.auth_id = 2 and p.title like concat('%','권','%');
 
-
-
+select * from event_plan;

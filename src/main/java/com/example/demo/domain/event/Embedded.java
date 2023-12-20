@@ -12,6 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Embedded {
-
     private List<Events> events;
+    private List<EventData> eventData;
 }

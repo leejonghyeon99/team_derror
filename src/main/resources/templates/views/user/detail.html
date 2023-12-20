@@ -9,90 +9,60 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/user/detail.css}">
     <script th:src="@{/js/user/detail.js}"></script>
-    <script >function confirmDelete(){
-            let confirmMsg = confirm("회원 탈퇴를 진행하시겠습니까?")
-            return confirmMsg;
-    }
-    </script>
+
     <title>회원정보</title>
 
 </head>
 <body>
 <th:block th:insert="~{common/sidebar::sidebar}"/>
 
-<div th:action="@{/user/detail}" method="POST" id="detail">
-
-    <div class="profile_area" style="background-image:url('/img/하늘.jpg'); background-size: cover">
-        <div class="profile_inner">
-            <img src="https://static.nid.naver.com/images/web/user/default.png" width="84" height="84">
-            <div class="profileName" th:text="${member.username}"></div>
-            <div class="profileEmail" th:text="${member.email}"></div>
-        </div>
-    </div>
+<form th:action="@{/user/detail}" method="POST" id="de tail">
 
     <div id="modalbtn" class="modalbtn">
-        <div id="modalbtn1">
-            <input class="w-btn w-btn-skin" type="button" id="btn1" th:value="회원정보">
+        <div>
+            <input type="button" id="btn1" th:value="회원정보">
         </div>
 
-        <div id="modalbtn2">
-            <input class="w-btn w-btn-skin" type="button" id="modalOpen1" th:value="친구관리">
+        <div>
+            <input type="button" id="modalOpen1" th:value="친구관리">
         </div>
-
-        <div id="modalbtn3">
-            <input class="w-btn w-btn-skin" type="button" id="modalOpen2" th:value="일정관리">
+        <div>
+            <input type="button" id="modalOpen2" th:value="일정관리">
         </div>
-
-        <div id="modalbtn4">
-            <input class="w-btn w-btn-skin" type="button" id="modalOpen3" th:value="발신알림">
+        <div>
+            <input type="button" id="modalOpen3" th:value="발신알림">
         </div>
-
-        <div id="modalbtn5">
-            <input class="w-btn w-btn-skin" type="button" id="modalOpen4" th:value="수신알림">
-        </div>
-        <form th:action="@{/user/signout}" method="post" onsubmit="return confirmDelete()">
-            <button id="memberSignOut" type="submit">회원탈퇴</button>
-        </form>
-    </div>
-
-
-    <div id="memberInfo" class="memberInfo">
-
-        <div><h5>회원기본정보</h5></div>
-        <div id="name">
-            <label>
-                <img th:src="@{/img/member.png}">
-                이름:
-                <span th:text="${member.name}"></span>
-            </label>
-        </div>
-        <div id="age">
-            <label>
-                <img th:src="@{/img/age.png}">
-                나이:
-                <span th:text="${member.age}"></span>
-            </label>
-        </div>
-        <div id="email">
-            <label>
-                <img th:src="@{/img/email.png}">
-                이메일:
-                <span th:text="${member.email}"></span>
-            </label>
-        </div>
-        <div id="phone">
-            <label>
-                <img th:src="@{/img/phone.png}">
-                전화번호:
-                <span th:text="${member.phone}"></span>
-            </label>
+        <div>
+            <input type="button" id="modalOpen4" th:value="수신알림">
         </div>
     </div>
+    <div id="memberForm" class="memberForm">
+        <div id="memberInfo" class="memberInfo">
+            <h5>회원기본정보</h5>
+            <div id="name">
+                <label>이름:
+                    <span th:text="${member.name}"></span>
+                </label>
+            </div>
+            <div id="age">
+                <label>나이:
+                    <span th:text="${member.age}"></span>
+                </label>
+            </div>
+            <div id="email">
+                <label>이메일:
+                    <span th:text="${member.email}"></span>
+                </label>
+            </div>
+            <div id="phone">
+                <label>전화번호:
+                    <span th:text="${member.phone}"></span>
+                </label>
+            </div>
+        </div>
 
-    <div class="postList">
-
-        <div><h5>회원게시글목록</h5></div>
-        <div class="tbl">
+        <div class="postList">
+            <label>회원게시글목록</label>
             <table>
                 <thead>
                 <tr>
@@ -102,7 +72,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="post : ${list}" >
+                <tr th:each="post : ${list}">
                     <td>
                         <a th:href="@{/board/detail/{postId}(postId=${post.id})}" th:text="${post.title}"></a>
                     </td>
@@ -143,7 +113,7 @@
             <input type="button" class="close" onclick="closeModal('modal4')" th:value="닫기">
         </div>
     </div>
-</div>
+</form>
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>
 </body>
