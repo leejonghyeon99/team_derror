@@ -210,9 +210,9 @@ a:hover {
 .modal {
     display: none;
     position: fixed;
-    top: 48%;
+    top: 56%;
     left: 53%;
-    transform: translate(-48%, -53%);
+    transform: translate(-56%, -53%);
     border: 1px solid #00498C;
     background-color: #fff;
     padding: 10px;
@@ -246,16 +246,6 @@ a:hover {
     right: 10px;
     max-height: 5%;
 }
-#modal2Close {
-    color: #aaa;
-    font-size: 15px;
-    font-weight: bold;
-    position: relative;
-    bottom: -6px;
-    max-height: 5%;
-    left: 96%;
-}
-
 
 .close:hover,
 .close:focus {

@@ -32,6 +32,20 @@
         WHERE username = #{username}
     </select>
 
+    <select id="findEmail" resultType="com.example.demo.domain.user.Member">
+        SELECT id           "id"
+             , auth_id      "auth_id"
+             , username     "username"
+             , password     "password"
+             , email        "email"
+             , name         "name"
+             , phone        "phone"
+             , age          "age"
+             , created_date "created_date"
+        FROM member
+        WHERE email = #{email}
+    </select>
+
     <insert id="save" flushCache="true" parameterType="com.example.demo.domain.user.Member"
             keyProperty="id" useGeneratedKeys="true" keyColumn="id">
         INSERT INTO member(auth_id, username, password, age, phone, name, email, provider, provider_id)
