@@ -13,7 +13,7 @@
         <association property="member" column="member_id" javaType="com.example.demo.domain.user.Member">
             <id property="id" column="member_id"/>
             <id property="name" column="name"/>
-            <id property="thumnail_img" column="thumnail_img"/>
+            <id property="thumbnail_img" column="thumbnail_img"/>
         </association>
     </resultMap>
 
