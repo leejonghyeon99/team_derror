@@ -14,6 +14,13 @@ body {
     font-family: 'DM Serif Display', serif;
 }
 
+#free {
+    text-align: center;
+    font-size: 120px;
+    color: white;
+    font-family: 'DM Serif Display', serif;
+}
+
 .board-filter {
     display: flex;
     flex-wrap: wrap;
@@ -112,7 +119,7 @@ form[name="frmPageRows"] .form-select {
     overflow: hidden;
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px; /* 글자 크기 설정 */
+    font-size: 15px; /* 글자 크기 설정 */
     color: #111111;
     text-align: center; /* 텍스트 가운데 정렬 */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
@@ -124,6 +131,7 @@ form[name="frmPageRows"] .form-select {
     padding: 8px;
 }
 
+
 /* 목차 스타일 */
 #boardtable th {
     background-color: #003366; /* 찐 파랑 배경색 */
@@ -132,13 +140,14 @@ form[name="frmPageRows"] .form-select {
 
 /* 목록 스타일 */
 #boardtable td {
+    border: 1px solid #ddd;
     background-color: #fff; /* 흰 바탕색 */
     color: #111111;
 }
 
 /* 마우스 호버 효과 */
 #boardtable tbody tr:hover {
-    background-color: #cdf0ff; /* 연하늘색 배경으로 변경 */
+    background-color: #cdf0ff;!important
     cursor: pointer;
 }
 
@@ -158,3 +167,7 @@ form[name="frmPageRows"] .form-select {
 .col-username { width: 10%; }
 .col-viewCnt { width: 10%; }
 .col-createdDate { width: 20%; }
+
+/*#writeButton {*/
+/*    margin-top: 10px;*/
+/*}*/

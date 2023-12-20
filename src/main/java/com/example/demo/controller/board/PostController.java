@@ -43,11 +43,13 @@ public class PostController {
     @PostMapping("/write")
     public String writeOk(
             @RequestParam Map<String, MultipartFile> files   // 첨부 파일
-            , @Valid Post post
+                , @Valid Post post
             , BindingResult result
             , Model model   // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
             , RedirectAttributes redirectAttrs
     ){
+
+        System.out.println("#################################### \n"+post.toString());
         // validation 에러가 있었다면 redirect 할거다!
         if(result.hasErrors()){
             redirectAttrs.addFlashAttribute("title", post.getTitle());
