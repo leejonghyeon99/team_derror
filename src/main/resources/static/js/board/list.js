@@ -1,11 +1,11 @@
 $(function () {
 
-  const  frmPageRows = $("[name='frmPageRows']");
-  const  select = $(".form-select");
+    const  frmPageRows = $("[name='frmPageRows']");
+    const  select = $(".form-select");
 
     select.change(function (){
-      frmPageRows.submit();
-  });
+        frmPageRows.submit();
+    });
 
 
     //*************************************************************************************
@@ -29,6 +29,7 @@ $(function () {
             console.log('검색어:', keyword);
         }
     });
+
 
 
 

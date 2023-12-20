@@ -27,12 +27,8 @@
 
 <div class="container mt-3"  th:with="user=${#authentication.getPrincipal().getMember()}" >
     <h2>작성</h2>
-    <form th:action="@{/board/write}" method="post" enctype="multipart/form-data">
-        <div th:with="isAdmin=${user.auth_id == 2}">
-            <label  th:if="${isAdmin}" ><input type="radio" name="category" value="notice"> 공지사항</label><br>
-            <label><input type="radio" name="category" value="free"> 자유게시판</label><br>
-            <label><input type="radio" name="category" value="share"> 공유게시판</label><br>
-        </div>
+    <form method="post">
+
         <div class="my-3">
             <label for="title">제목: </label>
             <input type="text" class="form-control" id="title" placeholder="제목을 입력하세요" name="title" th:value="${title}">

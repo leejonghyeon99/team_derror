@@ -7,7 +7,7 @@
 
 <script th:if="${result>0}" th:inline="javascript">
     alert("삭제성공");
-    // location.href = `list`;
+    location.href = `board/[[${category}]]`;
 </script>
 
 </html>

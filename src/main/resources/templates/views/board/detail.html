@@ -58,10 +58,14 @@
                        <a href="#"><strong>[[${post.member.name}]]</strong>님의 게시글 더보기 ></a>
                    </div>
                    <div class="crud-btn">
-                       <a th:href="@{/board/write}" sec:authorize="hasAnyRole('ADMIN')"><strong>작성</strong></a>
                        <a th:href="@{'/board/update/' + ${post.id}}" th:if="${logged_user.id == post.member.id}"><strong>수정</strong></a>
                        <a th:if="${logged_user.id == post.member.id}" id="btnDel" ><strong>삭제</strong></a>
-                       <a th:onclick="'javascript:history.back();'" ><strong>목록</strong></a>
+                       <a th:if="${session.category} eq notice"
+                          th:href="@{/board/notice(page=${session.page})}"><strong>목록</strong></a>
+                       <a th:if="${session.category} eq free"
+                          th:href="@{/board/free(page=${session.page})}"><strong>목록</strong></a>
+                       <a th:if="${session.category} eq share"
+                          th:href="@{/board/share(page=${session.page})}"><strong>목록</strong></a>
                    </div>
                </div>
                <hr>

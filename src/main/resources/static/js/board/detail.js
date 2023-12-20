@@ -8,6 +8,7 @@ $(document).ready(function (){
         }
     });
 
+    // 댓글 대댓글
     const commentBody = $('.comment-body');
     const replyComment = $("#replyComment");
     let childList;
@@ -146,6 +147,9 @@ $(document).ready(function (){
         $(this).find('i').toggle();
         $(this).closest('.parent').find('.child-list').toggle();
     })
+
+
+
 })
 
 
