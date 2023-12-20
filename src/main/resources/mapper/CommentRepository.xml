@@ -13,7 +13,7 @@
         <association property="member" column="member_id" javaType="com.example.demo.domain.user.Member">
             <id property="id" column="member_id"/>
             <id property="name" column="name"/>
-            <id property="thumnail_img" column="thumnail_img"/>
+            <id property="thumbnail_img" column="thumbnail_img"/>
         </association>
     </resultMap>
 
@@ -39,7 +39,7 @@
 
     <select id="commentCnt" resultType="java.lang.Integer">
         select count(*)
-        from comment;
+        from comment where post_id = #{id};
     </select>
 
     <select id="getCommentById" resultMap="commentMap">

@@ -95,7 +95,6 @@ public class PostController {
     ){
         U.getSession().setAttribute("pageRows",pageRows);
         postService.findListByKeyWord(keyword,page,model,category,sort);
-        System.out.println("검색작동확인"+keyword+page+model+category+sort);
         return "board/"+category;
     }
 

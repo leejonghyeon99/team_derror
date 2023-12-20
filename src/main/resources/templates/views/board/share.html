@@ -13,7 +13,7 @@
     <script src="https://kit.fontawesome.com/51772bd9bd.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
-    <script th:src="@{/js/board/list.js}"></script>
+    <script th:src="@{/js/board/share.js}"></script>
 
     <title>목록</title>
 </head>
@@ -22,10 +22,10 @@
 <!-- 인증 헤더 -->
 <th:block th:insert="~{common/sidebar::sidebar}"/>
 
-<div>
+<div class="board-content">
     <div class="container mt-3">
         <div>
-            <h2 id="share" style="display: none;">공유게시판</h2>
+            <h2 id="share">공유게시판</h2>
             <hr>
             <div>
                 <a class="btn btn-outline-dark" th:href="@{/board/write}" th:class="writeButton">작성</a>
@@ -45,15 +45,15 @@
                 <input type="hidden" name="page" th:value="${postPage.page}">
                 <input id="category" type="hidden" th:value="${postPage.category}">
                 <select class="form-select" name="pageRows">
-                    <option value="10" th:selected="${pageRows==10}">10</option>
-                    <option value="15" th:selected="${pageRows==15}">15</option>
-                    <option value="20" th:selected="${pageRows==20}">20</option>
-                    <option value="50" th:selected="${pageRows==50}">50</option>
+                    <option value="10" th:selected="${postPage.pageRows==10}">10</option>
+                    <option value="15" th:selected="${postPage.pageRows==15}">15</option>
+                    <option value="20" th:selected="${postPage.pageRows==20}">20</option>
+                    <option value="50" th:selected="${postPage.pageRows==50}">50</option>
                 </select>
 
-                <select class="form-select" name="sortForm">
-                    <option name="id" value="id" th:selected="${sort eq 'id'}">최신순</option>
-                    <option name=view value="view" th:selected="${sort eq 'view'}">조회순</option>
+                <select class="form-select" name="sort">
+                    <option name="id" value="id" th:selected="${postPage.sort eq 'id'}">최신순</option>
+                    <option name=view value="view" th:selected="${postPage.sort eq 'view'}">조회순</option>
                 </select>
             </form>
         </div>
@@ -68,16 +68,12 @@
                     <!-- 썸네일 이미지 -->
                         <a th:href="@{'/board/detail/' + ${post.id}}">
 
-                                <div th:with="firstImage=${post.thumbnail}">-->
+                                <div th:with="firstImage=${post.thumbnail}">
                                     <div>
                                         <img th:src="@{'/upload/' + ${firstImage}}" class="card-img-top"
                                              alt="첨부파일">
                                     </div>
                                 </div>
-<!--                                <div th:unless="${post.fileList != null and not #lists.isEmpty(post.fileList)}">-->
-<!--                                    <img th:src="@{'/upload/default.jpeg'}" class="card-img-top" alt="기본이미지"/>-->
-<!--                                </div>-->
-
                         </a>
                     <!-- 썸네일 이미지 -->
                     </div>
@@ -86,6 +82,8 @@
                             <h5 class="card-title" th:text="${post.title}">Card title</h5>
                         </a>
                         <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${post.member.name}">Card
+                            subtitle</h6>
+                        <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${post.viewCnt}">Card
                             subtitle</h6>
                     </div>
                     <div class="card-footer">

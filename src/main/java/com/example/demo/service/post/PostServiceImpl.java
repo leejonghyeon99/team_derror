@@ -48,7 +48,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Autowired
-    public PostServiceImpl(SqlSession sqlSession){ // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
+    public PostServiceImpl(SqlSession sqlSession) { // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
         this.postMapper = sqlSession.getMapper(PostMapper.class);
         this.userRepository = sqlSession.getMapper(UserRepository.class);
         this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
@@ -73,11 +73,11 @@ public class PostServiceImpl implements PostService {
 
     // 특정 글(id) 첨부파일(들) 추가
     private void addFiles(Map<String, MultipartFile> files, Long id) {
-        if(files != null){
-            for(var e : files.entrySet()){
+        if (files != null) {
+            for (var e : files.entrySet()) {
 
                 // name="upfile##" 인 경우만 첨부파일 등록. (이유, 다른 웹에디터와 섞이지 않도록..ex: summernote)
-                if(!e.getKey().startsWith("upfile")) continue;
+                if (!e.getKey().startsWith("upfile")) continue;
 
                 // 첨부 파일 정보 출력
                 System.out.println("\n첨부파일 정보: " + e.getKey());   // name값
@@ -88,14 +88,14 @@ public class PostServiceImpl implements PostService {
                 Attachment file = upload(e.getValue());
 
                 // 성공하면 DB 에도 저장
-                if(file != null){
+                if (file != null) {
                     file.setPostId(id);   // FK 설정
                     attachmentRepository.save(file);   // INSERT
                 }
             }
             Attachment attachment = attachmentRepository.findById(id);
 
-            if (attachment != null){
+            if (attachment != null) {
                 System.out.println("ttt");
                 //첫번째 이미지를 썸네일 설정
                 attachmentRepository.updateForThumbnail(id);
@@ -109,7 +109,7 @@ public class PostServiceImpl implements PostService {
 
         // 담긴 파일이 없으면 pass
         String originalFilename = multipartFile.getOriginalFilename();
-        if(originalFilename == null || originalFilename.length() == 0) return null;
+        if (originalFilename == null || originalFilename.length() == 0) return null;
 
         // 원본파일명
         String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -119,10 +119,10 @@ public class PostServiceImpl implements PostService {
         // 파일명 이 중복되는지 확인
         File file = new File(uploadDir, sourceName);
 
-        if(file.exists()){  // 이미 존재하는 파일명,  중복되면 다름 이름으로 변경하여 저장
+        if (file.exists()) {  // 이미 존재하는 파일명,  중복되면 다름 이름으로 변경하여 저장
             // a.txt => a_2378142783946.txt  : time stamp 값을 활용할거다!
             int pos = fileName.lastIndexOf(".");
-            if(pos > -1){   // 확장자가 있는 경우
+            if (pos > -1) {   // 확장자가 있는 경우
                 String name = fileName.substring(0, pos);  // 파일 '이름'
                 String ext = fileName.substring(pos + 1);   // 파일 '확장자'
 
@@ -167,7 +167,7 @@ public class PostServiceImpl implements PostService {
         postMapper.viewCntUpdate(id);
         Post post = postMapper.findById(id);
 
-        if(post != null){
+        if (post != null) {
             // 첨부파일(들) 정보 가져오기
             List<Attachment> fileList = attachmentRepository.findByPost(id);
             System.out.println(fileList);
@@ -182,7 +182,7 @@ public class PostServiceImpl implements PostService {
     public Post findById(Long id) {
         Post post = postMapper.findById(id);
 
-        if(post != null){
+        if (post != null) {
             // 첨부파일 정보 가져오기
             List<Attachment> fileList = attachmentRepository.findByPost(id);
             setImage(fileList);   // 이미지 파일 여부 세팅
@@ -195,7 +195,7 @@ public class PostServiceImpl implements PostService {
         // upload 실제 물리적인 경로
         String realPath = new File(uploadDir).getAbsolutePath();
 
-        for(var attachment : fileList){
+        for (var attachment : fileList) {
             BufferedImage imgData = null;
             File f = new File(realPath, attachment.getFilename());  // 저장된 첨부파일에 대한 File 객체
 
@@ -206,31 +206,31 @@ public class PostServiceImpl implements PostService {
                 throw new RuntimeException(e);
             }
 
-            if(imgData != null) attachment.setImage(true);  // 이미지 여부 체크!
+            if (imgData != null) attachment.setImage(true);  // 이미지 여부 체크!
         }
     }
 
     @Override
     public void list(Integer page, String category, String sort, Model model) {
-        if(page == null) page = 1;  // 디폴트는 1page
-        if(page < 1) page = 1;
+        if (page == null) page = 1;  // 디폴트는 1page
+        if (page < 1) page = 1;
 
         // 페이징
         // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
         // pageRows: 한 '페이지'에 몇개의 글을 리스트 할것인가?
         HttpSession session = U.getSession();
-        Integer writePages = (Integer)session.getAttribute("writePages");
-        if(writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
-        Integer pageRows = (Integer)session.getAttribute("pageRows");
-        if(pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
+        Integer writePages = (Integer) session.getAttribute("writePages");
+        if (writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
+        Integer pageRows = (Integer) session.getAttribute("pageRows");
+        if (pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
 
         // 현재 페이지 번호 -> session 에 저장
         session.setAttribute("page", page);
-        session.setAttribute("category",category);
+        session.setAttribute("category", category);
         session.setAttribute("sort", sort);
 
         long cnt = postMapper.countAll(category);   // 글 목록 전체의 개수
-        int totalPage = (int)Math.ceil(cnt / (double)pageRows);   // 총 몇 '페이지' ?
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);   // 총 몇 '페이지' ?
 
         // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
         int startPage = 0;
@@ -239,9 +239,9 @@ public class PostServiceImpl implements PostService {
         // 해당 페이지의 글 목록
         List<Post> list = null;
 
-        if(cnt > 0){  // 데이터가 최소 1개 이상 있는 경우만 페이징
+        if (cnt > 0) {  // 데이터가 최소 1개 이상 있는 경우만 페이징
             //  page 값 보정
-            if(page > totalPage) page = totalPage;
+            if (page > totalPage) page = totalPage;
 
             // 몇번째 데이터부터 fromRow
             int fromRow = (page - 1) * pageRows;
@@ -251,12 +251,11 @@ public class PostServiceImpl implements PostService {
             endPage = startPage + writePages - 1;
             if (endPage >= totalPage) endPage = totalPage;
 
-            if(sort.equals("id")){
+            if (sort.equals("id")) {
                 list = postMapper.listByRecent(fromRow, pageRows, category);
-            }else {
-                list = postMapper.listByViewCnt(fromRow,pageRows,category);
+            } else {
+                list = postMapper.listByViewCnt(fromRow, pageRows, category);
             }
-
 
 
         } else {
@@ -276,32 +275,32 @@ public class PostServiceImpl implements PostService {
                 .endPage(endPage)
                 .posts(list)
                 .build();
-        model.addAttribute("postPage",postPage);
+        model.addAttribute("postPage", postPage);
 
     }
 
 
     @Override
     public PostPage list2(Integer page, String category, String sort) {
-        if(page == null) page = 1;  // 디폴트는 1page
-        if(page < 1) page = 1;
+        if (page == null) page = 1;  // 디폴트는 1page
+        if (page < 1) page = 1;
 
         // 페이징
         // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
         // pageRows: 한 '페이지'에 몇개의 글을 리스트 할것인가?
         HttpSession session = U.getSession();
-        Integer writePages = (Integer)session.getAttribute("writePages");
-        if(writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
-        Integer pageRows = (Integer)session.getAttribute("pageRows");
-        if(pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
+        Integer writePages = (Integer) session.getAttribute("writePages");
+        if (writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
+        Integer pageRows = (Integer) session.getAttribute("pageRows");
+        if (pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
 
         // 현재 페이지 번호 -> session 에 저장
         session.setAttribute("page", page);
-        session.setAttribute("category",category);
+        session.setAttribute("category", category);
         session.setAttribute("sort", sort);
 
         long cnt = postMapper.countAll(category);   // 글 목록 전체의 개수
-        int totalPage = (int)Math.ceil(cnt / (double)pageRows);   // 총 몇 '페이지' ?
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);   // 총 몇 '페이지' ?
 
         // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
         int startPage = 0;
@@ -310,9 +309,9 @@ public class PostServiceImpl implements PostService {
         // 해당 페이지의 글 목록
         List<Post> list = null;
 
-        if(cnt > 0){  // 데이터가 최소 1개 이상 있는 경우만 페이징
+        if (cnt > 0) {  // 데이터가 최소 1개 이상 있는 경우만 페이징
             //  page 값 보정
-            if(page > totalPage) page = totalPage;
+            if (page > totalPage) page = totalPage;
 
             // 몇번째 데이터부터 fromRow
             int fromRow = (page - 1) * pageRows;
@@ -322,12 +321,11 @@ public class PostServiceImpl implements PostService {
             endPage = startPage + writePages - 1;
             if (endPage >= totalPage) endPage = totalPage;
 
-            if(sort.equals("id")){
+            if (sort.equals("id")) {
                 list = postMapper.listByRecent(fromRow, pageRows, category);
-            }else {
-                list = postMapper.listByViewCnt(fromRow,pageRows,category);
+            } else {
+                list = postMapper.listByViewCnt(fromRow, pageRows, category);
             }
-
 
 
         } else {
@@ -360,10 +358,10 @@ public class PostServiceImpl implements PostService {
         addFiles(files, post.getId());
 
         // 삭제할 첨부파일(들) 삭제
-        if(delfile != null){
-            for(Long fileId : delfile){
+        if (delfile != null) {
+            for (Long fileId : delfile) {
                 Attachment file = attachmentRepository.findById(fileId);
-                if(file != null){
+                if (file != null) {
                     delFile(file, post.getId());  // 물리적으로 파일 삭제
                     attachmentRepository.delete(file);  // DB 에서 삭제
                 }
@@ -377,12 +375,12 @@ public class PostServiceImpl implements PostService {
         File f = new File(saveDirectory, file.getFilename());   // 물리적으로 저장된 파일들이 삭제 대상
         System.out.println("삭제시도--> " + f.getAbsolutePath());
 
-        if(f.exists()){
-            if (f.delete()){
-                if (attachmentRepository.delete(file) > 0){
+        if (f.exists()) {
+            if (f.delete()) {
+                if (attachmentRepository.delete(file) > 0) {
                     attachmentRepository.updateForThumbnailWhenDelete(id);
                     System.out.println("삭제 성공");
-                }else {
+                } else {
                     System.out.println("Attach Table 데이터 삭제 실패");
                 }
             } else {
@@ -398,12 +396,12 @@ public class PostServiceImpl implements PostService {
     public int deleteById(Long id) {
         int result = 0;
         Post post = postMapper.findById(id);  // 존재하는 데이터인지 읽어와보기
-        if(post != null){  // 존재한다면 삭제 진행.
+        if (post != null) {  // 존재한다면 삭제 진행.
             // 물리적으로 저장된 첨부파일(들) 삭제
             List<Attachment> fileList = attachmentRepository.findByPost(id);
-            if(fileList != null){
-                for(Attachment file : fileList){
-                    delFile(file,id);
+            if (fileList != null) {
+                for (Attachment file : fileList) {
+                    delFile(file, id);
                 }
             }
 
@@ -415,26 +413,26 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostPage findListByKeyWord(String keyword, Integer page, Model model, String category, String sort) {
         // 현재 페이지 parameter
-        if(page == null) page = 1;  // 디폴트는 1page
-        if(page < 1) page = 1;
+        if (page == null) page = 1;  // 디폴트는 1page
+        if (page < 1) page = 1;
 
 
         // 페이징
         // writePages: 한 [페이징] 당 몇개의 페이지가 표시되나
         // pageRows: 한 '페이지'에 몇개의 글을 리스트 할것인가?
         HttpSession session = U.getSession();
-        Integer writePages = (Integer)session.getAttribute("writePages");
-        if(writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
-        Integer pageRows = (Integer)session.getAttribute("pageRows");
-        if(pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
+        Integer writePages = (Integer) session.getAttribute("writePages");
+        if (writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
+        Integer pageRows = (Integer) session.getAttribute("pageRows");
+        if (pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
 
         // 현재 페이지 번호 -> session 에 저장
         session.setAttribute("page", page);
-        session.setAttribute("category",category);
+        session.setAttribute("category", category);
         session.setAttribute("sort", sort);
 
         long cnt = postMapper.countKeyword(keyword, category);   // 글 목록 전체의 개수
-        int totalPage = (int)Math.ceil(cnt / (double)pageRows);   // 총 몇 '페이지' ?
+        int totalPage = (int) Math.ceil(cnt / (double) pageRows);   // 총 몇 '페이지' ?
 
         // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
         int startPage = 0;
@@ -443,9 +441,9 @@ public class PostServiceImpl implements PostService {
         // 해당 페이지의 글 목록
         List<Post> list = null;
 
-        if(cnt > 0){  // 데이터가 최소 1개 이상 있는 경우만 페이징
+        if (cnt > 0) {  // 데이터가 최소 1개 이상 있는 경우만 페이징
             //  page 값 보정
-            if(page > totalPage) page = totalPage;
+            if (page > totalPage) page = totalPage;
 
             // 몇번째 데이터부터 fromRow
             int fromRow = (page - 1) * pageRows;
@@ -460,7 +458,7 @@ public class PostServiceImpl implements PostService {
                 model.addAttribute("noSearchResults", true);
 
             } else {
-                list = postMapper.findListByKeyWord(keyword,fromRow, pageRows, category);
+                list = postMapper.findListByKeyWord(keyword, fromRow, pageRows, category);
             }
 
         } else {
@@ -482,7 +480,7 @@ public class PostServiceImpl implements PostService {
                 .posts(list)
                 .build();
 
-        model.addAttribute("postPage",postPage);
+        model.addAttribute("postPage", postPage);
 
         return postPage;
     }

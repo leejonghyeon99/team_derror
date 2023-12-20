@@ -107,10 +107,10 @@ public class CommentServiceImpl implements CommentService {
                     .content(content)
                     .build();
             commentRepository.saveParent(comment);
-
             return QryResult.builder()
                     .count(1)
                     .status("OK")
+                    .comment(commentRepository.getCommentById(comment.getId()))
                     .build();
         } catch (DataAccessException e) {
             // 예외 처리
@@ -146,6 +146,7 @@ public class CommentServiceImpl implements CommentService {
             return QryResult.builder()
                     .count(1)
                     .status("OK")
+                    .comment(commentRepository.getCommentById(comment.getId()))
                     .id(comment.getId())
                     .build();
         } catch (DataAccessException e) {

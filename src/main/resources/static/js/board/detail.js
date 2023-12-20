@@ -1,111 +1,144 @@
 $(document).ready(function (){
+    const commentBody = $('.comment-body');
+    const replyComment = $("#replyComment");
+    let childList;
 
-    $(".uiChilds").click(function (){
+    $(".reply-comment-btn").click(function() {
+        // 폼 데이터 수집
+        var formData = new FormData(replyComment[0]);
 
-        $(this).closest(".comment-item").find(".child").toggle();
-        $(this).closest(".comment-item").find(".child-hr").toggle();
-        $(this).closest(".comment-item").find(".hideChilds").toggle();
-        $(this).closest(".comment-item").find(".showChilds").toggle();
-    })
-
-
-    let parentId;
-    let item;
-    $(".comment-reply").click(function (){
-        item = $(this).closest(".comment-item");
-        item.find(".hideReply").toggle();
-        item.find(".showReply").toggle();
-
-
-        parentId = $(this).closest(".comment-item").data('parent-id');
-        let replyBody = $(this).closest(".comment-item").find(".reply-body");
-        if (!replyBody.html()) {
-            replyBody.html(`
-            <form class="reply-form" action="/comment/child/write" method="post">
-                <input type="hidden" name="commentId" value="${parentId}">                               
-                <input type="hidden" name="memberId" value="${logged_id}">
-                <input type="hidden" name="postId" value="${post_id}">
-                <input type="text" name="content" required>
-                <button class="child-reply-btn" type="button">작성</button>
-            </form>
-            `);
-        }
-        item.find(".reply-form").toggle();
-        childReplyAddEvents(replyBody);
-    })
-
-    function childReplyAddEvents( element ){
-        $('.child-reply-btn').click(function (){
-            subForm(element);
-        })
-    }
-
-    function subForm(element){
-        let input = element.find('input');
-
-        let formsInput =[];
-        for (const e of input) {
-            formsInput.push(e.value);
-        }
-
-        console.log(formsInput)
-        var data = {
-            commentId: formsInput[0],
-            memberId: formsInput[1],
-            postId : formsInput[2],
-            content : formsInput[3].trim()
-        }
-        console.log(data);
+        // Ajax 요청 보내기
         $.ajax({
-            url: '/comment/child/write',
+            url: '/comment/parent/write',
             type: 'POST',
-            data: JSON.stringify(data),
-            contentType: 'application/json',
-            success: function (data, status) {
-                console.log(data)
-                appentChildComment(data);
-
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data, status) {
+                console.log(status);
+                console.log(data);
+                updateParent(data);
+                replyComment.find('[name="content"]').val('');
             },
-            error: function (err) {
-                console.log(err);
+            error: function(error) {
+                console.error(error);
             }
         });
+    });
+
+
+    function updateParent(data){
+        console.log(data)
+        let date = new Date(data.comment.createdDate);
+        let dateToString = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
+        let html = `<div class="parent" data-commentid="${data.comment.id}">
+                           <div class="display-flex">
+                               <img class="user-logo" src="/upload/thumbnail/${data.comment.member.thumbnail_img}">
+                               <div class="post-info">
+                                   <span class="info-member">${data.comment.member.name}</span>
+                                   <span> ${dateToString} </span>
+                                   <div class="toggleChild">
+                                       <a><span class="reply">답글</span></a>
+                                       <a>
+                                       <span class="comment-icon">댓글 <strong class="child-cnt">${data.comment.childCnt}</strong>개
+                                        <i class="bi bi-caret-down up"></i>
+                                        <i class="bi bi-caret-up down"></i>
+                                       </span>
+                                        </a>
+                                   </div>                                 
+                               </div>
+                               <span class="comment-content">${data.comment.content}</span>
+                           </div> 
+                           <div class="parent-form"></div>
+                           <div class="child-list"></div>
+                        </div>
+                        <br>
+                        `
+        commentBody.prepend(html);
     }
 
-    function appentChildComment(data){
-        let date;
-        let datetime;
-        let reply;
-        let replyHtml =[];
-        for (const e of data.list) {
-            date = new Date(e.createdDate);
-            datetime = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}-${date.getMinutes()}`
-            reply= `
-        <hr>
-        <div class="child">
-            <div class="comment-item">
-                <div class="comment-logo">
-                <img class="user-logo" src="">          
-                </div>
-            <div class="comment-body">
-                <span class="comment-item-user">${e.member.name}</span>
-                <span class="comment-item-content">${e.content}</span>
-                <div>
-                    <span class="comment-item-created">${datetime}</span>
-                </div>
-            </div>
-            </div>
-        </div>
-        `
-            replyHtml.push(reply);
+
+    $(document).on('click','.reply', function (){
+        childList = $(this).closest('.parent').find('.child-list');
+        let commentId = $(this).closest('.parent').data('commentid');
+        let form = $(this).closest('.parent').find('.parent-form');
+        let data = `
+                <form>
+                    <input type="hidden" name="memberId" value="${logged_id}">
+                    <input type="hidden" name="postId" value="${post_id}">
+                    <input type="hidden" name="commentId" value="${commentId}">                         
+                    <input type="text" name="content" required>
+                    <button class="child-reply-btn" type="button">작성</button>
+                </form>`
+
+        if(!(form.children().length > 0)){
+            form.html(data);
+            childReply(form);
+        }else{
+            form.html('');
         }
-        item.find('.child-list').html(replyHtml);
-        item.find('.child').show();
 
+    })
+
+
+
+
+
+    let childCnt;
+    function childReply(parentForm){
+        childCnt = parentForm.closest('.parent').find('.child-cnt')[0];
+        let cnt = parseInt(childCnt.innerText,10);
+        parentForm.find('form').find('.child-reply-btn').click(function (){
+            var formData = new FormData(parentForm.find('form')[0]);
+
+
+            $.ajax({
+                url: '/comment/child/write',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data, status) {
+                    updateChild(data);
+                    cnt++;
+                    childCnt.innerHTML = cnt;
+                    console.log(childCnt,cnt)
+                    parentForm.find('input').val('');
+                    parentForm.html('');
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
 
     }
+
+    function updateChild(data){
+        console.log(data)
+        let date = new Date(data.comment.createdDate);
+        let dateToString = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}`;
+        let html = `<div class="child">
+                           <div class="display-flex">
+                               <img class="user-logo" src="/upload/thumbnail/${data.comment.member.thumbnail_img}">
+                               <div class="post-info">
+                                   <span class="info-member">${data.comment.member.name}</span>
+                                   <span> ${dateToString} </span>
+                               </div>
+                               <span class="comment-content">${data.comment.content}</span>
+                           </div> 
+                        </div>
+                        <br>
+                        `
+        childList.prepend(html);
+    }
+
+
+
+    $(document).on('click','.comment-icon', function (){
+        $(this).find('i').toggle();
+        $(this).closest('.parent').find('.child-list').toggle();
+    })
 })
-
-
 
 

@@ -11,7 +11,7 @@
     // 나중에 댓글 작성시 필요.
     const post_id = [[${post.id}]];
     const logged_id = /*[[${#authentication.principal.member.id}]]*/ 0;
-    console.log(logged_id)
+
 </script>
 <head>
     <meta charset="utf-8">
@@ -24,18 +24,18 @@
     <link rel="stylesheet" th:href="@{/css/board/detail.css}">
     <script th:src="@{/js/sidebar.js}"></script>
     <script th:src="@{/js/board/detail.js}"></script>
+
     <title>조회 - [[${post.title}]]</title>
 </head>
 
 <body>
-
 <th:block th:insert="~{common/sidebar::sidebar}"/>
     <div class="main-content">
        <div class="container">
            <div class="post-header">
                <h3 th:text="${post.title}"></h3>
                <div class="post-sub">
-                    <img class="user-logo" th:src="@{/upload/${post.member.thumnail_img}}">
+                    <img class="user-logo" th:src="@{/upload/thumbnail/__${post.member.thumbnail_img}__}">
                     <div class="post-info">
                         <span class="info-member" th:text="${post.member.name}"></span>
                         <span th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
@@ -45,75 +45,68 @@
                     </div>
                </div>
                <hr>
-               <div class="post-body" th:text="${post.content}">
+               <div class="post-body" th:utext="${post.content}">
 
                </div>
                <div class="post-body-bottom">
-                   <img class="user-logo" th:src="@{/img/bird.jpg}">
+                   <img class="user-logo" th:src="@{/upload/thumbnail/__${post.member.thumbnail_img}__}">
                    <div class="post-info">
                        <a href="#"><strong>[[${post.member.name}]]</strong>님의 게시글 더보기 ></a>
                    </div>
                    <div class="crud-btn">
-                       <a th:href="@{board/write}"><strong>댓글 작성</strong></a>
                        <a th:href="@{board/write}"><strong>작성</strong></a>
                        <a th:href="@{board/update}"><strong>수정</strong></a>
                        <a th:href="@{board/delete}"><strong>삭제</strong></a>
                        <a th:href="@{board/list}"><strong>목록</strong></a>
                    </div>
                </div>
-               <div>
-
-               </div>
                <hr>
                <div id="commentBody" class="post-comment">
-                   <div class="comment-list" th:each="parent, iterStat : ${parentComment.list}">
-                       <div class="comment-item" th:attr="data-parent-id=${parent.id}">
-                           <div class="parent">
-                               <div class="comment-logo">
-                                   <img class="user-logo" th:if="${parent.member.thumnail_img}" th:src="@{parent.member.thumnail_img}">
-                                   <img class="user-logo" th:unless="${parent.member.thumnail_img}" th:src="@{/img/bird.jpg}">
-                               </div>
-                               <div class="comment-body">
-                                   <span class="comment-item-user" th:text="${parent.member.name}"></span>
-                                   <span class="comment-item-content" th:text="${parent.content}"></span>
-                                   <div>
-                                       <span class="comment-item-created" th:text="${#temporals.format(parent.createdDate,'yyyy-MM-dd HH:mm')}"></span>
-                                       <div th:if="${parent.childComment}">
-                                           <a class="uiChilds showChilds"><span>[[${parent.childCnt}]]개 답글 더보기...</span></a>
-                                           <a class="uiChilds hideChilds"><span>닫기</span></a>
-                                       </div>
+                   <form id="replyComment">
+                       <input type="hidden" name="memberId" th:value="${#authentication.principal.member.id}">
+                       <input type="hidden" name="postId" th:value="${post.id}">
+                       <input type="text" name="content" required>
+                       <button class="reply-comment-btn" type="button">작성</button>
+                   </form>
+                   <hr>
+                   <div class="comment-body">
+                       <div class="parent" th:each="parent : ${parentComment.list}" th:data-commentId="${parent.id}">
+                           <div class="display-flex">
+                               <img class="user-logo" th:src="@{/upload/thumbnail/__${parent.member.thumbnail_img}__}">
+                               <div class="post-info">
+                                   <span class="info-member" th:text="${parent.member.name}"></span>
+                                   <span th:text="${#temporals.format(parent.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                   <div class="toggleChild">
+                                       <a><span class="reply">답글</span></a>
+                                       <a>
+                                           <span class="comment-icon">댓글 <strong class="child-cnt">[[${parent.childCnt}]]</strong>개
+                                            <i class="bi bi-caret-down up"></i>
+                                            <i class="bi bi-caret-up down"></i>
+                                           </span>
+                                       </a>
                                    </div>
                                </div>
+                               <span class="comment-content" th:text="${parent.content}"></span>
                            </div>
-                           <hr class="child-hr" th:if="${parent.childComment}"/>
-                           <a><span class="comment-reply showReply" th:if="${logged_id != 0}">답글 작성</span></a>
-                           <a><span class="comment-reply hideReply" th:if="${logged_id != 0}">작성 취소</span></a>
-                           <div class="reply-body"></div>
+                           <div class="parent-form"></div>
                            <br>
                            <div class="child-list">
-
-                               <div class="child" th:if="${parent.childComment}" th:each="child, iterStat  : ${parent.childComment}">
-                                   <div class="comment-item">
-                                       <div class="comment-logo">
-                                           <img class="user-logo" th:if="${child.member.thumnail_img}" th:src="@{child.member.thumnail_img}">
-                                           <img class="user-logo" th:unless="${child.member.thumnail_img}" th:src="@{/img/bird.jpg}">
+                               <div class="child" th:each="child : ${parent.childComment}">
+                                   <div class="display-flex">
+                                       <img class="user-logo" th:src="@{/upload/thumbnail/__${child.member.thumbnail_img}__}">
+                                       <div class="post-info">
+                                           <span class="info-member" th:text="${child.member.name}"></span>
+                                           <span th:text="${#temporals.format(child.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
                                        </div>
-                                       <div class="comment-body">
-                                           <span class="comment-item-user" th:text="${child.member.name}"></span>
-                                           <span class="comment-item-content" th:text="${child.content}"></span>
-                                           <div>
-                                               <span class="comment-item-created" th:text="${#temporals.format(child.createdDate,'yyyy-MM-dd HH:mm')}"></span>
-                                           </div>
-                                       </div>
+                                       <span class="comment-content" th:text="${child.content}"></span>
                                    </div>
-                                   <hr th:unless="${iterStat.last}" />
+                                   <br>
                                </div>
                            </div>
                        </div>
-                       <hr th:unless="${iterStat.last}" />
-
                    </div>
                </div>
+
            </div>
        </div>
     </div>
