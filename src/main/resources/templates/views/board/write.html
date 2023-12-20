@@ -57,12 +57,7 @@
 
 
         <button type="submit" class="btn btn-outline-dark">작성완료</button>
-        <a class="btn btn-outline-dark ms-1" th:if="${session.category} eq notice"
-           th:href="@{/board/notice(page=${session.page})}">목록</a>
-        <a class="btn btn-outline-dark ms-1" th:if="${session.category} eq free"
-           th:href="@{/board/free(page=${session.page})}">목록</a>
-        <a class="btn btn-outline-dark ms-1" th:if="${session.category} eq share"
-           th:href="@{/board/share(page=${session.page})}">목록</a>
+        <a class="btn btn-outline-dark ms-1" th:onclick="'javascript:history.back();'" >목록</a>
     </form>
 </div>
 </body>

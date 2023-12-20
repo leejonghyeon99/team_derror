@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 
 @Controller
 @RequestMapping("/board")
@@ -95,6 +98,8 @@ public class PostController {
     ){
         U.getSession().setAttribute("pageRows",pageRows);
         postService.findListByKeyWord(keyword,page,model,category,sort);
+        System.out.println("넘어와?"+keyword+page+model+category+sort);
+
         return "board/"+category;
     }
 

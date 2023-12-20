@@ -139,6 +139,7 @@ form[name="frmPageRows"] .form-select {
 /* 마우스 호버 효과 */
 #boardtable tbody tr:hover {
     background-color: #cdf0ff; /* 연하늘색 배경으로 변경 */
+    cursor: pointer;
 }
 
 #boardtable a {

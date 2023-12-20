@@ -92,7 +92,7 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="delete" flushCache="true">
+    <delete id="delete" flushCache="true" parameterType="com.example.demo.domain.board.Post">
         DELETE
         FROM post
         WHERE id = #{id}

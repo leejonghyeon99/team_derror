@@ -30,9 +30,6 @@ $(function () {
         }
     });
 
-    $('#refreshButton').click(function() {
-        history.back();
-    });
 
 
 
