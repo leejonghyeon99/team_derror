@@ -67,18 +67,9 @@ public class UserController {
     public void test(Model model) {
     }
 
-
-    @GetMapping("/login")
-    public void login(Model model) {
-    }
-
     @PostMapping("/loginError")
     public String loginError() {
-        return "user/login";
-    }
-
-    @GetMapping("/signup")
-    public void signup() {
+        return "user/sign";
     }
 
     @GetMapping("/signout")
@@ -104,18 +95,19 @@ public class UserController {
 
             List<FieldError> errList = result.getFieldErrors();
             redirectAttrs.addFlashAttribute("errors", errList);
-            for (int i = 0; i < errList.size(); i++) {
+            redirectAttrs.addFlashAttribute("error", "signup");
 
+            for (int i = 0; i < errList.size(); i++) {
                 redirectAttrs.addFlashAttribute("err" + errList.get(i).getField(), errList.get(i).getCode());
             }
 
-
-            return "redirect:/user/signup";
+            return "redirect:/user/sign";
         }
 
         String page = "/user/signupOk";
         int cnt = userService.signup(member);
         model.addAttribute("result", cnt);
+
         return page;
     }
 
@@ -149,15 +141,8 @@ public class UserController {
                     return "/user/signout";
                 }
             }
-            return "/user/login";
+            return "/user/sign";
         }
-
-
-
-
-
-
-
 
 
         @GetMapping("/sign")

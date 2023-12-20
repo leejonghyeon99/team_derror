@@ -7,39 +7,50 @@
     <title>Login</title>
 </head>
 <body>
-    
-<div class="container" id="container">
+
+<div class="container" id="container" th:classappend="${error} eq 'signup' ? 'right-panel-active' : '' ">
   <div class="form-container sign-up-container">
-    <form action="#">
+    <form th:action="@{/user/signup}" method="POST" id="sign-frm">
       <h1>회원가입</h1>
       <div class="social-container">
-        <a href="#" class="social"><img th:src="@{/img/icon/kakao.png}"></a>
-        <a href="#" class="social"><img th:src="@{/img/icon/google.png}"></a>
+        <a class="social" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+          <img th:src="@{/img/icon/kakao.png}">
+        </a>
+        <a class="social" th:href="@{/oauth2/authorization/google}"><img th:src="@{/img/icon/google.png}"></a>
       </div>
-      <span>OR</span>
-      <input type="text" placeholder="아이디" />
-      <input type="password" placeholder="비밀번호" />
-      <input type="password" placeholder="비밀번호 재 입력" />
-      <input type="text" placeholder="이름" />
-      <input type="text" placeholder="나이" />
-      <input type="text" placeholder="연락처" />      
-      <input type="email" placeholder="이메일" />
-      
-      <button>회원가입</button>
+
+        <input name="username" placeholder="아이디 입력" th:value="${username}" >
+        <span th:text="${errusername}"></span>
+        <input type="password" name="password"  placeholder="비밀번호 입력" >
+        <span th:text="${errpassword}"></span>
+        <input type="password" name="re_password" placeholder="비밀번호 재입력" >
+        <span th:text="${errre_password}"></span>
+        <input type="text" name="name" placeholder="이름" th:value="${name}">
+        <span th:text="${errname}"></span>
+        <input type="text" name="age" placeholder="나이" th:value="${age}" >
+        <span th:text="${errage}"></span>
+        <input type="text" name="phone" placeholder="연락처" >
+        <span th:text="${errphone}"></span>
+        <input type="text" name="email" placeholder="이메일" >
+        <span th:text="${erremail}"></span>
+      <button type="submit">회원가입</button>
     </form>
   </div>
   <div class="form-container sign-in-container">
-    <form action="#">
+    <form th:action="@{/user/login}" method="POST" id="login-frm">
       <h1>로그인</h1>
       <div class="social-container">
-        <a href="#" class="social"><img th:src="@{/img/icon/kakao.png}"></a>
-        <a href="#" class="social"><img th:src="@{/img/icon/google.png}"></a>
+        <a class="social" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">
+          <img th:src="@{/img/icon/kakao.png}">
+        </a>
+        <a class="social" th:href="@{/oauth2/authorization/google}"><img th:src="@{/img/icon/google.png}"></a>
       </div>
-      <span>OR</span>
-      <input type="text" placeholder="ID" />
-      <input type="password" placeholder="Password" />
+
+      <span id="err" th:text="${errmsg}"></span>
+      <input type="text" name="username" placeholder="ID" th:value="${username}"/>
+      <input type="password" name="password" placeholder="Password" />
       <a href="#">비밀번호를 잊어버렸나요?</a>
-      <button>로그인</button>
+      <button type="submit">로그인</button>
     </form>
   </div>
   <div class="overlay-container">
