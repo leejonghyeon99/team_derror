@@ -17,6 +17,8 @@ public interface PostRepository {
 
     Post findById(Long id);
 
+
+
     List<Post> findByCategory(int from, int rows, String category);
 
 //    Post findByImage(Long id);

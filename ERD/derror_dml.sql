@@ -6,6 +6,13 @@ select * from post;
 select * from event_plan;
 
 
+alter table member add column thumbnail_img varchar(200) default 'default_thumbnail.png';
+alter table post add column thumbnail varchar(200) default 'default.jpg';
+
+select *
+from post
+where post.member_id = (select id from member where username = 'USER1')
+;
 
 update authority set name = 'ROLE_USER' where id = 1;
 update authority set name = 'ROLE_ADMIN' where id = 2;
