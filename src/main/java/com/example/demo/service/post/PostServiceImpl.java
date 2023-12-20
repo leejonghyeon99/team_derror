@@ -55,6 +55,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Post> findByUsername(String username) {
+        return postMapper.findByUsername(username);
+    }
+
+    @Override
     public int write(Post post, Map<String, MultipartFile> files) {
         // 현재 로그인한 작성자 정보.
         Member member = U.getLoggedUser();

@@ -24,6 +24,14 @@ public class PostApiController {
         this.postService = postService;
     }
 
+    @GetMapping("/findPost/{username}")
+    public ResponseEntity<List<Post>> findByUsername(
+            @PathVariable String username
+    ){
+        System.out.println(username);
+        return new ResponseEntity<>(postService.findByUsername(username),HttpStatus.OK);
+    }
+
     @GetMapping("/detail/{id}")
     public Post detail(@PathVariable Long id){
         return postService.detail(id);

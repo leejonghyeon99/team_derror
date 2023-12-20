@@ -7,6 +7,7 @@ import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.user.UserRepository;
 import com.example.demo.service.UserService;
 import com.example.demo.service.board.BoardService;
+import com.example.demo.service.post.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -34,7 +35,7 @@ import java.util.Map;
 public class UserController {
 
     private UserService userService;
-    private BoardService boardService;
+    private PostService postService;
 
     private MemberValidator memberValidator;
     @Autowired
@@ -47,11 +48,11 @@ public class UserController {
     }
 
     @Autowired
-    public UserController(UserService userService, BoardService boardService, MemberValidator memberValidator
+    public UserController(UserService userService, PostService postService, MemberValidator memberValidator
                             ) {
         this.userService = userService;
         this.memberValidator = memberValidator;
-        this.boardService = boardService;
+        this.postService = postService;
 
     }
 
@@ -120,9 +121,9 @@ public class UserController {
 
     @GetMapping("/detail")
     public String detail(Principal principal, Model model) {
-        String loginId = principal.getName();
-        List<Post> list = boardService.findByUserName(loginId);
-        Member member = userService.findUsername(loginId);
+        String username = principal.getName();
+        List<Post> list = postService.findByUsername(username);
+        Member member = userService.findUsername(username);
         model.addAttribute("member", member);
         model.addAttribute("list", list);
 
