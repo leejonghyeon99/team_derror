@@ -104,7 +104,7 @@ a span:hover{
 .post-comment form{
     display: flex;
     margin-left: 50%;
-    width: 700px;
+    width: 1000px;
     transform: translateX(-50%);
 }
 
