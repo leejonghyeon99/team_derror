@@ -67,6 +67,9 @@ public class UserController {
     public void test(Model model) {
     }
 
+    @GetMapping("/calendar")
+    public  void calendar(Model model){
+    }
 
     @GetMapping("/login")
     public void login(Model model) {

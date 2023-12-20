@@ -9,11 +9,38 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/user/detail.css}">
     <script th:src="@{/js/user/detail.js}"></script>
-    <script >function confirmDelete(){
-            let confirmMsg = confirm("회원 탈퇴를 진행하시겠습니까?")
-            return confirmMsg;
+    <script>function confirmDelete() {
+        let confirmMsg = confirm("회원 탈퇴를 진행하시겠습니까?")
+        return confirmMsg;
     }
     </script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <!-- FullCalendar JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.js"></script>
+
+    <!-- FullCalendar CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css">
+    <style>
+        /* 일요일 날짜 빨간색 */
+        .fc-day-sun {
+            color: red;
+            text-decoration: none;
+        }
+
+        /* 토요일 날짜 파란색 */
+        .fc-day-sat {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .fc-day:hover {
+            background-color: #f0f0f0; /* 호버 시 배경색 설정 */
+            cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+        }
+
+    </style>
+
     <title>회원정보</title>
 
 </head>
@@ -102,7 +129,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="post : ${list}" >
+                <tr th:each="post : ${list}">
                     <td>
                         <a th:href="@{/board/detail/{postId}(postId=${post.id})}" th:text="${post.title}"></a>
                     </td>
@@ -122,27 +149,255 @@
         </div>
     </div>
     <div class="modal" id="modal2">
-        <div class="modal-content">
-            <h2>일정관리</h2>
-            <p>일정내용</p>
-            <input type="button" class="close" onclick="closeModal('modal2')" th:value="닫기">
+
+        <h2>일정관리</h2>
+        <p>  <!-- 캘린더를 표시할 공간 -->
+        <div id="calendar"></div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventModalLabel">My Schedule</h5>
+                    </div>
+                    <div class="modal-body">
+                        <label for="eventTitle">일정 제목:</label>
+                        <input type="text" id="eventTitle" class="form-control">
+                        <label for="eventStartDate">시작 날짜:</label>
+                        <input type="date" id="eventStartDate" class="form-control">
+                        <label for="eventEndDate">종료 날짜:</label>
+                        <input type="date" id="eventEndDate" class="form-control">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="allDayCheckbox">
+                            <label class="form-check-label" for="allDayCheckbox">하루 종일</label>
+                        </div>
+                        <label for="eventColor">색상:</label>
+                        <select id="eventColor" class="form-control">
+                            <option value="#228B22">초록</option>
+                            <option value="#FFD700">노랑</option>
+                            <option value="#000080">파랑</option>
+                            <option value="#8B0000">빨강</option>
+                            <option value="#800080">보라</option>
+                        </select>
+                        <label for="eventMemo">메모:</label>
+                        <textarea id="eventMemo" class="form-control" rows="6"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-primary" onclick="addOrUpdateEvent()">일정 추가/수정</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteEvent()">일정 삭제</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <script>
+            var eventCounter = 1; // 카운터 초기화
+            var selectedEventId = null; // 선택된 이벤트의 ID
+
+            // FullCalendar를 초기화하고 설정
+            var calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+                // 캘린더 설정
+                headerToolbar: {
+                    left: 'prev today',
+                    center: 'title',
+                    right: 'addEventButton next'
+                },
+                locale: 'ko',
+                timeZone: 'Asia/Seoul',
+                themeSystem: 'bootstrap5',
+                contentHeight: 700,
+                displayEventTime: false,
+                editable: true, // 드래그 앤 드롭 활성화
+                selectable: true, // 일정 선택 활성화
+                views: {
+                    dayGridMonth: {
+                        dayMaxEventRows: 5, // 이벤트 최대 표시 행 수
+                        dayMaxEvents: true, // 특정 날짜에 표시되는 최대 이벤트 수
+                        eventDisplay: 'background' // 이벤트 표시 방법
+                    }
+                },
+                events: [],
+                customButtons: {
+                    addEventButton: {
+                        text: 'Schedule',
+                        click: function () {
+                            selectedEventId = null; // 새 이벤트를 추가할 때 선택된 이벤트 초기화
+                            $('#eventModal').modal('show');
+                        }
+                    }
+                },
+                eventClick: function (info) {
+                    selectedEventId = info.event.id;
+                    $('#eventModal').modal('show');
+                    // 선택한 이벤트 정보를 모달에 표시하는 함수 호출
+                    displayEventInfo(info.event);
+                },
+                dateClick: function (info) {
+                    // 날짜를 클릭했을 때 실행되는 코드
+                    selectedEventId = null; // 새 이벤트를 추가할 때 선택된 이벤트 초기화
+                    var startDateStr = info.date.toISOString().split('T')[0];
+                    // 모달을 열기
+                    $('#eventModal').modal('show');
+                    // 클릭한 날짜를 시작 날짜로 설정
+                    $('#eventStartDate').val(startDateStr);
+                },
+                select: function (info) {
+                    // 일정을 선택한 경우 호출되는 함수
+                    // 선택한 일정의 시작일과 종료일을 모달에 설정
+                    $('#eventModal').modal('show');
+                    $('#eventStartDate').val(info.startStr);
+                    $('#eventEndDate').val(info.endStr);
+                }
+            });
+
+            calendar.render();
+
+            // Bootstrap modal 이벤트
+            $('#eventModal').on('show.bs.modal', function (e) {
+                // 모달이 나타날 때 실행되는 코드
+                if (selectedEventId) {
+                    var selectedEvent = calendar.getEventById(selectedEventId);
+                    if (selectedEvent) {
+                        displayEventInfo(selectedEvent);
+                    }
+                } else {
+                    // 새 이벤트를 추가할 때 모달 초기화
+                    if (!$('#eventTitle').val()) {
+                        // 입력 필드가 비어있을 때만 초기화
+                        $('#eventTitle').val('');
+                        $('#eventStartDate').val('');
+                        $('#eventEndDate').val('');
+                        $('#allDayCheckbox').prop('checked', false); // 하루 종일 체크 해제
+                        $('#eventColor').val('#ff0000'); // 초기 색상 설정
+                        $('#eventMemo').val(''); // 메모 초기화
+                    }
+                }
+            });
+
+            $('#eventModal').on('hidden.bs.modal', function (e) {
+                // 모달이 닫힐 때 실행되는 코드
+                selectedEventId = null; // 선택된 이벤트 초기화
+
+                // 모달 내용 초기화
+                $('#eventTitle').val('');
+                $('#eventStartDate').val('');
+                $('#eventEndDate').val('');
+                $('#allDayCheckbox').prop('checked', false); // 하루 종일 체크 해제
+                $('#eventColor').val('#ff0000'); // 초기 색상 설정
+                $('#eventMemo').val(''); // 메모 초기화
+            });
+
+
+            // 일정 추가 또는 수정 함수
+            function addOrUpdateEvent() {
+                // 제목과 시작/종료 날짜 및 시간, 색상 가져오기
+                var title = $('#eventTitle').val();
+                var startDate = $('#eventStartDate').val();
+                var endDate = $('#eventEndDate').val();
+                var allDay = $('#allDayCheckbox').prop('checked');
+                var color = $('#eventColor').val();
+                var memo = $('#eventMemo').val();
+
+                // 하루 종일 이벤트일 경우 시간 정보 제거
+                if (allDay) {
+                    startDate = startDate + 'T00:00:00';
+                    endDate = startDate + 'T23:59:59';
+                }
+
+                // 입력 값이 유효한지 확인
+                if (title && startDate && endDate && color) {
+                    if (selectedEventId) {
+                        // 선택된 이벤트가 있으면 수정
+                        var selectedEvent = calendar.getEventById(selectedEventId);
+                        if (selectedEvent) {
+                            selectedEvent.setProp('title', title);
+                            selectedEvent.setStart(startDate);
+                            selectedEvent.setEnd(endDate);
+                            selectedEvent.setProp('color', color);
+                            selectedEvent.setProp('allDay', allDay);
+                            selectedEvent.setExtendedProp('memo', memo);
+                            calendar.updateEvent(selectedEvent);
+                        }
+                    } else {
+                        // 선택된 이벤트가 없으면 추가
+                        var newEvent = {
+                            id: eventCounter++, // 카운터 값을 할당하고 증가
+                            title: title,
+                            start: startDate,
+                            end: endDate,
+                            color: color,
+                            allDay: allDay,
+                            extendedProps: {
+                                memo: memo
+                            }
+                        };
+                        calendar.addEvent(newEvent);
+                    }
+
+                    // 입력 필드 초기화
+                    $('#eventTitle').val('');
+                    $('#eventStartDate').val('');
+                    $('#eventEndDate').val('');
+                    $('#allDayCheckbox').prop('checked', false); // 하루 종일 체크 해제
+                    $('#eventColor').val('#ff0000'); // 초기 색상 설정
+                    $('#eventMemo').val(''); // 메모 초기화
+
+                    // 캘린더 다시 렌더링
+                    calendar.render();
+                    $('#eventModal').modal('hide');
+                } else {
+                    alert('모든 필드를 입력하세요.');
+                }
+            }
+
+            // 일정 삭제 함수
+            function deleteEvent() {
+                if (selectedEventId) {
+                    var selectedEvent = calendar.getEventById(selectedEventId);
+                    if (selectedEvent) {
+                        selectedEvent.remove();
+                        $('#eventModal').modal('hide'); // 모달 닫기
+                    }
+                }
+            }
+
+            // 이벤트 정보를 모달에 표시하는 함수
+            function displayEventInfo(event) {
+                // 이벤트 정보를 모달에 표시
+                $('#eventTitle').val(event.title);
+                $('#eventStartDate').val(event.start.toISOString().split('T')[0]);
+                // 올데이 이벤트인 경우 종료 날짜를 시작 날짜와 동일하게 표시
+                if (event.allDay) {
+                    $('#eventEndDate').val(event.start.toISOString().split('T')[0]);
+                } else {
+                    $('#eventEndDate').val(event.end.toISOString().split('T')[0]);
+                }
+                $('#allDayCheckbox').prop('checked', event.allDay);
+                $('#eventColor').val(event.color);
+                $('#eventMemo').val(event.extendedProps.memo); // 메모 표시
+            }
+        </script>
+        </td>
+        <input type="button" id="modal2Close" class="close" onclick="closeModal('modal2')" th:value="닫기">
+
     </div>
     <div class="modal" id="modal3">
         <div class="modal-content">
-
             <h2>발신알림</h2>
             <p>발신내용</p>
             <input type="button" class="close" onclick="closeModal('modal3')" th:value="닫기">
         </div>
     </div>
     <div class="modal" id="modal4">
-        <div class="modal-content">
-            <h2>수신알림</h2>
-            <p>수신내용</p>
-            <input type="button" class="close" onclick="closeModal('modal4')" th:value="닫기">
-        </div>
+
+        <h2>수신알림</h2>
+        <p>수신내용</p>
+        <input type="button" class="close" onclick="closeModal('modal4')" th:value="닫기">
     </div>
+</div>
 </div>
 <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 <script th:src="@{/js/sidebar.js}"></script>
