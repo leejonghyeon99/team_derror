@@ -28,7 +28,7 @@
         VALUES (#{category}, #{title}, #{content}, #{member.id}, #{thumbnail})
     </insert>
 
-    <select id="findByUsername">
+    <select id="findByUsername" resultMap="postMap">
         select *
         from post
         where post.member_id = (select id from member where username = #{username})

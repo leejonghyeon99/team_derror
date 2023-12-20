@@ -12,6 +12,8 @@ public interface PostService {
 
     int write(Post post, Map<String, MultipartFile> files);
 
+    List<Post> findByUsername(String username);
+
     Post detail(Long id);
 
     Post findById(Long id);
