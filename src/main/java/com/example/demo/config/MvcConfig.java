@@ -30,8 +30,8 @@ public class MvcConfig {
             // upload/ 경로의 resource 가 동작케 함.
             // IntelliJ 의 경우 이 경로를 module 이 아닌 project 이하에 생성해야 한다.
             registry
-                    .addResourceHandler("/upload/**","/4k/**")
-                    .addResourceLocations("file:" + uploadDir + "/","file:4k/");
+                    .addResourceHandler("/upload/**","/4k/**","/Noto_Sans_KR/**")
+                    .addResourceLocations("file:" + uploadDir + "/","file:4k/","file:Noto_Sans_KR/");
         }
     }
 

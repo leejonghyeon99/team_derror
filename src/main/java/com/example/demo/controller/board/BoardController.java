@@ -25,7 +25,7 @@ import java.util.Map;
  * @Author 장고운
  */
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/sample")
 public class BoardController {
 
 
@@ -73,28 +73,38 @@ public class BoardController {
         return "board/detail";
     }
 
-    // 리스트 최신순
+    // 리스트 최신순 리스트 조회순 내림차순
     @GetMapping("/{category}")
-    public String list(Integer page, Model model, @PathVariable String category){
-        boardService.list(page, model, category);
-        model.addAttribute("category",category);
+    public String list(Integer page, Model model, @PathVariable String category, String sort){
+        model.addAttribute("category", category);
+        model.addAttribute("sort", sort);
+        boardService.list(page, model, category, sort);
+        System.out.println("페이징 리스트"+","+page+","+category+","+sort);
         return "board/list";
     }
 
-    // 공지사항 조회순
-    @GetMapping("/{category}/desc")
-    public String listDesc(Integer page, Model model, @PathVariable String category){
-        boardService.listDescByViewCnt(page, model, category);
-        return "board/list";
-    }
+//    // 리스트 최신순 리스트 조회순 오름차순
+//    @GetMapping("/{category}/desc")
+//    public String listDesc(Integer page, Model model, @PathVariable String category){
+//        boardService.listDescByViewCnt(page, model, category);
+//        return "board/list";
+//    }
 
-    // 페이징 - pageRows 변경시 동작
+    // 페이징 버튼 클릭 시 동작
     @PostMapping("/{category}/pageRows")
     public String pageRows(@PathVariable String category, Integer page, Integer pageRows){
-        System.out.println(category+","+page+","+pageRows);
+        System.out.println("페이징 버튼 클릭"+","+category+","+page+","+pageRows);
         U.getSession().setAttribute("pageRows", pageRows);
         return "redirect:/board/"+category+"?page=" + page;
     }
+//    // 페이징 - pageRows 변경시 동작
+//    @PostMapping("/{category}/pageRows")
+//    public String viewCntpageRows(@PathVariable String category, Integer page, Integer pageRows){
+//        System.out.println(category+","+page+","+pageRows);
+//        U.getSession().setAttribute("pageRows", pageRows);
+//        return "redirect:/board/"+category+"desc?page=" + page;
+//    }
+
 
     // 수정페이지
     @GetMapping("/update/{id}")
@@ -133,8 +143,8 @@ public class BoardController {
 
     // 삭제
     @PostMapping("/delete")
-    public String deleteOk(Long id, Model model){
-        int result = boardService.deleteById(id);
+    public String deleteOk(Long postId, Model model){
+        int result = boardService.deleteById(postId);
         model.addAttribute("result", result);
         return "board/deleteOk";
     }
@@ -147,8 +157,9 @@ public class BoardController {
 
     // 검색창
     @GetMapping("/search")
-    public String getSerchList(String keyword,Integer page, Model model){
-        boardService.serchByList(keyword,page,model);
+    public String getSerchList(String keyword,Integer page, Model model, String category){
+        boardService.serchByList(keyword,page,model,category);
+        System.out.println("작동확인"+ keyword+ page+ model+category);
         return "board/list";
 
     }

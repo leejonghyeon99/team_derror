@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,18 +21,16 @@ public class Comment {
     private Long id;    //  PK
     @ToString.Exclude
     private Member member;// 댓글 작성자(FK)
-
-    @JsonIgnore // JSON 변환 시 제외하는 필드
-    private Long post_id;// 어느글의 댓글(FK)
-
-    private Long comment_id; // 부모 댓글 아이디
-
+    private Long postId;// 어느글의 댓글(FK)
+    private Long commentId; // 부모 댓글 아이디
     private String content; // 댓글 내용
+    private int childCnt; //자식 댓글 개수
+
+    private List<Comment> childComment;
 
     // java.time.* 객체 변환을 위한 annotation  들
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    @JsonProperty("created_date")
-    private LocalDateTime created_date;
+    private LocalDateTime createdDate;
 }

@@ -1,0 +1,142 @@
+@font-face {
+    font-family: 'black'; /* 사용하고자 하는 폰트 이름 설정 */
+    src: url('/Noto_Sans_KR/static/NotoSansKR-Black.ttf') format('truetype'); /* 폰트 파일의 경로 설정 */
+    /* 추가로 필요한 속성들 (예: font-weight, font-style 등)도 설정할 수 있습니다. */
+}
+
+
+* {
+    box-sizing: border-box;
+    border-collapse: collapse;
+    font-family: black;
+}
+
+a{
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a span:hover{
+    text-decoration: underline;
+}
+
+.container{
+    position: relative;
+    width: 1200px;
+    padding: 30px 25px;
+    border: 1px solid rgba(208, 208, 208, 0.97);
+    border-radius: 5px;
+}
+
+.user-logo {
+    width: 30px;
+    height: 30px; /* 높이 자동 조절 */
+    margin-right: 10px; /* 이미지 오른쪽 여백 */
+    border-radius: 50%;
+}
+
+.post-sub {
+    position: relative;
+    display: flex;
+    align-items: center; /* 수직 정렬 중앙 */
+}
+
+.post-info{
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+}
+
+
+.info-member {
+    font-weight: bold; /* 멤버 이름에 굵게 표시 */
+}
+
+.post-link-comment{
+    position: absolute;
+    right: 15px;
+}
+
+.post-body{
+    margin: 20px 0;
+    min-height: 500px;
+}
+
+.post-body-bottom{
+    display: flex;
+    align-items: center;
+    color: black;
+    position: relative;
+}
+
+.crud-btn{
+    position: absolute;
+    right: 30px;
+    margin: 3px 8px;
+}
+
+.post-comment{
+    height: auto;
+    margin: 20px 0;
+    min-height: 50px;
+}
+
+.comment-content{
+    padding-left: 30px;
+
+}
+
+.reply{
+    font-weight: bold;
+}
+
+.display-flex{
+    display: flex;
+    align-items: center;
+}
+
+.child-list{
+    margin-top: 20px;
+    margin-left: 60px;
+}
+
+.post-comment form{
+    display: flex;
+    margin-left: 50%;
+    width: 1000px;
+    transform: translateX(-50%);
+}
+
+.post-comment input{
+    width: 100%;
+    border: 0.6px solid #adb5bd;
+    border-radius: 5px;
+    padding: 5px;
+    height: 50px;
+    overflow-y: scroll;
+}
+
+.post-comment button{
+    margin-left: 14px;
+    width: 80px;
+    height: auto;
+    font-weight: bold;
+    border: dodgerblue 1px solid;
+    border-radius: 5px;
+    color: dodgerblue;
+    background-color: #ffffff;
+    transition: all 0.5s;
+}
+
+.post-comment button:hover{
+    box-shadow: 0px 4px 6px rgba(0, 221, 255, 0.87);
+}
+
+.down{
+   display: none;
+}
+
+.child-list{
+    display: none;
+}

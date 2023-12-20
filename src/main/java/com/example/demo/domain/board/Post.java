@@ -23,14 +23,13 @@ public class Post {
     private String content; // 내용
     private LocalDateTime createdDate;  // 작성일자
     private Long viewCnt;   // 조회수
+    private String thumbnail; //썸네일 이미지
 
     private Member member;  // 글 작성자 (FK)
-
     // 첨부파일
     @ToString.Exclude
     @Builder.Default
     private List<Attachment> fileList = new ArrayList<>();
 
-    private String keyword;
 
 }

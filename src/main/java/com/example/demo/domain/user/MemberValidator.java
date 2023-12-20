@@ -30,6 +30,8 @@ public class MemberValidator implements Validator {
             errors.rejectValue("username", "이미 존재하는 아이디 입니다");
         }
 
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password","비밀번호를 입력하세요");
+
         if (!member.getPassword().equals(member.getRe_password())) {
             errors.rejectValue("re_password","비밀번호와 비밀번호 재입력이 일치하지 않습니다.");
         }

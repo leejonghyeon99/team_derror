@@ -14,6 +14,7 @@ public interface UserService {
 
 
     int signup(Member member);
+    int removeById(Long id);
 
     List<Authority> selectAuthoritiesById(Long id);
 
