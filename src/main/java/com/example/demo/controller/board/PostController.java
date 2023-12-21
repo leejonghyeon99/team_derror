@@ -38,6 +38,11 @@ public class PostController {
         this.commentService = commentService;
     }
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder){
+        System.out.println("initBinder() 호출");
+        binder.setValidator(new PostValidator());
+    }
 
     @GetMapping("/write")
     public void write(){}
@@ -154,11 +159,7 @@ public class PostController {
         return "board/deleteOk";
     }
 
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder){
-//        System.out.println("initBinder() 호출");
-//        binder.setValidator(new PostValidator());
-//    }
+
 
 
 }
