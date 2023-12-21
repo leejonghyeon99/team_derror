@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -71,7 +72,14 @@ public class CountryController {
                 HashMap::putAll
         );
 
-        model.addAttribute("citys", countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0));
+        List<String> cityNames = countryinfo.getEmbedded().getEvents().stream()
+                .flatMap(event -> event.getEmbed().getVenues().stream()
+                        .map(venue -> venue.getCity().getName()))
+                .distinct()
+                .collect(Collectors.toList());
+
+        model.addAttribute("citys", cityNames);
+//        model.addAttribute("citys", countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0));
         model.addAttribute("codes", codeMap);
         model.addAttribute("classifications", classMap);
     }; // end search
@@ -88,35 +96,12 @@ public class CountryController {
         RestTemplate restTemplate = new RestTemplate();
         Countryinfo countryinfo = restTemplate.getForObject(apiUrl, Countryinfo.class);
 
-//        countryinfo.getEmbedded().getEvents().forEach(events -> events.getId());
-//        System.out.println(countryinfo.getPage().getTotalPages());
-//        System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
-//        System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
-//        System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
-
         countryinfo.getEmbedded().getEvents().forEach(events -> events.getId());
         System.out.println(countryinfo.getPage().getTotalPages());
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getCity().getName());
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
 
-
-        // 예외 처리: getEmbedded()의 반환값이 null이면 빈 리스트로 초기화
-        //List<Events> eventsList = countryinfo.getEmbedded() != null ? countryinfo.getEmbedded().getEvents() : Collections.emptyList();
-//        eventsList.forEach(events -> events.getId());
-//        System.out.println(countryinfo.getPage().getTotalPages());
-//
-//        // eventsList가 비어있지 않을 때에만 처리
-//        if (!eventsList.isEmpty()) {
-//            System.out.println(eventsList.get(0).getEmbed().getVenues().get(0).getCity().getName());
-//            System.out.println(eventsList.get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
-//            System.out.println(eventsList.get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
-//        }
-
-//        countryInfo.getEmbedded().getEvents().stream().reduce( (e,v) -> {
-//
-//            return null;
-//        });
 
         return countryinfo;
     } // end Event
