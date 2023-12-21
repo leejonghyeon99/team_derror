@@ -61,6 +61,15 @@
                <div class="img-list"  th:each="file : ${post.fileList}">
                    <img th:if="${file.image}" th:src="@{/upload/__${file.filename}__}" th:alt="${file.id}" />
                </div>
+               <hr>
+               <div class="file-list" >
+                   <ul>
+                       <li class="list-group-item" th:each="attachment : ${post.fileList}">
+                           <a th:href="@{/board/download(id=${attachment.id})}" th:text="${attachment.sourcename}"></a>
+                       </li>
+                   </ul>
+
+               </div>
 
 
                <div class="post-body-bottom">

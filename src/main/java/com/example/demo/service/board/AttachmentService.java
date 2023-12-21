@@ -8,6 +8,6 @@ public interface AttachmentService {
 
     Attachment findById(Long id);
 
-    Attachment findListById(Long id);
+    Attachment findOne(Long id);
 }
 

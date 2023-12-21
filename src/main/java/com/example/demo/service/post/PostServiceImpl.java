@@ -88,7 +88,7 @@ public class PostServiceImpl implements PostService {
                 System.out.println("\n첨부파일 정보: " + e.getKey());   // name값
                 U.printFileInfo(e.getValue());   // 파일 정보 출력
                 System.out.println();
-
+                
                 // 물리적인 파일 저장
                 Attachment file = upload(e.getValue());
 
