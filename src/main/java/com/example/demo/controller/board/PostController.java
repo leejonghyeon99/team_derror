@@ -93,6 +93,7 @@ public class PostController {
             Model model
     ){
         U.getSession().setAttribute("pageRows", pageRows);
+        U.getSession().setAttribute("category", category);
         postService.list(page,category,sort,model);
 
     }
@@ -108,10 +109,12 @@ public class PostController {
     ){
         U.getSession().setAttribute("pageRows",pageRows);
         U.getSession().setAttribute("keyword",keyword);
+        U.getSession().setAttribute("category", category);
         postService.findListByKeyWord(keyword,page,model,category,sort);
         model.addAttribute("keyword",U.getSession().getAttribute("keyword"));
         System.out.println("#######################test KEYWORD: "+keyword+"/ page: "+page+"/ pageRows: "+pageRows+"/ sort: "+sort);
         System.out.println("###################session Key : "+ U.getSession().getAttribute("keyword"));
+        System.out.println("###################session Key : "+ U.getSession().getAttribute("category"));
         return "board/"+category;
     }
 
