@@ -12,7 +12,7 @@ public class PostValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
         System.out.println("supports(" + clazz.getName() + ")");
-        boolean result = PostPage.class.isAssignableFrom(clazz) || Post.class.isAssignableFrom(clazz);
+        boolean result = PostPage.class.isAssignableFrom(clazz) || Post.class.isAssignableFrom(clazz) || QryCommentList.class.isAssignableFrom(clazz) || QryResult.class.isAssignableFrom(clazz);
         System.out.println("결과" + result);
         return result;
     }
