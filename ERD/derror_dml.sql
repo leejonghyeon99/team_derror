@@ -5,7 +5,7 @@ select * from member;
 select * from post;
 select * from event_plan;
 
-
+alter table member drop column thumnail_img;
 alter table member add column thumbnail_img varchar(200) default 'default_thumbnail.png';
 alter table post add column thumbnail varchar(200) default 'default.jpg';
 
@@ -34,4 +34,17 @@ select * from post where post.member_id in (3,4,5);
 SELECT count(distinct p.id) FROM member m join post p on m.auth_id = 2 and p.title like concat('%','권','%');
 
 
+drop table calendar;
+CREATE TABLE calendar(
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       title VARCHAR(255) NOT NULL,
+                       start_date DATE NOT NULL,
+                       end_date DATE,
+                       color VARCHAR(20),
+                       all_day BOOLEAN DEFAULT TRUE,
+                       memo TEXT,
+                       member_id BIGINT NOT NULL ,
+                       FOREIGN KEY (member_id) REFERENCES Member(id)
+);
 
+select * from calendar;

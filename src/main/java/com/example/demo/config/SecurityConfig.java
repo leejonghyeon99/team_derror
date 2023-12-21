@@ -27,7 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/board/detail/**").authenticated()
                         .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**",
                                 "/countryinfo/search/**"
-                                ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
+                                ,"/airandhotel/hotel/**","/airandhotel/airport/**", "/calendar").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
