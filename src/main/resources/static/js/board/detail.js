@@ -1,13 +1,22 @@
 $(document).ready(function (){
+
+    // 글 [삭제] 버튼
+    $("#btnDel").click(function(){
+        let answer = confirm("삭제하시겠습니까?");
+        if(answer){
+            $("form[name='frmDelete']").submit();
+        }
+    });
+
+    // 댓글 대댓글
     const commentBody = $('.comment-body');
     const replyComment = $("#replyComment");
     let childList;
 
     $(".reply-comment-btn").click(function() {
-        // 폼 데이터 수집
+
         var formData = new FormData(replyComment[0]);
 
-        // Ajax 요청 보내기
         $.ajax({
             url: '/comment/parent/write',
             type: 'POST',
@@ -15,17 +24,15 @@ $(document).ready(function (){
             contentType: false,
             processData: false,
             success: function(data, status) {
-                console.log(status);
-                console.log(data);
                 updateParent(data);
                 replyComment.find('[name="content"]').val('');
+
             },
             error: function(error) {
                 console.error(error);
             }
         });
     });
-
 
     function updateParent(data){
         console.log(data)
@@ -139,6 +146,9 @@ $(document).ready(function (){
         $(this).find('i').toggle();
         $(this).closest('.parent').find('.child-list').toggle();
     })
+
+
+
 })
 
 

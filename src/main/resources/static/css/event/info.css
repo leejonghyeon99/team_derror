@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'black'; /* 사용하고자 하는 폰트 이름 설정 */
+    src: url('/Noto_Sans_KR/static/NotoSansKR-Black.ttf') format('truetype'); /* 폰트 파일의 경로 설정 */
+    /* 추가로 필요한 속성들 (예: font-weight, font-style 등)도 설정할 수 있습니다. */
+}
+
+* {
+    box-sizing: border-box;
+    font-family: black;
+}
+.main-content {
+    height: 100%;
+}
+.main_one {
+    font-size: 18px;
+}
+.main_two img {
+    margin-top: 30px;
+    max-width: 100%;
+    height: 430px;
+}
+.main_three {
+    width: 100%;
+    height: 935px;
+}
+.main_four a {
+    float: right;
+    background-color: #6c757d;
+    color: white;
+    padding: 11px;
+    font-size: 18px;
+    text-decoration: none;
+    margin-right: 8px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+#addEventButton {
+    float: right;
+    margin-top: 15px;
+    text-decoration: none;
+}

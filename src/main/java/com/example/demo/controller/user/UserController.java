@@ -3,10 +3,7 @@ package com.example.demo.controller.user;
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.user.Member;
 import com.example.demo.domain.user.MemberValidator;
-import com.example.demo.repository.PostRepository;
-import com.example.demo.repository.user.UserRepository;
 import com.example.demo.service.UserService;
-import com.example.demo.service.board.BoardService;
 import com.example.demo.service.post.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -36,10 +32,9 @@ public class UserController {
 
     private UserService userService;
     private PostService postService;
-
     private MemberValidator memberValidator;
     @Autowired
-    private  HttpSession httpSession;
+    private HttpSession httpSession;
 
 
     @InitBinder
@@ -49,7 +44,7 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService, PostService postService, MemberValidator memberValidator
-                            ) {
+    ) {
         this.userService = userService;
         this.memberValidator = memberValidator;
         this.postService = postService;
@@ -67,18 +62,14 @@ public class UserController {
     public void test(Model model) {
     }
 
-
-    @GetMapping("/login")
-    public void login(Model model) {
-    }
-
     @PostMapping("/loginError")
     public String loginError() {
-        return "user/login";
+        return "user/sign";
     }
 
-    @GetMapping("/signup")
-    public void signup() {
+
+    @GetMapping("/sign")
+    public void sign() {
     }
 
     @GetMapping("/signout")
@@ -104,18 +95,20 @@ public class UserController {
 
             List<FieldError> errList = result.getFieldErrors();
             redirectAttrs.addFlashAttribute("errors", errList);
+            redirectAttrs.addFlashAttribute("error", "signup");
+
             for (int i = 0; i < errList.size(); i++) {
 
                 redirectAttrs.addFlashAttribute("err" + errList.get(i).getField(), errList.get(i).getCode());
             }
 
-
-            return "redirect:/user/signup";
+            return "redirect:/user/sign";
         }
 
         String page = "/user/signupOk";
         int cnt = userService.signup(member);
         model.addAttribute("result", cnt);
+
         return page;
     }
 
@@ -126,31 +119,31 @@ public class UserController {
         Member member = userService.findUsername(username);
         model.addAttribute("member", member);
         model.addAttribute("list", list);
-
-
         return "user/detail";
     }
 
-        @PostMapping("/signout")
-        public String removeUser(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @PostMapping("/signout")
+    public String removeUser(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
-            if (authentication != null && authentication.isAuthenticated()) {
+        if (authentication != null && authentication.isAuthenticated()) {
 
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                Member member = userService.findUsername(userDetails.getUsername());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Member member = userService.findUsername(userDetails.getUsername());
 
-                if (member != null) {
-                    int result = userService.removeById(member.getId());
-                    new SecurityContextLogoutHandler().logout(request, response, authentication);
-                    model.addAttribute("result", result);
-                    return "/user/signout";
-                }
+            if (member != null) {
+                int result = userService.removeById(member.getId());
+                new SecurityContextLogoutHandler().logout(request, response, authentication);
+                model.addAttribute("result", result);
+                return "/user/signout";
             }
-            return "/user/login";
         }
+        return "/user/sign";
+    }
+
 
 }
 

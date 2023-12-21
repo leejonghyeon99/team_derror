@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //----------------------모달창------------------
 
-
 function openModal(modalId) {
     var modal = document.getElementById(modalId);
 
@@ -38,22 +37,14 @@ function closeModal(modalId) {
     modal.classList.remove('show');
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
-
-    document.getElementById("btn1").addEventListener("click", function () {
-
-        var openModals = document.querySelectorAll('.modal.show');
-        openModals.forEach(function (openModal) {
-            closeModal(openModal.id);
-        });
-    });
-
     document.getElementById("modalOpen1").addEventListener("click", function () {
         openModal("modal1");
     });
 
     document.getElementById("modalOpen2").addEventListener("click", function () {
-        openModal("modal2");
+        openModal("modal2")
     });
 
     document.getElementById("modalOpen3").addEventListener("click", function () {
@@ -65,13 +56,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     var closeBtn = document.getElementsByClassName("close");
-    for (var i = 0; i < closeBtn.length; i++) {
-        closeBtn[i].addEventListener("click", function () {
-            var madalId = this.parentElement.parentElement.id;
+    for(var i = 0; i<closeBtn.length; i++){
+        closeBtn[i].addEventListener("click",function (){
+            var modalId = this.parentElement.parentElement.id;
             closeModal(modalId);
         })
     }
-
-
-})
-
+});

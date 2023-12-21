@@ -5,7 +5,7 @@ select * from member;
 select * from post;
 select * from event_plan;
 
-alter table member drop column thumnail_img;
+
 alter table member add column thumbnail_img varchar(200) default 'default_thumbnail.png';
 alter table post add column thumbnail varchar(200) default 'default.jpg';
 
@@ -48,3 +48,4 @@ CREATE TABLE calendar(
 );
 
 select * from calendar;
+select * from event_plan;

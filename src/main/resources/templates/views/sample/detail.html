@@ -80,7 +80,8 @@
                     <a class="btn btn-outline-dark" th:href="@{'/board/update/' + ${post.id}}"
                        th:if="${logged_user.id == post.member.id}">>수정</a>
                     <button type="button" class="btn btn-outline-danger ms-2" id="btnDel"
-                            th:if="${logged_user.id == post.member.id}">삭제
+                            th:if="${logged_user.id == post.member.id}"
+                            th:href="@{'/board/delete/' + ${post.id}}">삭제
                     </button>
 
                     <a class="btn btn-outline-dark ms-2" th:href="@{/board/write}" sec:authorize="hasAnyRole('ADMIN')"

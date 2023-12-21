@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.event.EventRepository">
+
+    <resultMap id="eventResultMap" type="com.example.demo.domain.event.Events">
+        <id property="id" column="master_id"/>
+    </resultMap>
+
+    <select id="getAllEvents" resultMap="eventResultMap">
+        SELECT * FROM event_plan
+        where master_id = #{id};
+    </select>
+
+    <select id="getEvents" resultMap="eventResultMap">
+        SELECT * FROM event_plan;
+    </select>
+
+    <select id="getEventById" parameterType="String" resultMap="eventResultMap">
+        SELECT * FROM event_plan WHERE master_id = #{id};
+    </select>
+
+    <insert id="save" parameterType="com.example.demo.domain.event.Events">
+        INSERT INTO event_plan (master_id, title, member_id, created_date, national)
+        VALUES (#{master_id}, #{title}, #{member_id}, #{created_date}, #{national})
+    </insert>
+
+</mapper>

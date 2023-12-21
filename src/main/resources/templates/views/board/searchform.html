@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="searchform">
+
+    <form id="searchKeyword" th:action="@{'/board/' + ${postPage.category} + '/search'}" method="GET">
+        <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
+        <input type="hidden" name="category" th:value="${category}">
+        <button type="submit" id="searchButton"><i class="bi bi-search-heart"></i></button>
+        <button type="button" id="refreshButton">
+            <i class="bi bi-arrow-clockwise"></i>
+        </button>
+    </form>
+
+    <div th:if="${noSearchResults}" id="noSearchResults" data-no-search-results="true"></div>
+
+</th:block>
+</html>

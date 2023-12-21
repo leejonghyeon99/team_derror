@@ -22,6 +22,7 @@ public class MemberValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Member member = (Member) target;
         String username = member.getUsername();
+        String email = member.getEmail();
 
         if(username == null || username.trim().isEmpty()) {;
             errors.rejectValue("username", "아이디는 필수입니다");
@@ -40,13 +41,15 @@ public class MemberValidator implements Validator {
 
         if (!member.getEmail().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
             errors.rejectValue("email", "유효한 이메일 주소를 입력하세요.");
+        } else if(userService.existEmail(email)){
+            errors.rejectValue("email", "이미 존재하는 이메일 입니다");
         }
 
         if (member.getAge() <= 0) {
             errors.rejectValue("age","나이는 0보다 커야 합니다.");
         }
 
-        if (!member.getPhone().matches("\\d+")) {
+        if (!member.getPhone().matches("010\\d{4}\\d{4}")) {
             errors.rejectValue("phone","유효한 전화번호를 입력하세요.");
         }
 
