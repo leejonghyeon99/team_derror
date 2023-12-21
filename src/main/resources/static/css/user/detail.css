@@ -1,9 +1,11 @@
 .active {
     background-color: #5CFFD1;
 }
+
 body {
     background-color: rgba(173, 181, 189, 0.1);
 }
+
 .memberForm {
     margin: 0 auto;
     margin-top: 210px;
@@ -22,9 +24,11 @@ body {
     box-shadow: 0 0 19px rgba(0, 0, 0, 0.02);
     border-radius: 5px;
 }
+
 img {
     border-radius: 50%;
 }
+
 .profile_area {
     padding: 12px 39px 20px;
     text-align: center;
@@ -36,7 +40,7 @@ img {
 }
 
 .profile_inner {
- margin-left: 35px;
+    margin-left: 35px;
 }
 
 .profileName {
@@ -71,15 +75,15 @@ img {
     outline: 1px solid #00498C;
 }
 
-.memberInfo{
+.memberInfo {
     margin: 0 auto;
     margin-top: 30px;
     position: fixed;
     width: 700px;
     height: 300px;
     top: 29.5%;
-    left: 35%;
-    transform: translate(-29.5%, -35%);
+    left: 31%;
+    transform: translate(-29.5%, -31%);
     border: 1px solid #00498C;
     background-color: #fff;
     padding: 10px;
@@ -104,6 +108,7 @@ img {
 label {
     font-weight: bold;
 }
+
 #phone img, #age img {
     width: 30px;
     height: 30px;
@@ -124,14 +129,14 @@ label {
     margin-left: 4px
 }
 
-.postList {
+.postList, .eventList {
     margin: 0 auto;
     margin-top: 360px;
     position: fixed;
     width: 700px;
     top: 29.5%;
-    left: 35%;
-    transform: translate(-29.5%, -35%);
+    left: 31%;
+    transform: translate(-29.5%, -31%);
     border: 1px solid #00498C;
     background-color: #fff;
     padding: 10px;
@@ -140,9 +145,19 @@ label {
     box-sizing: border-box;
     box-shadow: 0 0 19px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    height: 300px;
 }
 
-.tbl {
+.eventList {
+    top: 33%;
+    left: 72%;
+    transform: translate(-33%, -72%);
+    height: 630px;
+    max-height: 630px;
+}
+
+
+.tbl, .tbl2 {
     max-height: 80%;
     overflow: auto;
 }
@@ -153,24 +168,28 @@ h5 {
     border-bottom: 1px solid #000000;
     padding-bottom: 10px;
 }
-.postList table {
+
+.postList table, .eventList table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.postList th, .postList td {
+.postList th, .postList td, .eventList th, .eventList td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
+.postList td, .eventList td {
+    text-align: center;
+}
 
-.postList th {
+.postList th, .eventList th {
     background-color: #f2f2f2;
 }
 
 
-.postList tr:nth-child(even) {
+.postList tr:nth-child(even), .eventList tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
@@ -181,7 +200,6 @@ a {
     text-decoration: underline;
 }
 
-
 a:hover {
     color: blue;
     text-underline: blue;
@@ -190,13 +208,13 @@ a:hover {
 .modalbtn {
     position: fixed;
     top: 27%;
-    left: 15%;
-    transform: translate(-27%, -15%);
+    left: 11%;
+    transform: translate(-27%, -11%);
     box-sizing: border-box;
 
 }
 
-#memberSignOut{
+#memberSignOut {
     border: none;
     background-color: rgba(173, 181, 189, 0.01);
     text-decoration: underline;
@@ -210,14 +228,14 @@ a:hover {
 .modal {
     display: none;
     position: fixed;
-    top: 56%;
-    left: 53%;
-    transform: translate(-56%, -53%);
+    top: 45%;
+    left: 36%;
+    transform: translate(-45%, -36%);
     border: 1px solid #00498C;
     background-color: #fff;
     padding: 10px;
-    max-width: 60%;
-    max-height: 65%;
+    max-width: 42%;
+    max-height: 70%;
     box-sizing: border-box;
     box-shadow: 0 0 19px rgba(0, 0, 0, 0.3);
 
@@ -233,10 +251,11 @@ a:hover {
     margin-bottom: 20px;
 }
 
-#modalOpen1, #modalOpen2, #modalOpen3,#modalOpen4,#btn1 {
-    padding : 10px 20px;
+#modalOpen1, #modalOpen2, #modalOpen3, #modalOpen4, #btn1 {
+    padding: 10px 20px;
     font-size: 16px;
 }
+
 .close {
     color: #aaa;
     font-size: 15px;
