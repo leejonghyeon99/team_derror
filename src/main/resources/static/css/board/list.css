@@ -14,6 +14,13 @@ body {
     font-family: 'DM Serif Display', serif;
 }
 
+#free {
+    text-align: center;
+    font-size: 120px;
+    color: white;
+    font-family: 'DM Serif Display', serif;
+}
+
 .board-filter {
     display: flex;
     flex-wrap: wrap;
@@ -28,14 +35,14 @@ body {
     margin-top: 20px;
 }
 
-.serchForm {
+.searchForm {
     position: relative;
     order: 2; /* 중간에 위치하도록 설정합니다 */
     width: 40%; /* 전체 너비를 차지하도록 설정합니다 */
     margin-bottom: 10px; /* 간격 조절 */
 }
 
-.serchForm input[type="text"] {
+.searchForm input[type="text"] {
     width: calc(100% - 80px); /* 입력 필드 너비 */
     padding: 10px; /* 내부 여백 */
     border: 1px solid #ccc; /* 테두리 스타일 */
@@ -46,7 +53,7 @@ body {
     margin-right: 10px;
 }
 
-#serchButton {
+#searchButton {
     position: absolute;
     top: 0;
     left: calc(100% - 80px);
@@ -74,13 +81,13 @@ body {
     transition: background-color 0.3s ease; /* 호버 시 색상 전환 효과 */
 }
 
-.serchForm input[type="text"],
-#serchButton, #refreshButton {
+.searchForm input[type="text"],
+#searchButton, #refreshButton {
     display: inline-block;
 }
 
 /* 버튼에 마진을 추가하여 검색창과 버튼 간격을 조절합니다. */
-#serchButton, #refreshButton {
+#searchButton, #refreshButton {
     margin-left: 10px;
 }
 
@@ -112,7 +119,7 @@ form[name="frmPageRows"] .form-select {
     overflow: hidden;
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px; /* 글자 크기 설정 */
+    font-size: 15px; /* 글자 크기 설정 */
     color: #111111;
     text-align: center; /* 텍스트 가운데 정렬 */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
@@ -124,6 +131,7 @@ form[name="frmPageRows"] .form-select {
     padding: 8px;
 }
 
+
 /* 목차 스타일 */
 #boardtable th {
     background-color: #003366; /* 찐 파랑 배경색 */
@@ -132,13 +140,15 @@ form[name="frmPageRows"] .form-select {
 
 /* 목록 스타일 */
 #boardtable td {
+    border: 1px solid #ddd;
     background-color: #fff; /* 흰 바탕색 */
     color: #111111;
 }
 
 /* 마우스 호버 효과 */
 #boardtable tbody tr:hover {
-    background-color: #cdf0ff; /* 연하늘색 배경으로 변경 */
+    background-color: #cdf0ff;!important
+    cursor: pointer;
 }
 
 #boardtable a {
@@ -157,3 +167,7 @@ form[name="frmPageRows"] .form-select {
 .col-username { width: 10%; }
 .col-viewCnt { width: 10%; }
 .col-createdDate { width: 20%; }
+
+/*#writeButton {*/
+/*    margin-top: 10px;*/
+/*}*/

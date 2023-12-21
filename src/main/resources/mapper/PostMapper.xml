@@ -67,13 +67,24 @@
         SELECT count(*) FROM post p WHERE p.category = #{category}
     </select>
 
-    <select id="findListByKeyWord" resultMap="postMap">
+    <select id="findListByKeyWordForId" resultMap="postMap">
         SELECT *
         FROM post AS p
                  LEFT JOIN member AS m
                            ON p.member_id = m.id
         WHERE category = #{category}
         AND p.title LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY p.id DESC
+        LIMIT #{from}, #{rows}
+    </select>
+
+    <select id="findListByKeyWordForViewCnt" resultMap="postMap">
+        SELECT *
+        FROM post AS p
+                 LEFT JOIN member AS m
+                           ON p.member_id = m.id
+        WHERE category = #{category}
+          AND p.title LIKE CONCAT('%', #{keyword}, '%')
         ORDER BY p.view_cnt DESC
         LIMIT #{from}, #{rows}
     </select>
@@ -98,7 +109,7 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="delete" flushCache="true">
+    <delete id="delete" flushCache="true" parameterType="com.example.demo.domain.board.Post">
         DELETE
         FROM post
         WHERE id = #{id}

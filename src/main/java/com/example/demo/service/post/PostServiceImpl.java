@@ -69,7 +69,7 @@ public class PostServiceImpl implements PostService {
         post.setMember(member);   // 글 작성자 세팅
 
         int cnt = postMapper.save(post);
-
+        System.out.println("서비스임플"+post.toString());
         // 첨부파일 추가
         addFiles(files, post.getId());
 
@@ -88,7 +88,7 @@ public class PostServiceImpl implements PostService {
                 System.out.println("\n첨부파일 정보: " + e.getKey());   // name값
                 U.printFileInfo(e.getValue());   // 파일 정보 출력
                 System.out.println();
-
+                
                 // 물리적인 파일 저장
                 Attachment file = upload(e.getValue());
 
@@ -98,7 +98,7 @@ public class PostServiceImpl implements PostService {
                     attachmentRepository.save(file);   // INSERT
                 }
             }
-            Attachment attachment = attachmentRepository.findById(id);
+            List<Attachment> attachment = attachmentRepository.findByPost(id);
 
             if (attachment != null) {
                 System.out.println("ttt");
@@ -401,6 +401,7 @@ public class PostServiceImpl implements PostService {
     public int deleteById(Long id) {
         int result = 0;
         Post post = postMapper.findById(id);  // 존재하는 데이터인지 읽어와보기
+
         if (post != null) {  // 존재한다면 삭제 진행.
             // 물리적으로 저장된 첨부파일(들) 삭제
             List<Attachment> fileList = attachmentRepository.findByPost(id);
@@ -430,6 +431,8 @@ public class PostServiceImpl implements PostService {
         if (writePages == null) writePages = WRITE_PAGES;  // 만약 session 에 없으면 기본값으로 동작
         Integer pageRows = (Integer) session.getAttribute("pageRows");
         if (pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
+
+        System.out.println("writePages: " + writePages +"/    pageRows: "+pageRows+ "/              sort: " + sort);
 
         // 현재 페이지 번호 -> session 에 저장
         session.setAttribute("page", page);
@@ -463,7 +466,11 @@ public class PostServiceImpl implements PostService {
                 model.addAttribute("noSearchResults", true);
 
             } else {
-                list = postMapper.findListByKeyWord(keyword, fromRow, pageRows, category);
+                if (sort.equals("id")) {
+                    list = postMapper.findListByKeyWordForId(keyword,fromRow, pageRows, category);
+                } else {
+                    list = postMapper.findListByKeyWordForViewCnt(keyword,fromRow, pageRows, category);
+                }
             }
 
         } else {

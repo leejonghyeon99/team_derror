@@ -1,11 +1,25 @@
 $(function () {
 
-  const  frmPageRows = $("[name='frmPageRows']");
-  const  select = $(".form-select");
+    const  frmPageRows = $("[name='frmPageRows']");
+    const  searchKeyword = $("#searchKeyword");
+    const  select = $(".form-select");
+    const keyword = $("[name='keyword']").val();
+
 
     select.change(function (){
-      frmPageRows.submit();
-  });
+        if(keyword.length){
+            let selectedPageRows = $("select[name='pageRows']").val();
+            let selectedPage = $("select[name='sort']").val();
+            let selectedSort = $("select[name='sort']").val();
+            searchKeyword.append(`<input type="text" name="pageRows" value=${selectedPageRows}>`);
+            searchKeyword.append(`<input type="text" name="sort" value=${selectedSort}>`);
+            searchKeyword.submit();
+            return
+        }else{
+            frmPageRows.submit();
+        }
+
+    });
 
 
     //*************************************************************************************
@@ -20,8 +34,8 @@ $(function () {
     });
 
     // 엔터로 검색 가능
-    $('#serchButton').submit(function(event) {
-        event.preventDefault(); // 기본 동작(페이지 리로드) 방지
+    $('#searchButton').submit(function(event) {
+
         const keyword = $('#keyword').val().trim();
         if (keyword !== '') {
             // 검색 동작: window.location.href = '/search?keyword=' + keyword;
@@ -31,8 +45,22 @@ $(function () {
     });
 
     $('#refreshButton').click(function() {
-        history.back();
+        var category = $('[name="category"]').val();
+        var redirectUrl = '';
+
+        // 카테고리에 따라 다른 URL로 리다이렉트
+        if (category === 'notice') {
+            redirectUrl = '/board/notice';
+        } else if (category === 'free') {
+            redirectUrl = '/board/free';
+        } else if (category === 'share') {
+            redirectUrl = '/board/share';
+        }
+
+        // 첫 페이지로 이동
+        window.location.href = redirectUrl;
     });
+
 
 
 

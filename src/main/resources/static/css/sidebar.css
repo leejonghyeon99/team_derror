@@ -2,8 +2,8 @@ a {
     text-decoration: none;
 }
 
-.dropdownMember, .dropdownLogout {
-    background-color: #666666;
+.dropdownMember, .dropdownLogout, .board-list {
+    /*background-color: #666666;*/
 }
 
 
@@ -137,6 +137,11 @@ a {
     padding: 20px;
 }
 
+.share-content {
+    margin-left: 200px;
+    padding: 20px;
+}
+
 .collapsed + .main-content {
     margin-left: 100px;
 }
@@ -145,12 +150,16 @@ a {
     margin-left: 100px;
 }
 
-.board-list {
-    margin-left: 20px; /* 들여쓰기 적용 */
+.collapsed + .share-content {
+    margin-left: 100px;
+}
+
+.board-list, .user-list {
+    margin-left: 20px;
 }
 
 .board-list a {
-    display: block; /* 각 항목이 새로운 줄에 표시되도록 설정 */
+    display: block;
 }
 
 .board-list a:nth-of-type(1)::before {
