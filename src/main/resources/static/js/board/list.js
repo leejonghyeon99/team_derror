@@ -1,10 +1,24 @@
 $(function () {
 
     const  frmPageRows = $("[name='frmPageRows']");
+    const  searchKeyword = $("#searchKeyword");
     const  select = $(".form-select");
+    const keyword = $("[name='keyword']").val();
+
 
     select.change(function (){
-        frmPageRows.submit();
+        if(keyword.length){
+            let selectedPageRows = $("select[name='pageRows']").val();
+            let selectedPage = $("select[name='sort']").val();
+            let selectedSort = $("select[name='sort']").val();
+            searchKeyword.append(`<input type="text" name="pageRows" value=${selectedPageRows}>`);
+            searchKeyword.append(`<input type="text" name="sort" value=${selectedSort}>`);
+            searchKeyword.submit();
+            return
+        }else{
+            frmPageRows.submit();
+        }
+
     });
 
 
@@ -20,8 +34,8 @@ $(function () {
     });
 
     // 엔터로 검색 가능
-    $('#serchButton').submit(function(event) {
-        event.preventDefault(); // 기본 동작(페이지 리로드) 방지
+    $('#searchButton').submit(function(event) {
+
         const keyword = $('#keyword').val().trim();
         if (keyword !== '') {
             // 검색 동작: window.location.href = '/search?keyword=' + keyword;

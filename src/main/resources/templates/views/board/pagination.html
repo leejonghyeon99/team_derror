@@ -6,25 +6,41 @@
         <ul class="pagination justify-content-center">
             <!--/* << 표시 여부 */-->
 
-            <li class="page-item" th:if="${postPage.page > 1}"><a class="page-link"  th:href="@{${url }(page=1, sort=${postPage.sort})}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
+            <li class="page-item" th:if="${postPage.page > 1}" th:unless="${keyword}"><a class="page-link"  th:href="@{${url }(page=1, sort=${postPage.sort})}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
+            <li class="page-item" th:if="${postPage.page > 1} and ${keyword}"><a class="page-link"  th:href="@{${url }(keyword=${keyword},page=1, sort=${postPage.sort})}" title="처음"><i class='fas fa-angle-double-left'></i></a></li>
+
+
 
             <!--/* < 표시 여부 */-->
-            <li class="page-item" th:if="${postPage.startPage > 1 }"><a class="page-link" th:href="@{${url }(page=${postPage.startPage - 1 })}"><i class='fas fa-angle-left'></i></a></li>
+            <li class="page-item" th:if="${postPage.startPage > 1 }" th:unless="${keyword}"><a class="page-link" th:href="@{${url }(page=${postPage.startPage - 1 })}"><i class='fas fa-angle-left'></i></a></li>
+            <li class="page-item" th:if="${postPage.startPage > 1 } and ${keyword}"><a class="page-link" th:href="@{${url }((keyword=${keyword},page=${postPage.startPage - 1 })}"><i class='fas fa-angle-left'></i></a></li>
+
 
             <!--/* 페이징 안의 '숫자' 표시 */-->
             <th:block th:if="${postPage.totalPage > 1 }">
                 <th:block th:each="k: ${#numbers.sequence(postPage.startPage, postPage.endPage)}">
                     <!-- sequence 해당페이지들 순환-->
-                    <li class="page-item" th:unless="${k == postPage.page }"><a class="page-link" th:href="@{${url}(page=${k}, sort=${postPage.sort})}" th:text="${k}"></a></li>
-                    <li class="page-item active" th:if="${k == postPage.page }"><a class="page-link" href="javascript:void(0);" th:text="${k}"></a></li>
+
+                    <th:block th:unless="${keyword}">
+                        <li class="page-item" th:unless="${k == postPage.page }"><a class="page-link" th:href="@{${url}(page=${k}, sort=${postPage.sort})}" th:text="${k}"></a></li>
+                        <li class="page-item active" th:if="${k == postPage.page }"><a class="page-link" href="javascript:void(0);" th:text="${k}"></a></li>
+                    </th:block>
+                    <th:block th:if="${keyword}">
+                        <li class="page-item" th:unless="${k == postPage.page }"><a class="page-link" th:href="@{${url}(keyword=${keyword},page=${k}, sort=${postPage.sort})}" th:text="${k}"></a></li>
+                        <li class="page-item active" th:if="${k == postPage.page }"><a class="page-link" href="javascript:void(0);" th:text="${k}"></a></li>
+                    </th:block>
                 </th:block>
             </th:block>
 
             <!--/* > 표시 여부 */-->
-            <li class="page-item" th:if="${postPage.totalPage > postPage.endPage }"><a class="page-link" th:href="@{${url }(page=${postPage.endPage + 1 })}"><i class='fas fa-angle-right'></i></a></li>
+            <li class="page-item" th:if="${postPage.totalPage > postPage.endPage }" th:unless="${keyword}"><a class="page-link" th:href="@{${url }(page=${postPage.endPage + 1 })}"><i class='fas fa-angle-right'></i></a></li>
+            <li class="page-item" th:if="${postPage.totalPage > postPage.endPage } and ${keyword}"><a class="page-link" th:href="@{${url }((keyword=${keyword},page=${postPage.endPage + 1 })}"><i class='fas fa-angle-right'></i></a></li>
 
             <!--/* >> 표시 여부 */-->
-            <li class="page-item" th:if="${postPage.page < postPage.totalPage }"><a class="page-link" th:href="@{${url }(page=${postPage.totalPage },sort=${postPage.sort})}"><i class='fas fa-angle-double-right'></i></a></li>
+            <!-- 키워드가 존재하지 않으면 표시 -->
+            <li class="page-item" th:if="${postPage.page < postPage.totalPage }" th:unless="${keyword}"><a class="page-link" th:href="@{${url }(page=${postPage.totalPage },sort=${postPage.sort})}"><i class='fas fa-angle-double-right'></i></a></li>
+            <!-- 키워드가 존재하면  표시 -->
+            <li class="page-item" th:if="${postPage.page < postPage.totalPage } and ${keyword}"><a class="page-link" th:href="@{${url }(keyword=${keyword},page=${postPage.totalPage },sort=${postPage.sort})}"><i class='fas fa-angle-double-right'></i></a></li>
 
         </ul>
     </div>

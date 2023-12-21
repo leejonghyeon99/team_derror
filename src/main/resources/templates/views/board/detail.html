@@ -7,14 +7,7 @@
     alert("해당 정보가 삭제되거나 없습니다")
     history.back();
 </script>
-<script th:inline="javascript">
-    // 나중에 댓글 작성시 필요.
-    const post_id = [[${post.id}]];
-    const logged_id = /*[[${#authentication.principal.member.id}]]*/ 0;
-    let commentCnt = /*[[${commentCnt}]]*/ 0;
-</script>
 
-<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.member}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,8 +23,19 @@
     <title>조회 - [[${post.title}]]</title>
 </head>
 
+<script th:inline="javascript">
+    // 나중에 댓글 작성시 필요.
+    const post_id = [[${post.id}]];
+    const logged_id = /*[[${#authentication.principal.member.id}]]*/ 0;
+    let commentCnt = /*[[${commentCnt}]]*/ 0;
+</script>
+
+<th:block th:if="${post}" th:with="logged_user=${#authentication.principal.member}">
+
 <body>
 <th:block th:insert="~{common/sidebar::sidebar}"/>
+
+
 
 <form name="frmDelete" th:action="@{/board/delete}" method="post">
     <input type="hidden" name="postId" th:value="${post.id}">
@@ -51,6 +55,10 @@
                <hr>
                <div class="post-body" th:utext="${post.content}">
 
+
+               </div>
+               <div class="img-list"  th:each="file : ${post.fileList}">
+                   <img th:if="${file.image}" th:src="@{/upload/__${file.filename}__}" th:alt="${file.id}" />
                </div>
                <div class="post-body-bottom">
                    <img class="user-logo" th:src="@{/upload/thumbnail/__${post.member.thumbnail_img}__}">
