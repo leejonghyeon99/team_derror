@@ -61,6 +61,8 @@
                <div class="img-list"  th:each="file : ${post.fileList}">
                    <img th:if="${file.image}" th:src="@{/upload/__${file.filename}__}" th:alt="${file.id}" />
                </div>
+
+
                <div class="post-body-bottom">
                    <img class="user-logo" th:src="@{/upload/thumbnail/__${post.member.thumbnail_img}__}">
 <!--                   <div class="post-info">-->
