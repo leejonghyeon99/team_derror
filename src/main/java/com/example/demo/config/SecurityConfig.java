@@ -31,21 +31,21 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
-                .loginPage("/user/login")
-                .loginProcessingUrl("/user/login")
+                .loginPage("/user/sign")
+                .loginProcessingUrl("/user/sign")
                 .defaultSuccessUrl("/")
                 .successHandler(new SuccessHandler("/"))
                 .failureHandler(new FailureHandler())
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
                         .logoutUrl("/user/logout")
-                        .logoutSuccessUrl("/user/login")
+                        .logoutSuccessUrl("/user/sign")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
 
                 )
                 .oauth2Login(httpSecurityOAuth2LoginConfigurer -> httpSecurityOAuth2LoginConfigurer
-                        .loginPage("/user/login")
+                        .loginPage("/user/sign")
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                                 .userService(principalOauth2UserService)
                         )

@@ -69,7 +69,7 @@ public class PostServiceImpl implements PostService {
         post.setMember(member);   // 글 작성자 세팅
 
         int cnt = postMapper.save(post);
-
+        System.out.println("서비스임플"+post.toString());
         // 첨부파일 추가
         addFiles(files, post.getId());
 
@@ -98,7 +98,7 @@ public class PostServiceImpl implements PostService {
                     attachmentRepository.save(file);   // INSERT
                 }
             }
-            Attachment attachment = attachmentRepository.findById(id);
+            List<Attachment> attachment = attachmentRepository.findByPost(id);
 
             if (attachment != null) {
                 System.out.println("ttt");
@@ -432,6 +432,8 @@ public class PostServiceImpl implements PostService {
         Integer pageRows = (Integer) session.getAttribute("pageRows");
         if (pageRows == null) pageRows = PAGE_ROWS;  // 만약 session 에 없으면 기본값으로 동작
 
+        System.out.println("writePages: " + writePages +"/    pageRows: "+pageRows+ "/              sort: " + sort);
+
         // 현재 페이지 번호 -> session 에 저장
         session.setAttribute("page", page);
         session.setAttribute("category", category);
@@ -464,7 +466,11 @@ public class PostServiceImpl implements PostService {
                 model.addAttribute("noSearchResults", true);
 
             } else {
-                list = postMapper.findListByKeyWord(keyword, fromRow, pageRows, category);
+                if (sort.equals("id")) {
+                    list = postMapper.findListByKeyWordForId(keyword,fromRow, pageRows, category);
+                } else {
+                    list = postMapper.findListByKeyWordForViewCnt(keyword,fromRow, pageRows, category);
+                }
             }
 
         } else {

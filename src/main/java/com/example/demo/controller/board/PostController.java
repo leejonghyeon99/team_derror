@@ -2,6 +2,7 @@ package com.example.demo.controller.board;
 
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.PostPage;
+import com.example.demo.domain.board.PostValidator;
 import com.example.demo.domain.board.U;
 import com.example.demo.service.board.CommentService;
 import com.example.demo.service.post.PostService;
@@ -12,10 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +51,8 @@ public class PostController {
             , Model model   // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
             , RedirectAttributes redirectAttrs
     ){
-
         System.out.println("#################################### \n"+post.toString());
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ \n"+ files.toString());
         // validation 에러가 있었다면 redirect 할거다!
         if(result.hasErrors()){
             redirectAttrs.addFlashAttribute("title", post.getTitle());
@@ -99,9 +102,11 @@ public class PostController {
             Model model
     ){
         U.getSession().setAttribute("pageRows",pageRows);
+        U.getSession().setAttribute("keyword",keyword);
         postService.findListByKeyWord(keyword,page,model,category,sort);
-        System.out.println("넘어와?"+keyword+page+model+category+sort);
-
+        model.addAttribute("keyword",U.getSession().getAttribute("keyword"));
+        System.out.println("#######################test KEYWORD: "+keyword+"/ page: "+page+"/ pageRows: "+pageRows+"/ sort: "+sort);
+        System.out.println("###################session Key : "+ U.getSession().getAttribute("keyword"));
         return "board/"+category;
     }
 
@@ -145,6 +150,15 @@ public class PostController {
     public String deleteOk(Long postId, Model model){
         int result = postService.deleteById(postId);
         model.addAttribute("result", result);
+        model.addAttribute("category", U.getSession().getAttribute("category"));
         return "board/deleteOk";
     }
+
+//    @InitBinder
+//    public void initBinder(WebDataBinder binder){
+//        System.out.println("initBinder() 호출");
+//        binder.setValidator(new PostValidator());
+//    }
+
+
 }

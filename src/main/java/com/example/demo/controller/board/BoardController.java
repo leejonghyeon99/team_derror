@@ -149,10 +149,6 @@ public class BoardController {
         return "board/deleteOk";
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder){
-        binder.setValidator(new PostValidator());
-    }
 
 
     // 검색창

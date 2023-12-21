@@ -6,8 +6,11 @@
 </script>
 
 <script th:if="${result>0}" th:inline="javascript">
+    const category = [[${category}]];
+
+    // const category = /*[[${category}]]*/
     alert("삭제성공");
-    location.href = `board/[[${category}]]`;
+    location.href = `/board/${category}`;
 </script>
 
 </html>

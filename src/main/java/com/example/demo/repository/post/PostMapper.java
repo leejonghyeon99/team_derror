@@ -30,5 +30,6 @@ public interface PostMapper {
     int countKeyword(String keyword, String category);
 
     // 검색 리스트 불러오기
-    List<Post> findListByKeyWord(String keyword,int from, int rows, String category);
+    List<Post> findListByKeyWordForId(String keyword,int from, int rows, String category);
+    List<Post> findListByKeyWordForViewCnt(String keyword,int from, int rows, String category);
 }
