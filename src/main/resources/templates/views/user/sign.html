@@ -51,7 +51,7 @@
     </form>
   </div>
   <div class="form-container sign-in-container">
-    <form th:action="@{/user/login}" method="POST" id="login-frm">
+    <form th:action="@{/user/sign}" method="POST" id="login-frm">
       <h1>로그인</h1>
       <div class="social-container">
         <a class="social" th:href="@{https://kauth.kakao.com/oauth/authorize(response_type=${'code'}, client_id=${@environment.getProperty('app.oauth2.kakao.client-id')}, redirect_uri=${@environment.getProperty('app.oauth2.kakao.redirect-uri')})}">

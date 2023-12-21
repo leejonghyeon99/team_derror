@@ -34,7 +34,6 @@ $(document).ready(function (){
         });
     });
 
-
     function updateParent(data){
         console.log(data)
         let date = new Date(data.comment.createdDate);

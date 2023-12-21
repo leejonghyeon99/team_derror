@@ -44,8 +44,8 @@
                     <span class="float-end"></span>
                 </div>
                 <!-- serchform -->
-                <div class="serchForm">
-                    <th:block th:insert="~{board/serchform::serchform}"></th:block>
+                <div class="searchForm">
+                    <th:block th:insert="~{board/searchform::searchform}"></th:block>
                 </div>
                 <form name="frmPageRows">
                     <input type="hidden" name="page" th:value="${postPage.page}">
@@ -99,9 +99,9 @@
                     </div>
                 </th:block>
             </div>
+        </div>
             <!-- pagination -->
             <th:block th:insert="~{board/pagination::pagination}"></th:block>
-        </div>
 
     </div>
 </div>
