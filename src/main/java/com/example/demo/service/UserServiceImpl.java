@@ -71,6 +71,16 @@ public class UserServiceImpl implements UserService {
        }
         return 0;
     }
+
+    @Override
+    public int updateById(Long id){
+        Member member = userRepository.findId(id);
+        if(member != null){
+            userRepository.update(member);
+            return 1;
+        }
+        return 0;
+    }
     @Override
     public List<Authority> selectAuthoritiesById(Long id) {
 

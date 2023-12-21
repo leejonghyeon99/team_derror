@@ -38,7 +38,7 @@ public class UserController {
     private PostService postService;
     private MemberValidator memberValidator;
     @Autowired
-    private  HttpSession httpSession;
+    private HttpSession httpSession;
 
 
     @InitBinder
@@ -48,7 +48,7 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService, PostService postService, MemberValidator memberValidator
-                            ) {
+    ) {
         this.userService = userService;
         this.memberValidator = memberValidator;
         this.postService = postService;
@@ -69,6 +69,11 @@ public class UserController {
     @PostMapping("/loginError")
     public String loginError() {
         return "user/sign";
+    }
+
+
+    @GetMapping("/sign")
+    public void sign() {
     }
 
     @GetMapping("/signout")
@@ -118,42 +123,32 @@ public class UserController {
         Member member = userService.findUsername(username);
         model.addAttribute("member", member);
         model.addAttribute("list", list);
-
-
         return "user/detail";
     }
 
-        @PostMapping("/signout")
-        public String removeUser(Model model, HttpServletRequest request, HttpServletResponse response) {
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @PostMapping("/signout")
+    public String removeUser(Model model, HttpServletRequest request, HttpServletResponse response) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
-            if (authentication != null && authentication.isAuthenticated()) {
+        if (authentication != null && authentication.isAuthenticated()) {
 
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                Member member = userService.findUsername(userDetails.getUsername());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Member member = userService.findUsername(userDetails.getUsername());
 
-                if (member != null) {
-                    int result = userService.removeById(member.getId());
-                    new SecurityContextLogoutHandler().logout(request, response, authentication);
-                    model.addAttribute("result", result);
-                    return "/user/signout";
-                }
+            if (member != null) {
+                int result = userService.removeById(member.getId());
+                new SecurityContextLogoutHandler().logout(request, response, authentication);
+                model.addAttribute("result", result);
+                return "/user/signout";
             }
-            return "/user/sign";
         }
+        return "/user/sign";
+    }
 
 
-
-
-
-
-
-
-
-        @GetMapping("/sign")
-        public void sign(){}
 }
 
 

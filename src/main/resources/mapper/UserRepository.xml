@@ -57,8 +57,8 @@
         SET username = #{username}
           , password = #{password}
           , age=#{age}
-          , name     = #{name}
-          , email    = #{email}
+          , name= #{name}
+          , email= #{email}
           , phone=#{phone}
           , auth_id=#{auth_id}
         WHERE id = #{id}
