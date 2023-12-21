@@ -65,6 +65,10 @@
     </foreach> )
         ORDER BY id ASC
     </select>
+    <select id="findFileOne" resultType="com.example.demo.domain.board.Attachment">
+        <include refid="SELECTFILE"/>
+        AND id = #{id}
+    </select>
 
     <delete id="deleteByIds" flushCache="true" parameterType="java.util.ArrayList">
         DELETE FROM attach

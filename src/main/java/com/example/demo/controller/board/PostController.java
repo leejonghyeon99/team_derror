@@ -1,9 +1,7 @@
 package com.example.demo.controller.board;
 
-import com.example.demo.domain.board.Post;
-import com.example.demo.domain.board.PostPage;
-import com.example.demo.domain.board.PostValidator;
-import com.example.demo.domain.board.U;
+import com.example.demo.domain.board.*;
+import com.example.demo.service.board.AttachmentService;
 import com.example.demo.service.board.CommentService;
 import com.example.demo.service.post.PostService;
 import jakarta.validation.Valid;
@@ -33,7 +31,7 @@ public class PostController {
     private CommentService commentService;
 
     @Autowired
-    public PostController(PostService postService, CommentService commentService) {
+    public PostController(PostService postService, CommentService commentService ) {
         this.postService = postService;
         this.commentService = commentService;
     }
@@ -56,8 +54,6 @@ public class PostController {
             , Model model   // 매개변수 선언시 BindingResult 보다 Model 을 뒤에 두어야 한다.
             , RedirectAttributes redirectAttrs
     ){
-        System.out.println("#################################### \n"+post.toString());
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ \n"+ files.toString());
         // validation 에러가 있었다면 redirect 할거다!
         if(result.hasErrors()){
             redirectAttrs.addFlashAttribute("title", post.getTitle());
@@ -161,6 +157,7 @@ public class PostController {
         model.addAttribute("category", U.getSession().getAttribute("category"));
         return "board/deleteOk";
     }
+
 
 
 
