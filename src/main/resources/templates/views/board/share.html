@@ -25,6 +25,7 @@
     <script th:src="@{/js/board/share.js}"></script>
 
 
+
     <!-- 페이지 제목 -->
     <title>공유갤러리</title>
 </head>
@@ -33,12 +34,9 @@
 <!-- 인증 헤더 -->
 <th:block th:insert="~{common/sidebar::sidebar}"/>
 
-<div class="board-content">
+<div class="share-content">
     <div class="container mt-3">
-        <div>
-            <h2 id="share">Share Gallery</h2>
-        </div>
-
+        <div id="share">Share Gallery</div>
         <div class="row">
             <!-- 페이징 헤더 -->
             <div class="board-filter">
@@ -48,8 +46,8 @@
                     <span class="float-end"></span>
                 </div>
                 <!-- serchform -->
-                <div class="serchForm">
-                    <th:block th:insert="~{board/serchform::serchform}"></th:block>
+                <div class="searchForm">
+                    <th:block th:insert="~{board/searchform::searchform}"></th:block>
                 </div>
                 <form name="frmPageRows">
                     <input type="hidden" name="page" th:value="${postPage.page}">
@@ -67,38 +65,36 @@
                 </form>
             </div>
         </div>
-            <!-- 페이징 헤더 -->
+        <!-- 페이징 헤더 -->
 
         <!-- 공유게시판 카드 -->
+
         <div id="shareCards" class="row row-cols-2 row-cols-md-5 g-4">
             <div th:each="post : ${postPage.posts}" class="col">
-                <div class="card h-100">
+                <div class="card h-80">
                     <div class="card-head">
-                    <!-- 썸네일 이미지 -->
+                        <!-- 썸네일 이미지 -->
                         <a th:href="@{'/board/detail/' + ${post.id}}">
 
-                                <div th:with="firstImage=${post.thumbnail}">
-                                    <div>
-                                        <img th:src="@{'/upload/' + ${firstImage}}" class="card-img-top"
-                                             alt="첨부파일">
-                                    </div>
+                            <div th:with="firstImage=${post.thumbnail}">
+                                <div>
+                                    <img th:src="@{'/upload/' + ${firstImage}}" class="card-img-top"
+                                         alt="첨부파일">
                                 </div>
+                            </div>
                         </a>
-                    <!-- 썸네일 이미지 -->
+                        <!-- 썸네일 이미지 -->
                     </div>
                     <div class="card-body">
                         <a th:href="@{'/board/detail/' + ${post.id}}">
                             <h5 class="card-title" th:text="${post.title}">Card title</h5>
                         </a>
-                        <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${post.member.name}">Card
-                            subtitle</h6>
-                        <h6 class="card-subtitle mb-2 text-body-secondary" th:text="${post.viewCnt}">Card
-                            subtitle</h6>
+                        <p id="cardUser" class="card-subtitle mb-2 text-body-secondary" th:text="'작성자: ' + ${post.member.name}"></p>
+                        <p id="cardViewCnt" class="card-subtitle mb-2 text-body-secondary" th:text="'조회수: ' + ${post.viewCnt}"></p>
                     </div>
                     <div class="card-footer">
                         <small class="text-body-secondary"
-                               th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm:ss')}">Card
-                            createdDate</small>
+                               th:text="'작성일자: ' + ${#temporals.format(post.createdDate, 'yyyy-MM-dd')}"></small>
                     </div>
                 </div>
             </div>
@@ -109,7 +105,8 @@
             <div sec:authorize="isAuthenticated()">
                 <th:block sec:authorize="hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')">
                     <div>
-                        <a class="btn btn-primary btn-m" th:href="@{/board/write(category='free')}" id="writeButton">작성</a>
+                        <a class="btn btn-primary btn-m" th:href="@{/board/write(category='share')}"
+                           id="writeButton">작성</a>
                     </div>
                 </th:block>
             </div>
