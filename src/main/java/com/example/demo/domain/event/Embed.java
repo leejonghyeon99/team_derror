@@ -13,4 +13,5 @@ import java.util.List;
 @Builder
 public class Embed {
     private List<Venues> venues;
+    private List<Attractions> attractions;
 }

@@ -5,13 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Embedded {
-    private List<Events> events;
-    private List<EventData> eventData;
+public class Start {
+    private String localDate;
+    private String localTime;
 }
