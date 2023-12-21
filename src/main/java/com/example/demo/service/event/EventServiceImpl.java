@@ -29,8 +29,8 @@ public class EventServiceImpl implements EventService{
 
     // 이벤트 저장
     @Override
-    public EventData save(EventData eventData) {
-        return eventRepository.save(eventData);
+    public void save(EventData eventData) {
+        eventRepository.save(eventData);
     }
 
 

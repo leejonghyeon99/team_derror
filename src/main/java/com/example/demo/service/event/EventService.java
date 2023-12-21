@@ -2,7 +2,6 @@ package com.example.demo.service.event;
 
 import com.example.demo.domain.event.EventData;
 import com.example.demo.domain.event.Events;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -20,6 +19,6 @@ public interface EventService {
     Events getEventById(Events events);
 
     // 이벤트 저장
-    EventData save(EventData eventData);
+    void save(EventData eventData);
 
 }

@@ -19,4 +19,5 @@ public class Venues {
     private Map<String, Integer> upcomingEvents;
     private Map<String, String> country;
     private Map<String, String> location;
+
 }
