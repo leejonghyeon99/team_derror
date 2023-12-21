@@ -3,10 +3,7 @@ package com.example.demo.controller.user;
 import com.example.demo.domain.board.Post;
 import com.example.demo.domain.user.Member;
 import com.example.demo.domain.user.MemberValidator;
-import com.example.demo.repository.PostRepository;
-import com.example.demo.repository.user.UserRepository;
 import com.example.demo.service.UserService;
-import com.example.demo.service.board.BoardService;
 import com.example.demo.service.post.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
