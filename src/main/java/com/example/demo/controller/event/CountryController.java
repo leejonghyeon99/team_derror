@@ -38,7 +38,6 @@ public class CountryController {
 
         eventService.save(eventData);
 
-
         // 성공적인 응답을 클라이언트에 반환
         return ResponseEntity.ok("Data saved successfully");
     }

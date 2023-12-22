@@ -125,6 +125,8 @@ background-color:#000000;
 }
 
 .main-content{
+  margin-left: 40px;
+  margin-top: 50px;
   position: relative;
   padding-left: 60px;
   transition:padding-left 0.2s linear;
