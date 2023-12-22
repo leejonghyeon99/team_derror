@@ -33,8 +33,8 @@ public class SecurityConfig {
                 .formLogin(form -> form
                 .loginPage("/user/sign")
                 .loginProcessingUrl("/user/sign")
-                .defaultSuccessUrl("/")
-                .successHandler(new SuccessHandler("/"))
+                .defaultSuccessUrl("/home")
+                .successHandler(new SuccessHandler("/home"))
                 .failureHandler(new FailureHandler())
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer

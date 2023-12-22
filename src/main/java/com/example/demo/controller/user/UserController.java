@@ -1,9 +1,12 @@
 package com.example.demo.controller.user;
 
+import com.example.demo.config.PrincipalDetails;
 import com.example.demo.domain.board.Post;
+import com.example.demo.domain.event.EventData;
 import com.example.demo.domain.user.Member;
 import com.example.demo.domain.user.MemberValidator;
 import com.example.demo.service.UserService;
+import com.example.demo.service.event.EventService;
 import com.example.demo.service.post.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,22 +35,24 @@ public class UserController {
 
     private UserService userService;
     private PostService postService;
+    private EventService eventService;
     private MemberValidator memberValidator;
     @Autowired
     private HttpSession httpSession;
 
 
-    @InitBinder
+    @InitBinder("member")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(memberValidator);
     }
 
     @Autowired
-    public UserController(UserService userService, PostService postService, MemberValidator memberValidator
+    public UserController(UserService userService, PostService postService, EventService eventService, MemberValidator memberValidator
     ) {
         this.userService = userService;
         this.memberValidator = memberValidator;
         this.postService = postService;
+        this.eventService = eventService;
 
     }
 
@@ -114,12 +119,27 @@ public class UserController {
 
     @GetMapping("/detail")
     public String detail(Principal principal, Model model) {
+        Long loggedId = 0L;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            loggedId = ((PrincipalDetails) userDetails).getId();
+
+        }
         String username = principal.getName();
+        List<EventData> eventData =eventService.getEventsByMemberId(loggedId);
+        System.out.println("authen : " + authentication);
+        System.out.println("loggedId : " + loggedId);
+        System.out.println("eventdata : " + eventData);
         List<Post> list = postService.findByUsername(username);
         Member member = userService.findUsername(username);
         model.addAttribute("member", member);
         model.addAttribute("list", list);
+        model.addAttribute("eventData", eventData);
         return "user/detail";
+
+
     }
 
 

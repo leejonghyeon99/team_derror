@@ -11,8 +11,9 @@
         where master_id = #{id};
     </select>
 
-    <select id="getEvents" resultMap="eventResultMap">
-        SELECT * FROM event_plan;
+    <select id="getEventsByMemberId" parameterType="com.example.demo.domain.event.EventData">
+        SELECT * FROM event_plan
+        where member_id = #{id};
     </select>
 
     <select id="getEventById" parameterType="String" resultMap="eventResultMap">

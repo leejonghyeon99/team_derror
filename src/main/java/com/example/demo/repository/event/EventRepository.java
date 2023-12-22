@@ -11,6 +11,8 @@ import java.util.List;
 public interface EventRepository {
     List<Events> getAllEvents(String id);
     Events getEventById(String id);
+    List<EventData> getEventsByMemberId(Long id);
+
     void save(EventData eventData);
 
 }

@@ -20,7 +20,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.userService = userService;
     }
 
-
+    private Long id;
     private Member member;
 
     public Member getMember() {
@@ -32,7 +32,13 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
         this.member = member;
     }
+    public PrincipalDetails(Long id){
+        this.id = id;
+    }
 
+    public Long getId(){
+        return member.getId();
+    }
     public PrincipalDetails(Member member, Map<String, Object> attributes){
         this.attributes = attributes;
         this.member = member;
@@ -76,6 +82,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public String getUsername() {
         return member.getUsername();
     }
+
 
 
     @Override

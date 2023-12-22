@@ -37,6 +37,9 @@ function closeModal(modalId) {
     modal.classList.remove('show');
 }
 
+function scheduleUpdate(url){
+   window.location.href = url;
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("modalOpen1").addEventListener("click", function () {
