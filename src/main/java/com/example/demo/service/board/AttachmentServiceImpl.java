@@ -1,12 +1,10 @@
 package com.example.demo.service.board;
 
 import com.example.demo.domain.board.Attachment;
-import com.example.demo.repository.AttachmentRepository;
+import com.example.demo.repository.post.AttachmentRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AttachmentServiceImpl implements AttachmentService {

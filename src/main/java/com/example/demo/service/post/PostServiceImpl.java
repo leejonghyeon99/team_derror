@@ -5,8 +5,8 @@ import com.example.demo.domain.board.Post;
 import com.example.demo.domain.board.PostPage;
 import com.example.demo.domain.board.U;
 import com.example.demo.domain.user.Member;
-import com.example.demo.repository.AttachmentRepository;
-import com.example.demo.repository.post.PostMapper;
+import com.example.demo.repository.post.AttachmentRepository;
+import com.example.demo.repository.post.PostRepository;
 import com.example.demo.repository.user.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
@@ -42,14 +42,14 @@ public class PostServiceImpl implements PostService {
     @Value("${app.pagination.write_pages}")
     private int WRITE_PAGES;
 
-    private PostMapper postMapper;
+    private PostRepository postMapper;
     private UserRepository userRepository;
     private AttachmentRepository attachmentRepository;
 
 
     @Autowired
     public PostServiceImpl(SqlSession sqlSession) { // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
-        this.postMapper = sqlSession.getMapper(PostMapper.class);
+        this.postMapper = sqlSession.getMapper(PostRepository.class);
         this.userRepository = sqlSession.getMapper(UserRepository.class);
         this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
     }
