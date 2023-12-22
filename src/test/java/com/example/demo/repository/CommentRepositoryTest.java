@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.domain.board.Comment;
 import com.example.demo.domain.user.Member;
+import com.example.demo.repository.post.CommentRepository;
 import com.example.demo.service.board.CommentService;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
