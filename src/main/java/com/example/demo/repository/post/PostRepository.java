@@ -8,6 +8,8 @@ public interface PostRepository {
 
     int save(Post post);
 
+    int isFile(Long id);
+    int isThumbnail(Long id);
     List<Post> findByUsername(String username);
 
     Post findById(Long id);

@@ -42,21 +42,21 @@ public class PostServiceImpl implements PostService {
     @Value("${app.pagination.write_pages}")
     private int WRITE_PAGES;
 
-    private PostRepository postMapper;
+    private PostRepository postRepository;
     private UserRepository userRepository;
     private AttachmentRepository attachmentRepository;
 
 
     @Autowired
     public PostServiceImpl(SqlSession sqlSession) { // MyBatis 가 생성한 SqlSession 빈(bean) 객체 주입
-        this.postMapper = sqlSession.getMapper(PostRepository.class);
+        this.postRepository = sqlSession.getMapper(PostRepository.class);
         this.userRepository = sqlSession.getMapper(UserRepository.class);
         this.attachmentRepository = sqlSession.getMapper(AttachmentRepository.class);
     }
 
     @Override
     public List<Post> findByUsername(String username) {
-        return postMapper.findByUsername(username);
+        return postRepository.findByUsername(username);
     }
 
     @Override
@@ -68,17 +68,24 @@ public class PostServiceImpl implements PostService {
         member = userRepository.findId(member.getId());
         post.setMember(member);   // 글 작성자 세팅
 
-        int cnt = postMapper.save(post);
+        int cnt = postRepository.save(post);
         System.out.println("서비스임플"+post.toString());
+
         // 첨부파일 추가
         addFiles(files, post.getId());
 
+        // 첨부 파일이 없으면 기본이미지 넣기
+        if(postRepository.isThumbnail(post.getId()) > 0){
+            postRepository.isFile(post.getId());
+        }
         return cnt;
     }
 
     // 특정 글(id) 첨부파일(들) 추가
     private void addFiles(Map<String, MultipartFile> files, Long id) {
+        System.out.println(files);
         if (files != null) {
+            System.out.println(files+"#####################");
             for (var e : files.entrySet()) {
 
                 // name="upfile##" 인 경우만 첨부파일 등록. (이유, 다른 웹에디터와 섞이지 않도록..ex: summernote)
@@ -98,10 +105,10 @@ public class PostServiceImpl implements PostService {
                     attachmentRepository.save(file);   // INSERT
                 }
             }
+
             List<Attachment> attachment = attachmentRepository.findByPost(id);
 
             if (attachment != null) {
-                System.out.println("ttt");
                 //첫번째 이미지를 썸네일 설정
                 attachmentRepository.updateForThumbnail(id);
             }
@@ -114,7 +121,9 @@ public class PostServiceImpl implements PostService {
 
         // 담긴 파일이 없으면 pass
         String originalFilename = multipartFile.getOriginalFilename();
-        if (originalFilename == null || originalFilename.length() == 0) return null;
+        if (originalFilename == null || originalFilename.length() == 0){
+            return null;
+        }
 
         // 원본파일명
         String sourceName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -169,8 +178,8 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional  // 이 메소드는 '트랜잭션' 처리
     public Post detail(Long id) {
-        postMapper.viewCntUpdate(id);
-        Post post = postMapper.findById(id);
+        postRepository.viewCntUpdate(id);
+        Post post = postRepository.findById(id);
 
         if (post != null) {
             // 첨부파일(들) 정보 가져오기
@@ -185,7 +194,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findById(Long id) {
-        Post post = postMapper.findById(id);
+        Post post = postRepository.findById(id);
 
         if (post != null) {
             // 첨부파일 정보 가져오기
@@ -234,7 +243,7 @@ public class PostServiceImpl implements PostService {
         session.setAttribute("category", category);
         session.setAttribute("sort", sort);
 
-        long cnt = postMapper.countAll(category);   // 글 목록 전체의 개수
+        long cnt = postRepository.countAll(category);   // 글 목록 전체의 개수
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);   // 총 몇 '페이지' ?
 
         // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
@@ -257,9 +266,9 @@ public class PostServiceImpl implements PostService {
             if (endPage >= totalPage) endPage = totalPage;
 
             if (sort.equals("id")) {
-                list = postMapper.listByRecent(fromRow, pageRows, category);
+                list = postRepository.listByRecent(fromRow, pageRows, category);
             } else {
-                list = postMapper.listByViewCnt(fromRow, pageRows, category);
+                list = postRepository.listByViewCnt(fromRow, pageRows, category);
             }
 
 
@@ -304,7 +313,7 @@ public class PostServiceImpl implements PostService {
         session.setAttribute("category", category);
         session.setAttribute("sort", sort);
 
-        long cnt = postMapper.countAll(category);   // 글 목록 전체의 개수
+        long cnt = postRepository.countAll(category);   // 글 목록 전체의 개수
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);   // 총 몇 '페이지' ?
 
         // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
@@ -327,9 +336,9 @@ public class PostServiceImpl implements PostService {
             if (endPage >= totalPage) endPage = totalPage;
 
             if (sort.equals("id")) {
-                list = postMapper.listByRecent(fromRow, pageRows, category);
+                list = postRepository.listByRecent(fromRow, pageRows, category);
             } else {
-                list = postMapper.listByViewCnt(fromRow, pageRows, category);
+                list = postRepository.listByViewCnt(fromRow, pageRows, category);
             }
 
 
@@ -357,11 +366,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int update(Post post, Map<String, MultipartFile> files, Long[] delfile) {
-        int result = postMapper.update(post);
+        int result = postRepository.update(post);
 
         // 새로운 첨부파일 추가
         addFiles(files, post.getId());
-
+        // 첨부 파일이 없으면 기본이미지 넣기
+        if(postRepository.isThumbnail(post.getId()) > 0){
+            postRepository.isFile(post.getId());
+        }
         // 삭제할 첨부파일(들) 삭제
         if (delfile != null) {
             for (Long fileId : delfile) {
@@ -400,7 +412,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public int deleteById(Long id) {
         int result = 0;
-        Post post = postMapper.findById(id);  // 존재하는 데이터인지 읽어와보기
+        Post post = postRepository.findById(id);  // 존재하는 데이터인지 읽어와보기
 
         if (post != null) {  // 존재한다면 삭제 진행.
             // 물리적으로 저장된 첨부파일(들) 삭제
@@ -411,7 +423,7 @@ public class PostServiceImpl implements PostService {
                 }
             }
 
-            result = postMapper.delete(id);
+            result = postRepository.delete(id);
         }
         return result;
     }
@@ -439,7 +451,7 @@ public class PostServiceImpl implements PostService {
         session.setAttribute("category", category);
         session.setAttribute("sort", sort);
 
-        long cnt = postMapper.countKeyword(keyword, category);   // 글 목록 전체의 개수
+        long cnt = postRepository.countKeyword(keyword, category);   // 글 목록 전체의 개수
         int totalPage = (int) Math.ceil(cnt / (double) pageRows);   // 총 몇 '페이지' ?
 
         // [페이징] 에 표시할 '시작페이지' 와 '마지막페이지'
@@ -467,9 +479,9 @@ public class PostServiceImpl implements PostService {
 
             } else {
                 if (sort.equals("id")) {
-                    list = postMapper.findListByKeyWordForId(keyword,fromRow, pageRows, category);
+                    list = postRepository.findListByKeyWordForId(keyword,fromRow, pageRows, category);
                 } else {
-                    list = postMapper.findListByKeyWordForViewCnt(keyword,fromRow, pageRows, category);
+                    list = postRepository.findListByKeyWordForViewCnt(keyword,fromRow, pageRows, category);
                 }
             }
 
