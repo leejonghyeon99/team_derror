@@ -1,11 +1,11 @@
-const box = document.getElementById("keyword");
+const box = document.getElementById("prompt");
 const leftDown = document.getElementsByClassName("left-down");
 const leftUp = document.getElementsByClassName("left-up");
 const rightDown = document.getElementsByClassName("right-down");
 const rightUp = document.getElementsByClassName("right-up");
-
 disNone();
 function disNone(){
+    leftUp[0].style.display ='none';
     leftUp[0].style.display = 'none';
     leftDown[0].style.display = 'none';
     leftDown[1].style.display = 'none';
