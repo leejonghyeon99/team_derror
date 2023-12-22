@@ -1,14 +1,12 @@
 INSERT INTO authority (id,name) VALUES (1,'ROLE_USER'), (2,'ROLE_ADMIN');
+INSERT INTO event_plan
 select * from authority;
 select * from member;
-
-select * from attach;
-
-
 select * from post;
-select * from event_plan;
-update member set auth_id = 2 where id = 3;
-
+select * from event_plan order by id desc;
+desc event_plan;
+alter table event_plan drop column master_id;
+alter table event_plan add column master_id varchar(50);
 
 alter table member add column thumbnail_img varchar(200) default 'default_thumbnail.png';
 alter table post add column thumbnail varchar(200) default 'default.jpg';
@@ -37,5 +35,4 @@ select * from post;
 select * from post where post.member_id in (3,4,5);
 SELECT count(distinct p.id) FROM member m join post p on m.auth_id = 2 and p.title like concat('%','권','%');
 
-
-
+select * from event_plan;

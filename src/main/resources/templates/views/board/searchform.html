@@ -3,14 +3,13 @@
 
 <th:block th:fragment="searchform">
 
-    <form id="searchKeyword" th:action="@{'/board/' + ${postPage.category} + '/search'}"  method="GET">
+    <form id="searchKeyword" th:action="@{'/board/' + ${postPage.category} + '/search'}" method="GET">
         <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
+        <input type="hidden" name="category" th:value="${category}">
         <button type="submit" id="searchButton"><i class="bi bi-search-heart"></i></button>
-        <button type="button" id="refreshButton" >
-            <a th:if="${session.category} eq notice" th:href="@{/board/notice(page=${session.page})}"></a>
-            <a th:if="${session.category} eq free" th:href="@{/board/free(page=${session.page})}"></a>
-            <a th:if="${session.category} eq share" th:href="@{/board/share(page=${session.page})}"></a>
-            <i class="bi bi-arrow-clockwise"></i></button>
+        <button type="button" id="refreshButton">
+            <i class="bi bi-arrow-clockwise"></i>
+        </button>
     </form>
 
     <div th:if="${noSearchResults}" id="noSearchResults" data-no-search-results="true"></div>

@@ -25,9 +25,8 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 
     @Override
-    public Attachment findListById(Long id) {
-        List<Attachment> fileList = attachmentRepository.findByPost(id);
-        return fileList.get(0);
+    public Attachment findOne(Long id) {
+        return attachmentRepository.findFileOne(id);
     }
 
 }

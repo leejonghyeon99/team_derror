@@ -5,7 +5,6 @@ body{
     color: white;
     padding: 20px;
     font-family: 'Arial', sans-serif;
-    text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 0; /* body의 기본 마진 제거 */
 }

@@ -35,9 +35,10 @@ public class AttachmentController {
     // '직접' Response data를 구성
     @RequestMapping("/board/download")
     public ResponseEntity<Object> dowload(Long id){
+        System.out.println("id: "+id);
         if(id== null)return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); // 400
 
-        Attachment file = attachmentService.findById(id);
+        Attachment file = attachmentService.findOne(id);
         if(file == null) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);    //  404
 
         String sourceName = file.getSourcename();   // 원본이름

@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Map;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Embedded {
-    private List<Events> events;
-    private List<EventData> eventData;
+public class Classifications {
+    private Map<String, String> segment;
+    private Map<String, String> genre;
+    private Map<String, String> subGenre;
 }

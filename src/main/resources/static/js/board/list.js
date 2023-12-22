@@ -44,6 +44,22 @@ $(function () {
         }
     });
 
+    $('#refreshButton').click(function() {
+        var category = $('[name="category"]').val();
+        var redirectUrl = '';
+
+        // 카테고리에 따라 다른 URL로 리다이렉트
+        if (category === 'notice') {
+            redirectUrl = '/board/notice';
+        } else if (category === 'free') {
+            redirectUrl = '/board/free';
+        } else if (category === 'share') {
+            redirectUrl = '/board/share';
+        }
+
+        // 첫 페이지로 이동
+        window.location.href = redirectUrl;
+    });
 
 
 

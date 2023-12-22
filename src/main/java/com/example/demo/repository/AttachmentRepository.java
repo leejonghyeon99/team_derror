@@ -33,6 +33,8 @@ public interface AttachmentRepository {
     // 특정 첨부파일(id) 한개 SELECT
     Attachment findById(Long id);
 
+    Attachment findFileOne(Long id);
+
     // 선택된 첨부파일들 DELETE
     // 글 '수정' 단계에서 사용
     int deleteByIds(Long [] ids);
