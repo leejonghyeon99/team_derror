@@ -4,7 +4,7 @@ import com.example.demo.domain.board.Comment;
 import com.example.demo.domain.board.QryCommentList;
 import com.example.demo.domain.board.QryResult;
 import com.example.demo.domain.user.Member;
-import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.post.CommentRepository;
 import com.example.demo.repository.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
@@ -13,9 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Slf4j
