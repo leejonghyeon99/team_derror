@@ -19,6 +19,4 @@ public class OpenAiController {
     @GetMapping("/main")
     public void main(){}
 
-    @GetMapping("/chat")
-    public void chat(){}
 }

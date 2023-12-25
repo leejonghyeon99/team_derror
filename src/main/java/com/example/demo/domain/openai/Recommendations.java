@@ -17,9 +17,9 @@ public class Recommendations {
     private String countryCode;
     private String city;
     private String place;
+    private String address;
     private String longitude;
     private String latitude;
     private String detail;
     private List<Language> languages;
-    private Warn warn;
 }

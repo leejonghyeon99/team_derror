@@ -41,6 +41,14 @@ public class OpenAiRestController {
         return new ResponseEntity<>(service.chat(prompt),HttpStatus.OK);
     }
 
+    @GetMapping("/recommend")
+    public ResponseEntity<Sight> test(
+            String prompt
+    ){
+        System.out.println(prompt);
+        return new ResponseEntity<>(service.getSightJson(prompt),HttpStatus.OK);
+    }
+
 
 
 }

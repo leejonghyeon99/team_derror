@@ -1,0 +1,10 @@
+.cat-box{
+    position: relative;
+    width: 550px;
+}
+
+.cat{
+    position: absolute;
+    width: 100%;
+    left: 30%;
+}

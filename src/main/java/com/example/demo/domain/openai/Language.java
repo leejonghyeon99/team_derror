@@ -5,5 +5,4 @@ import lombok.Data;
 @Data
 public class Language {
     private String language ;
-    private String rate;
 }
