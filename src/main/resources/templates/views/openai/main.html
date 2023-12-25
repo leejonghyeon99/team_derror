@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/bea2d0bd17.js" crossorigin="anonymous"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+            key: "AIzaSyAqcohoRqpDKerLz1FpanyQihPZsy5p7f0",
+            v: "weekly",
+            language: "ko",
+        });
+    </script>
+
+
+    <link rel="stylesheet" th:href="@{/css/common/side.css}">
+    <link rel="stylesheet" th:href="@{/css/openai/main.css}">
+    <link rel="stylesheet" th:href="@{/css/openai/cat.css}">
+
+    <script th:src="@{/js/common/side.js}"></script>
+    <script th:src="@{/js/openai/sub.js}"></script>
+    <script th:src="@{/js/openai/calender.js}"></script>
+    <script th:src="@{/js/openai/chat.js}"></script>
+    <script th:src="@{/js/openai/cat.js}"></script>
+
+    <title>도우미</title>
+</head>
+<body>
+
+<th:block th:insert="~{common/sidebar::sidebar}"/>
+
+    <div class="container">
+
+        <div class="content-box">
+
+            <div id="content">
+                <div class="watermark"><p>D.Error</p></div>
+
+                <div class="chat-box cat-chat">
+                    <h3>모젤 강 계곡</h3>
+                    <p>독일</p>
+                    <p>베른카스텔-쿠에스</p>
+                    <p>모젤 강 계곡, 베른카스텔-쿠에스, 독일</p>
+                    <p>모젤 강 계곡은 독일 서부에 위치한 아름다운 포도밭과 강이 어우러진 관광 하이라이트로, 특히 베른카스텔-쿠에스 지역은 중세 시대부터 이어진 마을의 정취와 아름다운 자연 풍경이 조화를 이뤄 방문객들에게 잊지 못할 경험을 제공합니다. 와인 애호가라면 지역 특산품인 리슬링 와인을 맛보기에도 좋습니다.</p>
+                    <p>사용언어</p><p>독일어</p>
+                </div>
+            </div>
+
+            <div class="prompt-frm">
+                <label class="icon-label" for="prompt">
+                    <i class="fa-solid fa-pencil"></i>
+                    <input type="text" id="prompt">
+                </label>
+            </div>
+        </div>
+        <div class="calender-box">
+            <div id='calendar'></div>
+            <div class="cat-box">
+                <img id="base" class="cat" src="/../../../4k/base.png">
+                <img class="cat left-down" src="/../../../4k/base_0100.png">
+                <img class="cat left-down" src="/../../../4k/base_1000.png">
+                <img class="cat left-up" src="/../../../4k/base_left.png">
+                <img class="cat right-down" src="/../../../4k/base_0001.png">
+                <img class="cat right-down" src="/../../../4k/base_0010.png">
+                <img class="cat right-up" src="/../../../4k/base_right.png">
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>
+
