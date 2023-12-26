@@ -27,7 +27,7 @@ public class SecurityConfig {
                         .requestMatchers("/board/detail/**","/openai/**").authenticated()
                         .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**",
                                 "/countryinfo/search/**"
-                                ,"/airandhotel/hotel/**","/airandhotel/airport/**", "/openai/api/**").hasAnyRole("USER","ADMIN")
+                                ,"/airandhotel/hotel/**","/airandhotel/airport/**", "/calendar","/openai/api/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form

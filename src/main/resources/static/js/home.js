@@ -11,7 +11,7 @@ function startSlideshow() {
     });
 
     // 슬라이드쇼 시작 코드는 그대로 유지
-    var displayTime = 5000; // 5초
+    var displayTime = 1500; // 2초
     var transitionTime = 1000; // 1초
 
     setInterval(function () {
