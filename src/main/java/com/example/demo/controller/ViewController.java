@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController {
 
     @RequestMapping("/")
-    public String main(){return "index";}
+    public String main(){return "home";}
 
     @RequestMapping("/home")
     public String home(){return "home";}

@@ -21,8 +21,8 @@
     </select>
 
     <insert id="save" parameterType="com.example.demo.domain.event.Events">
-        INSERT INTO event_plan (master_id, title, member_id, created_date, national)
-        VALUES (#{master_id}, #{title}, #{member_id}, #{created_date}, #{national})
+        INSERT INTO event_plan (master_id, title, member_id, created_date, national, thumbnail)
+        VALUES (#{master_id}, #{title}, #{member_id}, #{created_date}, #{national}, #{thumbnail})
     </insert>
 
 </mapper>
