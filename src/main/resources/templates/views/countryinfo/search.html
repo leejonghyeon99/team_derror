@@ -76,6 +76,7 @@
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
+
                 const embedded = data._embedded;
                 const events = embedded.events;
 
@@ -90,7 +91,7 @@
                 // 이벤트 목록과 페이지를 로컬 스토리지에 저장
                 localStorage.setItem('data', JSON.stringify(data));
 
-                // 1시간 후에 세션 스토리지에서 'data' 키에 해당하는 데이터 제거
+                // 1시간 후에 로컬 스토리지에서 'data' 키에 해당하는 데이터 제거
                 setTimeout(() => {
                     localStorage.removeItem('data');
                 }, 3600000); // 1시간
@@ -107,8 +108,10 @@
     // 도시가 변경되었을 때 호출되는 함수
     function onCityChange() {
         const selectedCity = document.getElementById('city').value;
+        const classificationName = document.getElementById('classification').value;
         // 도시가 변경되면 이벤트 목록을 다시 불러옴
-        fetchEventList(selectedCity, 0)
+        fetchEventList(selectedCity, currentPage, classificationName)
+        console.log(fetchEventList)
     };
     function cityDropdown(cityNames) {
             const city = document.getElementById('city');
@@ -129,9 +132,11 @@
     }
 
     // 이벤트 목록을 불러와서 화면에 표시하는 함수
-    function fetchEventList(selectedCity, targetPage, classificationName) {
+    function fetchEventList(selectedCity, targetPage) {
         const countryCode = document.getElementById('countryCode').value;
+        const classificationName = document.getElementById('classification').value;
         const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}&city=${selectedCity}`;
+        console.log(classificationName);
         // API 요청
         fetch(apiUrl)
             .then(response => response.json())
@@ -254,8 +259,6 @@
         }
 
 </script>
-<link rel="stylesheet" th:href="@{/css/sidebar.css}">
-<script th:src="@{/js/sidebar.js}"></script>
 </body>
 </html>
 
