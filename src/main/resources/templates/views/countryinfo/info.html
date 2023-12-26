@@ -123,7 +123,6 @@
 <div id="longitude" style="display: none" th:text="${loc.location.longitude}"></div>
 
 <script defer="defer">
-
     // 일정 추가 버튼에 이벤트 리스너 추가
     document.getElementById('addEventButton').addEventListener('click', function () {
         const thumbnailElement = document.getElementById('thumbnail');
@@ -135,7 +134,7 @@
             national: document.getElementById('national').getAttribute('national'),
             thumbnail: thumbnailElement.getAttribute('src'),  // 이미지 URL (조건에 맞는 첫 번째 이미지)
         };
-        console.log("check: ", eventData)
+        // console.log("check: ", eventData)
 
         // 데이터베이스에 저장할 데이터
             saveEventDatabase(eventData);
@@ -143,7 +142,7 @@
 
     // 데이터를 데이터베이스에 저장하는 함수
     function saveEventDatabase(eventData) {
-        console.log(JSON.stringify(eventData));
+        // console.log(JSON.stringify(eventData));
         // AJAX 또는 Fetch API를 사용하여 데이터를 백엔드로 전송
         fetch(`/countryinfo/info`, {
             method: 'POST',

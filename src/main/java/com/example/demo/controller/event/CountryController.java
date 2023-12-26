@@ -55,10 +55,6 @@ public class CountryController {
 
     @GetMapping("/search")
     public void search(Model model) {
-        String apiUrl = API_BASE_URL;
-
-        RestTemplate restTemplate = new RestTemplate();
-        Countryinfo countryinfo = restTemplate.getForObject(apiUrl, Countryinfo.class);
 
         Map<String, String> codeMap = Arrays.stream(CountryCode.values()).collect(
                 HashMap::new,
@@ -71,14 +67,6 @@ public class CountryController {
                 HashMap::putAll
         );
 
-        List<String> cityNames = countryinfo.getEmbedded().getEvents().stream()
-                // flatMap 각 이벤트의 장소들을 하나의 스트림으로 만듬
-                .flatMap(event -> event.getEmbed().getVenues().stream()
-                        .map(venue -> venue.getCity().getName()))
-                .distinct() // 중복된 도시 이름 제거
-                .collect(Collectors.toList());
-
-        model.addAttribute("citys", cityNames);
         model.addAttribute("codes", codeMap);
         model.addAttribute("classifications", classMap);
     }; // end search

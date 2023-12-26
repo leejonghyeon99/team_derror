@@ -1,7 +1,6 @@
 let currentPage = 1;
 let totalPages;
 function getEventInformation(targetPage) {
-    document.getElementById('city').style.display = 'inline-block';
     const countryCode = document.getElementById('countryCode').value;
     const classificationName = document.getElementById('classification').value;
     const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}`;
@@ -16,17 +15,8 @@ function getEventInformation(targetPage) {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            const embedded = data._embedded;
-            const events = embedded.events;
-
-            // 이벤트 목록에 있는 도시 이름 가져오기
-            const cityNames = events.flatMap(event => event._embedded.venues.map(venue => venue.city.name))
-            // 중복된 도시 이름 제거 (filter 사용)
-            const uniqueCityNames = cityNames.filter((cityName, index, array) => array.indexOf(cityName) === index);
-
-            cityDropdown(uniqueCityNames);
-
             list(data)
+
             // 이벤트 목록과 페이지를 로컬 스토리지에 저장
             localStorage.setItem('data', JSON.stringify(data));
 
@@ -35,8 +25,6 @@ function getEventInformation(targetPage) {
                 localStorage.removeItem('data');
             }, 3600000); // 1시간
 
-            // 이벤트 목록을 다시 불러오는 함수 호출
-            fetchEventList(countryCode, targetPage, classificationName);
         })
         .catch(error => {
             console.error('데이터를 가져오는 중 오류 발생:', error);
@@ -44,56 +32,11 @@ function getEventInformation(targetPage) {
 
 } // end getEventInformation
 
-// 도시가 변경되었을 때 호출되는 함수
-function onCityChange() {
-    const selectedCity = document.getElementById('city').value;
-    // 도시가 변경되면 이벤트 목록을 다시 불러옴
-    fetchEventList(selectedCity, 0)
-};
-function cityDropdown(cityNames) {
-    const city = document.getElementById('city');
-    city.innerHTML = ''; // 기존 옵션을 지움
-
-    // 도시 드롭다운을 가져온 도시 이름으로 채움
-    for (const cityName of cityNames) {
-        const option = document.createElement('option');
-        option.text = cityName;
-        city.add(option);
-    }
-    // 도시 선택란에 변경 이벤트 추가
-    city.addEventListener('change', function() {
-        // 도시를 선택했을 때 실행할 로직을 여기에 추가
-        // 예: 선택한 도시에 대한 이벤트 목록을 가져오는 등
-        console.log('선택된 도시:', this.value);
-    });
-}
-
-// 이벤트 목록을 불러와서 화면에 표시하는 함수
-function fetchEventList(selectedCity, targetPage, classificationName) {
-    const countryCode = document.getElementById('countryCode').value;
-    const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}&city=${selectedCity}`;
-    // API 요청
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            list(data)
-        })
-
-        .catch(error => {
-            console.error('데이터를 가져오는 중 오류 발생:', error);
-        });
-}
-
 function list(data) {
     const embedded = data._embedded;
     const events = embedded.events;
-    const page = data.page.number;
     totalPages = data.page.totalPages;
 
-    console.log("embedded :", embedded);
-    console.log("events :", events);
-    console.log(totalPages);
-    console.log(page)
 
     const resultElement = document.getElementById('result');
     let htmlString = `<div class="card-container row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">`
@@ -166,7 +109,6 @@ window.onload = function () {
     window.addEventListener('beforeunload', function () {
         // 로컬 스토리지에서 'data' 키에 해당하는 데이터 제거
         localStorage.removeItem('data');
-        //localStorage.removeItem('timestamp');
     });
 };
 
@@ -180,15 +122,17 @@ function redirectToLoadInfo(clickedElement) {
         return;
     }
     // 콘솔에 이벤트 ID 출력
-    console.log(eventId);
+
     // .getDetailEvent 클래스를 가진 하위 폼 찾기
     const detailEventForm = clickedElement.querySelector('.getDetailEvent');
+
     // 폼이 존재하는지 확인
     if (!detailEventForm) {
         console.error('.getDetailEvent 클래스를 가진 폼을 찾을 수 없습니다.');
         return;
     }
     getEventInformation(currentPage - 1);
+
     // 폼 서브밋
     detailEventForm.submit();
 }
