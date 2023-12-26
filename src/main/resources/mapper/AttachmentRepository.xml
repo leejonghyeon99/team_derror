@@ -21,12 +21,13 @@
         SET thumbnail = (
             SELECT filename
             FROM attach
-            WHERE post_id = post.id
+            WHERE post_id = post.id AND (filename LIKE '%.jpg' OR filename LIKE '%.jpeg' OR filename LIKE '%.png' OR filename LIKE '%.gif')
             ORDER BY id ASC
             LIMIT 1
         )
         WHERE id = #{id}
     </update>
+
     <update id="updateForThumbnailWhenDelete">
         UPDATE post
         SET thumbnail = IFNULL((
@@ -35,7 +36,7 @@
                WHERE post_id = post.id
                ORDER BY id ASC
                LIMIT 1
-           ), 'defaulta.jpg')
+           ), 'default.jpg')
         where id = #{id}
     </update>
 
@@ -47,7 +48,7 @@
 
     <select id="findById" resultType="com.example.demo.domain.board.Attachment">
         <include refid="SELECTFILE"/>
-        AND post_id = #{id}
+        AND id = #{id}
     </select>
 
     <select id="findByPost" resultType="com.example.demo.domain.board.Attachment">

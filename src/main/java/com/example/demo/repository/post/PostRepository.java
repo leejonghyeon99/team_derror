@@ -10,6 +10,7 @@ public interface PostRepository {
 
     int isFile(Long id);
     int isThumbnail(Long id);
+
     List<Post> findByUsername(String username);
 
     Post findById(Long id);
