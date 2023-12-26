@@ -107,7 +107,7 @@ public class GptServiceImpl implements GptService{
             """;
 
     public Sight getSightJson(String prompt) {
-        OpenAiService service = new OpenAiService(token,Duration.ofSeconds(20));
+        OpenAiService service = new OpenAiService(token,Duration.ofSeconds(25));
 
         CustomChatCompletionRequest completionRequest = getCustomChatCompletionRequest(prompt);
 
