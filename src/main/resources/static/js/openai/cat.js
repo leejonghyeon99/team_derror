@@ -4,6 +4,7 @@ $(document).ready(function (){
     const leftUp = document.getElementsByClassName("left-up");
     const rightDown = document.getElementsByClassName("right-down");
     const rightUp = document.getElementsByClassName("right-up");
+
     disNone();
     function disNone(){
         leftUp[0].style.display ='none';
@@ -60,4 +61,6 @@ $(document).ready(function (){
             rightDown[rnd].style.display = 'none';
         }
     })
+
+
 })
