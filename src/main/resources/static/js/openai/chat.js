@@ -1,7 +1,7 @@
 $(document).ready(function() {
   const content = $("#content");
   const prompt = $("#prompt");
-
+  const textBox = $(".cat-text");
   content.scrollTop(content[0].scrollHeight);
   prompt.on("keydown", function(event) {
     if (event.keyCode == 13 ) {
@@ -28,10 +28,14 @@ $(document).ready(function() {
     });
   }
 
+  function startCatText(){
+    textBox.fadeToggle();
+  }
 
   // 정보
   function infoRequest(prompt) {
     console.log(prompt);
+    let interval = setInterval(startCatText,1000);
     loadingRender();
     $.ajax({
       url: `/openai/api/recommend?prompt=${prompt.val()}`,
@@ -42,6 +46,8 @@ $(document).ready(function() {
         nearInfo(data);
         $(".loading").remove();
         prompt.val("");
+        clearInterval(interval);
+        textBox.hide();
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error('Error:', errorThrown);
