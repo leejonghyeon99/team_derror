@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.openai.OpenaiRepository">
+
+    <resultMap id="recommendMap" type="com.example.demo.domain.openai.Recommendations">
+        <id property="id" column="id"/>
+        <id property="memberId" column="member_id"/>
+        <id property="question" column="question"/>
+        <id property="national" column="national"/>
+        <id property="countryCode" column="country_code"/>
+        <id property="city" column="city"/>
+        <id property="place" column="place"/>
+        <id property="address" column="address"/>
+        <id property="longitude" column="longitude"/>
+        <id property="latitude" column="latitude"/>
+        <id property="language" column="language"/>
+        <id property="detail" column="detail"/>
+        <id property="regDate" column="reg_date"></id>
+
+        <collection property="images" ofType="com.example.demo.domain.openai.OpenAiImg">
+            <id property="id" column="id"/>
+            <id property="openaiId" column="openai_id"/>
+            <id property="filename" column="filename"/>
+        </collection>
+    </resultMap>
+    <insert id="save" parameterType="com.example.demo.domain.openai.Recommendations"
+            flushCache="true" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into openai_log(member_id, question, national, country_code, city, place, address, longitude, latitude, detail, language)
+        values (#{memberId},#{question}, #{national}, #{countryCode}, #{city}, #{place}, #{address}, #{longitude}, #{latitude}, #{detail}, #{language});
+    </insert>
+    <insert id="saveImg" parameterType="com.example.demo.domain.openai.OpenAiImg"
+            flushCache="true" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into openai_img(openai_id, filename) values (#{openaiId},#{filename})
+    </insert>
+
+
+    <select id="findById" resultMap="recommendMap">
+        select * from openai_log a
+                 left join openai_img b on a.id = b.openai_id
+                 where a.member_id = #{id}
+    </select>
+</mapper>
