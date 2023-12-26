@@ -17,6 +17,7 @@ public interface EventService {
 
     // 이벤트 id값
     Events getEventById(Events events);
+    List<EventData> getEventsByMemberId (Long id);
 
     // 이벤트 저장
     void save(EventData eventData);

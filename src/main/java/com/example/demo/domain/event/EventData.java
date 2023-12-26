@@ -18,4 +18,6 @@ public class EventData {
     private String title;
     private String national;
     private String created_date;
+    private String thumbnail;
+
 }

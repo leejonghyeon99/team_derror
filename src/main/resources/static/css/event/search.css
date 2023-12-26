@@ -30,3 +30,8 @@ select::after {
     right: 10px;
     transform: translateY(-50%);
 }
+.event-card {
+    cursor: pointer;
+    margin: 40px;
+    width: 470px;
+}

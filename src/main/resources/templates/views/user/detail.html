@@ -16,33 +16,6 @@
         return confirmMsg;
     }
     </script>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <!-- FullCalendar JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.js"></script>
-
-    <!-- FullCalendar CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.css">
-    <style>
-        /* 일요일 날짜 빨간색 */
-        .fc-day-sun {
-            color: red;
-            text-decoration: none;
-        }
-
-        /* 토요일 날짜 파란색 */
-        .fc-day-sat {
-            color: blue;
-            text-decoration: none;
-        }
-
-        .fc-day:hover {
-            background-color: #f0f0f0; /* 호버 시 배경색 설정 */
-            cursor: pointer; /* 마우스 커서를 포인터로 변경 */
-        }
-
-    </style>
-
     <title>회원정보</title>
 
 </head>
@@ -149,18 +122,16 @@
             <table>
                 <thead>
                 <tr>
-                    <td>이벤트 명 </td>
+                    <td>이벤트 명</td>
                     <td>이벤트 사진</td>
                     <td>이벤트 시작 기간</td>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="post : ${list}">
-                    <td>
-                        <a th:href="@{/board/detail/{postId}(postId=${post.id})}" th:text="${post.title}"></a>
-                    </td>
-                    <td th:text="${post.createdDate}"></td>
-                    <td th:text="${post.viewCnt}"></td>
+                <tr th:each="events : ${eventData}">
+                    <td th:text="${events.title}"></td>
+<!--                    <td th:text="${events.thumbnail}"></td>-->
+                    <td th:text="${events.created_date}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -175,11 +146,63 @@
         </div>
     </div>
     <div class="modal" id="modal2">
+        <div class="modal-content">
+            <h2>일정관리</h2>
+            <div id="allEventsContainer"></div>
+            <script>
+                // 서버로부터 일정 데이터를 받아와서 동적으로 화면에 추가하는 함수
+                function fetchAndRenderEvents() {
+                    $.ajax({
+                        url: '/api/calendar/events', // 일정 데이터를 제공하는 엔드포인트
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            // 받아온 데이터를 이용하여 화면에 일정 목록 추가
+                            renderEvents(data);
+                        },
+                        error: function (error) {
+                            console.error('Error fetching events:', error);
+                        }
+                    });
+                }
 
-        <h2>일정관리</h2>
-        <p>일정내용</p>
-        <input type="button" id="modal2Close" class="close" onclick="closeModal('modal2')" th:value="닫기">
+                // 받아온 일정 데이터를 이용하여 화면에 동적으로 추가하는 함수
+                function renderEvents(events) {
+                    var table = $('<table>').addClass('table table-striped text-center');
 
+                    // Thead 구성
+                    var thead = $('<thead>');
+                    var headerRow = $('<tr>')
+                        .append($('<th>').text('제목'))
+                        .append($('<th>').text('기간'))
+                        .append($('<th>').text('메모'));
+                    thead.append(headerRow);
+                    table.append(thead);
+
+                    // Tbody 구성
+                    var tbody = $('<tbody>');
+
+                    // 받아온 일정 목록을 순회하면서 동적으로 추가
+                    events.forEach(function (event) {
+                        var eventRow = $('<tr>')
+                            .append($('<td>').text(event.title))
+                            .append($('<td>').text(event.startDate + ' ~ ' + event.endDate))
+                            .append($('<td>').text(event.memo));
+
+                        tbody.append(eventRow);
+                    });
+
+                    table.append(tbody);
+
+                    // 기존에 있던 내용을 비우고 테이블을 컨테이너에 추가
+                    $('#allEventsContainer').empty().append(table);
+                }
+
+                fetchAndRenderEvents();
+            </script>
+            <input type="button" id="modal2Close" class="close" onclick="closeModal('modal2')" th:value="닫기">
+            <input type="button" id="scheduleUpdate" onclick="scheduleUpdate('/calendar')" th:value="일정수정">
+        </div>
     </div>
     <div class="modal" id="modal3">
         <div class="modal-content">
@@ -189,10 +212,11 @@
         </div>
     </div>
     <div class="modal" id="modal4">
-
-        <h2>수신알림</h2>
-        <p>수신내용</p>
-        <input type="button" class="close" onclick="closeModal('modal4')" th:value="닫기">
+        <div class="modal-content">
+            <h2>수신알림</h2>
+            <p>수신내용</p>
+            <input type="button" class="close" onclick="closeModal('modal4')" th:value="닫기">
+        </div>
     </div>
 </div>
 </div>

@@ -11,8 +11,9 @@
         where master_id = #{id};
     </select>
 
-    <select id="getEvents" resultMap="eventResultMap">
-        SELECT * FROM event_plan;
+    <select id="getEventsByMemberId" parameterType="com.example.demo.domain.event.EventData">
+        SELECT * FROM event_plan
+        where member_id = #{id};
     </select>
 
     <select id="getEventById" parameterType="String" resultMap="eventResultMap">
@@ -20,8 +21,8 @@
     </select>
 
     <insert id="save" parameterType="com.example.demo.domain.event.Events">
-        INSERT INTO event_plan (master_id, title, member_id, created_date, national)
-        VALUES (#{master_id}, #{title}, #{member_id}, #{created_date}, #{national})
+        INSERT INTO event_plan (master_id, title, member_id, created_date, national, thumbnail)
+        VALUES (#{master_id}, #{title}, #{member_id}, #{created_date}, #{national}, #{thumbnail})
     </insert>
 
 </mapper>

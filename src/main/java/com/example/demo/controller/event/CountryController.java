@@ -38,7 +38,6 @@ public class CountryController {
 
         eventService.save(eventData);
 
-
         // 성공적인 응답을 클라이언트에 반환
         return ResponseEntity.ok("Data saved successfully");
     }
@@ -56,10 +55,6 @@ public class CountryController {
 
     @GetMapping("/search")
     public void search(Model model) {
-        String apiUrl = API_BASE_URL;
-
-        RestTemplate restTemplate = new RestTemplate();
-        Countryinfo countryinfo = restTemplate.getForObject(apiUrl, Countryinfo.class);
 
         Map<String, String> codeMap = Arrays.stream(CountryCode.values()).collect(
                 HashMap::new,
@@ -72,20 +67,11 @@ public class CountryController {
                 HashMap::putAll
         );
 
-        List<String> cityNames = countryinfo.getEmbedded().getEvents().stream()
-                .flatMap(event -> event.getEmbed().getVenues().stream()
-                        .map(venue -> venue.getCity().getName()))
-                .distinct()
-                .collect(Collectors.toList());
-
-        model.addAttribute("citys", cityNames);
-//        model.addAttribute("citys", countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0));
         model.addAttribute("codes", codeMap);
         model.addAttribute("classifications", classMap);
     }; // end search
 
     //https://app.ticketmaster.com/discovery/v2/events?apikey=JVSEuY5G6jkq6i2eYx4EX53D0z5tZz64&locale=*&countryCode=US
-
 
     @GetMapping("/list")
     @ResponseBody
@@ -102,9 +88,9 @@ public class CountryController {
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getAddress().get("line1"));
         System.out.println(countryinfo.getEmbedded().getEvents().get(0).getEmbed().getVenues().get(0).getUpcomingEvents().get("_total"));
 
-
         return countryinfo;
     } // end Event
+
 
     @GetMapping("/info")
     public void info(String eventId, Model model) {

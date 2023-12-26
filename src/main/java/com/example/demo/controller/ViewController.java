@@ -14,4 +14,8 @@ public class ViewController {
 
     @RequestMapping("/home")
     public String home(){return "home";}
+
+    @RequestMapping("/calendar")
+    public String calendar(){return "calendar";}
+
 }

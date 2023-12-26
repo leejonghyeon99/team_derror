@@ -1,0 +1,99 @@
+body {
+    background: linear-gradient(to bottom, #5476dc, #add8e6, #FFA07A);
+    background-size: cover;
+    color: white;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-left: 0px; /* body의 기본 마진 제거 */
+    height: 100%;
+}
+
+#eventModal {
+    color: black;
+}
+
+h3 {
+    font-weight: 700;
+    margin-top: 25px;
+}
+
+/* FullCalendar 날짜 색상 */
+.fc-day {
+    background-color: whitesmoke; /* SkyBlue */
+    color: #333; /* Dark Gray for text */
+}
+
+/* 일요일 날짜 빨간색 */
+.fc-day-sun {
+    color: red;
+}
+
+/* 토요일 날짜 파란색 */
+.fc-day-sat {
+    color: blue;
+}
+
+.fc-day:hover {
+    background-color: #f0f0f0; /* 호버 시 배경색 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+}
+
+/* 일정 목록 테이블 스타일 */
+.table-container {
+    margin: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #007bff; /* 테이블 헤더 배경색 */
+    color: white;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* 짝수 행 배경색 */
+}
+
+/* 일정 목록 제목 셀 스타일 */
+.table .title-cell {
+    font-weight: bold;
+    color: #007bff; /* 제목 색상 */
+}
+
+/* 일정 기간 셀 스타일 */
+.table .date-cell {
+    font-style: italic;
+}
+
+/* 일정 메모 셀 스타일 */
+.table .memo-cell {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 테이블 내용을 가운데 정렬 */
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.table thead {
+    position: sticky;
+    top: 0;
+}
+
+#allEventsContainer {
+    height: 800px;
+    overflow-y: auto;
+    border: 1px solid darkgray;
+}

@@ -27,6 +27,11 @@ public class EventServiceImpl implements EventService{
         return eventRepository.getEventById(events.getId());
     }
 
+    @Override
+    public List<EventData> getEventsByMemberId(Long id){
+        return eventRepository.getEventsByMemberId(id);
+    }
+
     // 이벤트 저장
     @Override
     public void save(EventData eventData) {
