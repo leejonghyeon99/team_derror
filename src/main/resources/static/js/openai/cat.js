@@ -8,7 +8,7 @@ $(document).ready(function (){
     disNone();
     function disNone(){
         leftUp[0].style.display ='none';
-        leftUp[0].style.display = 'none';
+        leftUp[1].style.display = 'none';
         leftDown[0].style.display = 'none';
         leftDown[1].style.display = 'none';
 
@@ -16,6 +16,7 @@ $(document).ready(function (){
         rightDown[0].style.display = 'none';
         rightDown[1].style.display = 'none';
     }
+
 
     const leftKeys = ['KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'Space'];
     const rightKeys = ['KeyU', 'KeyJ', 'KeyN', 'KeyI', 'KeyK', 'KeyM', 'KeyO', 'KeyL', 'KeyP', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period', 'Slash', 'Enter'];
