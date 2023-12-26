@@ -8,7 +8,7 @@ $(document).ready(function (){
     disNone();
     function disNone(){
         leftUp[0].style.display ='none';
-        leftUp[1].style.display = 'none';
+        leftUp[0].style.display = 'none';
         leftDown[0].style.display = 'none';
         leftDown[1].style.display = 'none';
 
