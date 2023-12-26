@@ -1,7 +1,7 @@
 
 body{
     background: linear-gradient(to bottom, #5476dc, #add8e6, #FFA07A);
-    background-size: 100% 100%;
+    background-size: cover;
     color: white;
     padding: 20px;
     font-family: 'Arial', sans-serif;

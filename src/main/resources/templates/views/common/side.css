@@ -28,15 +28,11 @@ ul li {
     top: 0;
     left: 0;
     bottom: 0;
-
-
-    background: gray;
     position: relative;
-
 }
 
 
-.menu, .menu-item,{
+.menu, .menu-item{
     position: absolute;
     display: flex;
     flex-direction: column;
