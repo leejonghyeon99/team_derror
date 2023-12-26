@@ -96,6 +96,10 @@
           AND category = #{category};
     </select>
 
+    <select id="isThumbnail" resultType="java.lang.Integer">
+        select count(*) from post where id = #{id} and thumbnail is null;
+    </select>
+
     <update id="viewCntUpdate" flushCache="true">
         UPDATE post
         SET view_cnt = post.view_cnt + 1
@@ -108,6 +112,11 @@
             content = #{content}
         WHERE id = #{id}
     </update>
+
+    <update id="isFile">
+        update post set thumbnail = 'default.jpg' where id = #{id}
+    </update>
+
 
     <delete id="delete" flushCache="true" parameterType="com.example.demo.domain.board.Post">
         DELETE

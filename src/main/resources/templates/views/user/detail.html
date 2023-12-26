@@ -130,7 +130,9 @@
                 <tbody>
                 <tr th:each="events : ${eventData}">
                     <td th:text="${events.title}"></td>
-<!--                    <td th:text="${events.thumbnail}"></td>-->
+                    <td th:src="${events.thumbnail}">
+                        <img th:src="${events.thumbnail}" style="width: 100px" height="100px">
+                    </td>
                     <td th:text="${events.created_date}"></td>
                 </tr>
                 </tbody>

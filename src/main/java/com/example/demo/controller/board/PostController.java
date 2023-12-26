@@ -38,7 +38,6 @@ public class PostController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        System.out.println("initBinder() 호출");
         binder.setValidator(new PostValidator());
     }
 

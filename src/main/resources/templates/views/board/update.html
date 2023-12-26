@@ -47,7 +47,7 @@
             </div>
 
             <form name="frm" th:action="@{/board/update}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" th:value="${post.id}"/>
+                <input type="hidden" name="id" th:value="${post.id}" id="id"/>
                 <div class="mb-3">
                     <label>작성자:</label>
                     <span class="form-control" th:text="${post.member.name}"></span>
