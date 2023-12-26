@@ -4,7 +4,7 @@ import com.example.demo.domain.board.Post;
 
 import java.util.List;
 
-public interface PostMapper {
+public interface PostRepository {
 
     int save(Post post);
 

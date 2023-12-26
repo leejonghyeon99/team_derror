@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.example.demo.repository.post;
 
 import com.example.demo.domain.board.Attachment;
 
