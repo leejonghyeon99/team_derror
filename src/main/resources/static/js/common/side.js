@@ -6,14 +6,14 @@ $(document).ready(function (){
     const logout = $("#logout");
     const logoutFrm = $("#logout-frm");
 
-// // mainMenu에 대한 이벤트 핸들러 추가
-//     mainMenu.on("mouseover", function() {
-//         mainContent.css("padding-left", "200px");
-//     });
-//
-//     mainMenu.on("mouseout", function() {
-//         mainContent.css("padding-left", "60px");
-//     });
+// mainMenu에 대한 이벤트 핸들러 추가
+    mainMenu.on("mouseover", function() {
+        mainContent.css("padding-left", "200px");
+    });
+
+    mainMenu.on("mouseout", function() {
+        mainContent.css("padding-left", "60px");
+    });
 
 // postlink에 대한 이벤트 핸들러 추가
     postlink.on("mouseover", function() {
