@@ -73,11 +73,10 @@ $(document).ready(function() {
       <p>${rec.city}</p>
       <p>${rec.address}</p>
       <p>${rec.detail}</p>
+      <p>사용언어</p>
+      <p>${rec.language}</p>
     `;
-    html += `<p>사용언어</p>`
-    for (var e of rec.languages) {
-      html += (`<p>${e.language}</p>`);
-    }
+
 
 
     const newChatBox = $("<div></div>").addClass("chat-box cat-chat");
@@ -133,7 +132,7 @@ $(document).ready(function() {
       success: function (response) {
         console.log(response);
         photos = response.places[0].photos;
-        imgRender(photos);
+        imgRender(photos,data.recommendation.id);
 
       },
       error: function (error) {
@@ -143,15 +142,37 @@ $(document).ready(function() {
 
   }
 
-  function imgRender(photos){
+  function imgRender(photos, id){
     let imgUrl;
     console.log(photos)
-
+    let images = [];
+    images.push(id);
     for (let i = 0; i < photos.length; i++) {
       imgUrl = `https://places.googleapis.com/v1/${photos[i].name}/media?key=${apiKey}&maxHeightPx=1920&maxWidthPx=1080`;
+      console.log(imgUrl)
+      images.push(imgUrl);
       $(".cat-chat:last").prepend(`<img src="${imgUrl}">`)
     }
+    saveImage(images);
 
   }
 
+
+  function saveImage(imgUrl){
+
+    $.ajax({
+      url : "/openai/api/saveImages",
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(imgUrl),
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.error(error);
+      }
+    })
+  }
 });

@@ -37,15 +37,20 @@
 
             <div id="content">
                 <div class="watermark"><p>D.Error</p></div>
-
-                <div class="chat-box cat-chat">
-                    <h3>모젤 강 계곡</h3>
-                    <p>독일</p>
-                    <p>베른카스텔-쿠에스</p>
-                    <p>모젤 강 계곡, 베른카스텔-쿠에스, 독일</p>
-                    <p>모젤 강 계곡은 독일 서부에 위치한 아름다운 포도밭과 강이 어우러진 관광 하이라이트로, 특히 베른카스텔-쿠에스 지역은 중세 시대부터 이어진 마을의 정취와 아름다운 자연 풍경이 조화를 이뤄 방문객들에게 잊지 못할 경험을 제공합니다. 와인 애호가라면 지역 특산품인 리슬링 와인을 맛보기에도 좋습니다.</p>
-                    <p>사용언어</p><p>독일어</p>
-                </div>
+                <th:block th:if="${recommend}" th:each="data : ${recommend}">
+                    <div class="chat-box user-chat">
+                        <span th:text="${data.question}"></span>
+                    </div>
+                    <div class="chat-box cat-chat">
+                        <img th:each="img : ${data.images}" th:src="@{/upload/openai/__${img.filename}__}">
+                        <h3 th:text="${data.place}"></h3>
+                        <p th:text="${data.national}"></p>
+                        <p th:text="${data.city}">베른카스텔-쿠에스</p>
+                        <p th:text="${data.address}">모젤 강 계곡, 베른카스텔-쿠에스, 독일</p>
+                        <p th:text="${data.detail}">모젤 강 계곡은 독일 서부에 위치한 아름다운 포도밭과 강이 어우러진 관광 하이라이트로, 특히 베른카스텔-쿠에스 지역은 중세 시대부터 이어진 마을의 정취와 아름다운 자연 풍경이 조화를 이뤄 방문객들에게 잊지 못할 경험을 제공합니다. 와인 애호가라면 지역 특산품인 리슬링 와인을 맛보기에도 좋습니다.</p>
+                        <p>사용언어</p><p th:text="${data.language}"></p>
+                    </div>
+                </th:block>
             </div>
 
             <div class="prompt-frm">
