@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.repository.CalendarRepository">
+
+    <insert id="insert"  parameterType="com.example.demo.domain.Calendar">
+        INSERT INTO calendar (title, start_date, end_date, color, all_day, memo, member_id)
+        VALUES (#{title}, #{startDate}, #{endDate}, #{color}, #{allDay}, #{memo}, #{memberId})
+    </insert>
+
+    <update id="update" parameterType="com.example.demo.domain.Calendar">
+        UPDATE calendar
+        SET title = #{title}, start_date = #{startDate}, end_date = #{endDate},
+            color = #{color}, all_day = #{allDay}, memo = #{memo}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="com.example.demo.domain.Calendar">
+        DELETE FROM calendar WHERE id = #{id}
+    </delete>
+
+    <select id="findById" resultType="com.example.demo.domain.Calendar">
+        SELECT * FROM calendar WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultType="com.example.demo.domain.Calendar">
+        SELECT
+            id,
+            title,
+            start_date "startDate",
+            end_date "endDate",
+            color,
+            all_day "allDay",
+            memo,
+            member_id "memberId"
+        FROM
+            calendar
+        WHERE
+            member_id = #{memberId};
+    </select>
+
+</mapper>

@@ -236,6 +236,7 @@ a:hover {
     padding: 10px;
     max-width: 42%;
     max-height: 70%;
+    height: 70%;
     box-sizing: border-box;
     box-shadow: 0 0 19px rgba(0, 0, 0, 0.3);
 
@@ -256,7 +257,7 @@ a:hover {
     font-size: 16px;
 }
 
-.close {
+.close, #scheduleUpdate {
     color: #aaa;
     font-size: 15px;
     font-weight: bold;
@@ -266,8 +267,13 @@ a:hover {
     max-height: 5%;
 }
 
+#scheduleUpdate {
+    right: 60px;
+}
 .close:hover,
-.close:focus {
+.close:focus,
+#scheduleUpdate:hover,
+#scheduleUpdate:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

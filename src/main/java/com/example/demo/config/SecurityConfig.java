@@ -24,17 +24,17 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/board/detail/**").authenticated()
+                        .requestMatchers("/board/detail/**","/openai/**").authenticated()
                         .requestMatchers("/board/write/**", "/board/update/**", "/board/delete/**",
                                 "/countryinfo/search/**"
-                                ,"/airandhotel/hotel/**","/airandhotel/airport/**").hasAnyRole("USER","ADMIN")
+                                ,"/airandhotel/hotel/**","/airandhotel/airport/**", "/calendar","/openai/api/**").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                 .loginPage("/user/sign")
                 .loginProcessingUrl("/user/sign")
-                .defaultSuccessUrl("/")
-                .successHandler(new SuccessHandler("/"))
+                .defaultSuccessUrl("/home")
+                .successHandler(new SuccessHandler("/home"))
                 .failureHandler(new FailureHandler())
                 )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer

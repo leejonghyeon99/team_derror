@@ -3,14 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/openai/main.css}">
-    <link rel="stylesheet" th:href="@{/css/openai/cat.css}">
-    <link rel="stylesheet" th:href="@{/css/common/side.css}">
-    <script th:src="@{/js/common/side.js}"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/bea2d0bd17.js" crossorigin="anonymous"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     <script>
         (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
             key: "AIzaSyAqcohoRqpDKerLz1FpanyQihPZsy5p7f0",
@@ -18,70 +13,71 @@
             language: "ko",
         });
     </script>
-    <title>Document</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/common/side.css}">
+    <link rel="stylesheet" th:href="@{/css/openai/main.css}">
+    <link rel="stylesheet" th:href="@{/css/openai/cat.css}">
+
+    <script th:src="@{/js/common/side.js}"></script>
+    <script th:src="@{/js/openai/sub.js}"></script>
+    <script th:src="@{/js/openai/calender.js}"></script>
+    <script th:src="@{/js/openai/chat.js}"></script>
+    <script th:src="@{/js/openai/cat.js}"></script>
+
+    <title>도우미</title>
 </head>
 <body>
+
 <th:block th:insert="~{common/sidebar::sidebar}"/>
-<div class="main-content">
 
-    <div id="main" class="main">
-        <div class="container h-100">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-md-6">
-                    <div id="cat-box">
-                        <img id="base" class="cat" th:src="@{/../4k/base.png}">
-                        <img class="cat left-down" th:src="@{/../4k/base_0100.png}">
-                        <img class="cat left-down" th:src="@{/../4k/base_1000.png}">
-                        <img class="cat left-up" th:src="@{/../4k/base_left.png}">
-                        <img class="cat right-down" th:src="@{/../4k/base_0001.png}">
-                        <img class="cat right-down" th:src="@{/../4k/base_0010.png}">
-                        <img class="cat right-up" th:src="@{/../4k/base_right.png}">
+    <div class="container">
+
+        <div class="content-box">
+
+            <div id="content">
+                <div class="watermark"><p>D.Error</p></div>
+                <th:block th:if="${recommend}" th:each="data : ${recommend}">
+                    <div class="chat-box user-chat">
+                        <span th:text="${data.question}"></span>
                     </div>
-                </div>
+                    <div class="chat-box cat-chat">
+                        <img th:each="img : ${data.images}" th:src="@{/upload/openai/__${img.filename}__}">
+                        <h3 th:text="${data.place}"></h3>
+                        <p th:text="${data.national}"></p>
+                        <p th:text="${data.city}">베른카스텔-쿠에스</p>
+                        <p th:text="${data.address}">모젤 강 계곡, 베른카스텔-쿠에스, 독일</p>
+                        <p th:text="${data.detail}">모젤 강 계곡은 독일 서부에 위치한 아름다운 포도밭과 강이 어우러진 관광 하이라이트로, 특히 베른카스텔-쿠에스 지역은 중세 시대부터 이어진 마을의 정취와 아름다운 자연 풍경이 조화를 이뤄 방문객들에게 잊지 못할 경험을 제공합니다. 와인 애호가라면 지역 특산품인 리슬링 와인을 맛보기에도 좋습니다.</p>
+                        <p>사용언어</p><p th:text="${data.language}"></p>
+                    </div>
+                </th:block>
             </div>
-            <div class="row justify-content-center align-items-center">
-                <div id="content-box" class="col-md-6">
-                    <!-- 검색바 -->
-                    <div class="form-inline mb-3">
-                        <div class="input-group">
-                            <input id="keyword" type="text" class="form-control" placeholder="Search...">
-                        </div>
-                    </div>
 
-                    <!-- 이미지 컨테이너 (Carousel) -->
-                    <div id="imageCarousel" class="carousel slide" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <!-- 이미지 슬라이드 -->
-                            <div class="carousel-item active">
-                                <img src="https://placehold.it/500x600" class="d-block w-100" alt="Image 1">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://placehold.it/500x600" class="d-block w-100" alt="Image 2">
-                            </div>
-                            <!-- 추가적인 이미지 슬라이드를 여기에 추가할 수 있습니다 -->
-                        </div>
-                        <!-- 이전/다음 버튼 -->
-                        <a class="carousel-control-prev" href="#imageCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                        <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only"></span>
-                        </a>
-                    </div>
-
-                    <!-- 이미지 정보를 담을 div -->
-                    <div id="place" class="mt-3">
-
-                    </div>
-                </div>
+            <div class="prompt-frm">
+                <label class="icon-label" for="prompt">
+                    <i class="fa-solid fa-pencil"></i>
+                    <input type="text" id="prompt">
+                </label>
+            </div>
+        </div>
+        <div class="calender-box">
+            <div id='calendar'></div>
+            <div class="cat-box">
+                <div class="cat-text">타닥 타닥...</div>
+                <img id="base" class="cat" src="/../../../4k/base.png">
+                <img class="cat left-down" src="/../../../4k/base_0100.png">
+                <img class="cat left-down" src="/../../../4k/base_1000.png">
+                <img class="cat left-up" src="/../../../4k/base_left.png">
+                <img class="cat right-down" src="/../../../4k/base_0001.png">
+                <img class="cat right-down" src="/../../../4k/base_0010.png">
+                <img class="cat right-up" src="/../../../4k/base_right.png">
             </div>
         </div>
     </div>
-</div>
 
-<script th:src="@{/js/openai/cat.js}"></script>
-<script th:src="@{/js/openai/place.js}"></script>
+
+
+
 </body>
 </html>
+

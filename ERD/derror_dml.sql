@@ -1,13 +1,17 @@
 INSERT INTO authority (id,name) VALUES (1,'ROLE_USER'), (2,'ROLE_ADMIN');
-INSERT INTO event_plan
+INSERT INTO event_plan;
+select * from openai_log;
 select * from authority;
 select * from member;
 select * from post;
 select * from event_plan order by id desc;
 desc event_plan;
 
+
 alter table event_plan drop column master_id;
 alter table event_plan add column master_id varchar(50);
+select * from event_plan;
+
 
 alter table member add column thumbnail_img varchar(200) default 'default_thumbnail.png';
 alter table post add column thumbnail varchar(200) default 'default.jpg';
