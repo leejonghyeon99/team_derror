@@ -7,6 +7,7 @@ select * from post;
 select * from event_plan order by id desc;
 desc event_plan;
 
+update member set auth_id = 2 where id =1 ;
 
 alter table event_plan drop column master_id;
 alter table event_plan add column master_id varchar(50);

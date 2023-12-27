@@ -45,13 +45,7 @@
             <input class="w-btn w-btn-skin" type="button" id="modalOpen2" th:value="일정관리">
         </div>
 
-        <div id="modalbtn4">
-            <input class="w-btn w-btn-skin" type="button" id="modalOpen3" th:value="발신알림">
-        </div>
 
-        <div id="modalbtn5">
-            <input class="w-btn w-btn-skin" type="button" id="modalOpen4" th:value="수신알림">
-        </div>
         <form th:action="@{/user/signout}" method="post" onsubmit="return confirmDelete()">
             <button id="memberSignOut" type="submit">회원탈퇴</button>
         </form>
@@ -204,20 +198,6 @@
             </script>
             <input type="button" id="modal2Close" class="close" onclick="closeModal('modal2')" th:value="닫기">
             <input type="button" id="scheduleUpdate" onclick="scheduleUpdate('/calendar')" th:value="일정수정">
-        </div>
-    </div>
-    <div class="modal" id="modal3">
-        <div class="modal-content">
-            <h2>발신알림</h2>
-            <p>발신내용</p>
-            <input type="button" class="close" onclick="closeModal('modal3')" th:value="닫기">
-        </div>
-    </div>
-    <div class="modal" id="modal4">
-        <div class="modal-content">
-            <h2>수신알림</h2>
-            <p>수신내용</p>
-            <input type="button" class="close" onclick="closeModal('modal4')" th:value="닫기">
         </div>
     </div>
 </div>

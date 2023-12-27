@@ -66,7 +66,7 @@ public class GptServiceImpl implements GptService{
 
     /**
      * @Author 이종현
-     * @param prompt
+     * @param prompt 키워드
      * @return
      */
     public List<ChatCompletionChoice> chat(String prompt){
@@ -106,6 +106,11 @@ public class GptServiceImpl implements GptService{
             }
             """;
 
+    /**
+     * @Author 이종현
+     * @param prompt 키워드
+     * @return
+     */
     public Sight getSightJson(String prompt) {
         OpenAiService service = new OpenAiService(token,Duration.ofSeconds(25));
 
@@ -141,6 +146,11 @@ public class GptServiceImpl implements GptService{
 
     }
 
+    /**
+     * @Author 이종현
+     * @param prompt 키워드
+     * @return
+     */
     @NotNull
     private CustomChatCompletionRequest getCustomChatCompletionRequest(String prompt) {
         final List<ChatMessage> messages = new ArrayList<>();
@@ -164,7 +174,10 @@ public class GptServiceImpl implements GptService{
     }
 
 
-
+    /**
+     * @Author 이종현
+     * @param imageUrls 이미지 url 리스트
+     */
     public void saveImagesFromUrls(List<String> imageUrls) {
         List<String> newList = imageUrls.stream().skip(1).collect(Collectors.toList());
         Long id = Long.parseLong(imageUrls.get(0));
@@ -174,6 +187,11 @@ public class GptServiceImpl implements GptService{
         }
     }
 
+    /**
+     * @Author 이종현
+     * @param imageUrl 이미지 url 리스트
+     * @param id 키워드 id
+     */
     private void saveImageFromUrl(String imageUrl, Long id) {
         try {
 
@@ -195,13 +213,11 @@ public class GptServiceImpl implements GptService{
                 openaiRepository.saveImg(openAiImg);
             }
         } catch (IOException e) {
-            e.printStackTrace(); // 오류 처리를 적절히 수행하세요.
+            e.printStackTrace(); 
         }
     }
 
     private String generateUniqueFileName() {
-        // 실제로는 고유한 파일 이름을 생성하거나 추출하는 로직을 구현해야 합니다.
-        // 여기서는 타임스탬프를 파일 이름에 추가하는 예시를 보여줍니다.
         return "image_" + System.currentTimeMillis() + ".jpg";
     }
 
