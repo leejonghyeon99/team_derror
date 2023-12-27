@@ -73,10 +73,6 @@
 
 
                <div class="post-body-bottom">
-                   <img class="user-logo" th:src="@{/upload/thumbnail/__${post.member.thumbnail_img}__}">
-<!--                   <div class="post-info">-->
-<!--                       <a href="#"><strong>[[${post.member.name}]]</strong>님의 게시글 더보기 ></a>-->
-<!--                   </div>-->
                    <div class="crud-btn">
                        <a th:href="@{'/board/update/' + ${post.id}}" th:if="${logged_user.id == post.member.id}"><strong>수정</strong></a>
                        <a th:if="${logged_user.id == post.member.id}" id="btnDel" ><strong>삭제</strong></a>
