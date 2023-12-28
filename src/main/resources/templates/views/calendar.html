@@ -99,7 +99,7 @@
             },
         },
         events: {
-            url: 'http://ec2-43-203-14-14.ap-northeast-2.compute.amazonaws.com/api/calendar/events',
+            url: '/api/calendar/events',
             method: 'GET',
         },
         customButtons: {
@@ -167,7 +167,7 @@
             // 추가
             $.ajax({
                 type: 'POST',
-                url: 'http://ec2-43-203-14-14.ap-northeast-2.compute.amazonaws.com/api/calendar/events/add',
+                url: '/api/calendar/events/add',
                 contentType: 'application/json',
                 data: JSON.stringify(eventData),
                 success: function (response) {
@@ -216,7 +216,7 @@
             // 수정된 데이터를 서버로 전송
             $.ajax({
                 type: "POST",
-                url: "http://ec2-43-203-14-14.ap-northeast-2.compute.amazonaws.com/api/calendar/events/update",
+                url: "/api/calendar/events/update",
                 data: eventData,
                 success: function (response) {
                     alert('일정 수정에 성공했습니다.');
@@ -249,7 +249,7 @@
             if (confirm('일정을 삭제하시겠습니까?')) {
                 $.ajax({
                     type: 'DELETE',
-                    url: 'http://ec2-43-203-14-14.ap-northeast-2.compute.amazonaws.com/api/calendar/events/' + selectedEventId, // 엔드포인트 경로에 /events/ 추가
+                    url: '/api/calendar/events/' + selectedEventId, // 엔드포인트 경로에 /events/ 추가
                     success: function (response) {
                         alert('일정이 삭제되었습니다.');
                         console.log(response);
@@ -289,7 +289,7 @@
     // 서버로부터 일정 데이터를 받아와서 동적으로 화면에 추가하는 함수
     function fetchAndRenderEvents() {
         $.ajax({
-            url: 'http://ec2-43-203-14-14.ap-northeast-2.compute.amazonaws.com/api/calendar/events', // 일정 데이터를 제공하는 엔드포인트
+            url: '/api/calendar/events', // 일정 데이터를 제공하는 엔드포인트
             method: 'GET',
             dataType: 'json',
             success: function (data) {
