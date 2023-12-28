@@ -388,7 +388,7 @@ CREATE TABLE calendar(
                          all_day BOOLEAN DEFAULT TRUE,
                          memo TEXT,
                          member_id BIGINT NOT NULL ,
-                         FOREIGN KEY (member_id) REFERENCES Member(id)
+                         FOREIGN KEY (member_id) REFERENCES member(id)
                      ON DELETE CASCADE
 );
 

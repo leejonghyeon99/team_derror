@@ -17,6 +17,8 @@ select * from openai_img;
 select * from openai_log;
 select * from attach;
 select * from calendar;
+select * from member;
+insert into calendar (title,start_date,color,memo,member_id) values('test','2023-12-28','#228B22','asdasdsadasd',1);
 
 
 -- 기존테이블 삭제
