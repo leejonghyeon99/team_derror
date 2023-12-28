@@ -85,8 +85,9 @@ function updateHotelList(hotels) {
     });
 
     function showHotelDetailsModal(placeId) {
+        console.log(placeId)
         $.ajax({
-            url: `http://43.203.14.14/api/hotel/service/${placeId}`,
+            url: `/api/hotel/service/${placeId}`,
             success: function (data) {
                 showHotelDetailsModalContent(data);
                 console.log(data)
