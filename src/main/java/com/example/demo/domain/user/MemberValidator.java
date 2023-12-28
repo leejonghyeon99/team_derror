@@ -43,8 +43,6 @@ public class MemberValidator implements Validator {
 
             if (!member.getEmail().matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
                 errors.rejectValue("email", "유효한 이메일 주소를 입력하세요.");
-            } else if (userService.existEmail(email)) {
-                errors.rejectValue("email", "이미 존재하는 이메일 입니다");
             }
 
             if (member.getAge() <= 0) {
