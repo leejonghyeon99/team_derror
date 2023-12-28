@@ -167,7 +167,7 @@
             // 추가
             $.ajax({
                 type: 'POST',
-                url: '/api/calendar/events/add',
+                url: 'api/calendar/events/add',
                 contentType: 'application/json',
                 data: JSON.stringify(eventData),
                 success: function (response) {

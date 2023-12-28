@@ -2,6 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.domain.Calendar;
 import com.example.demo.repository.CalendarRepository;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ public class CalendarServiceImpl implements CalendarService {
     public CalendarServiceImpl(SqlSession sqlSession){
         calendarRepository = sqlSession.getMapper(CalendarRepository.class);
     }
+
 
     @Override
     public void addEvent(Calendar calendar) {
