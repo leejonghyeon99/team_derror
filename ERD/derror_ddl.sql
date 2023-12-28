@@ -229,8 +229,7 @@ CREATE TABLE member
     thumbnail_img varchar(300) default 'default_thumbnail.png',
     created_date datetime default now(),
     PRIMARY KEY (id),
-    UNIQUE (username),
-    UNIQUE (email)
+    UNIQUE (username)
 );
 
 
@@ -392,3 +391,5 @@ CREATE TABLE calendar(
                          FOREIGN KEY (member_id) REFERENCES Member(id)
                      ON DELETE CASCADE
 );
+
+INSERT INTO authority (id,name) VALUES (1,'ROLE_USER'), (2,'ROLE_ADMIN');
