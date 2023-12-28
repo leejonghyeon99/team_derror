@@ -3,7 +3,7 @@ let totalPages;
 function getEventInformation(targetPage) {
     const countryCode = document.getElementById('countryCode').value;
     const classificationName = document.getElementById('classification').value;
-    const apiUrl = `http://localhost:8080/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}`;
+    const apiUrl = `http://43.203.14.14/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}`;
     console.log(apiUrl)
 
     if (countryCode === "선택하세요") {
