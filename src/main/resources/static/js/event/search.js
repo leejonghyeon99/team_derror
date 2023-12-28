@@ -46,7 +46,7 @@ function list(data) {
             const eventId = event.id;
             htmlString += `
                         <div class="col event-card" onclick="redirectToLoadInfo(this)">
-                            <form class="getDetailEvent" action="http://localhost:8080/countryinfo/info">
+                            <form class="getDetailEvent" action="http://43.203.14.14/countryinfo/info">
                                 <input class="eventId" type="hidden" name="eventId" value="${eventId}">
                             </form>
                             <div class="card h-100">
