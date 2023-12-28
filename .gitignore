@@ -4,7 +4,6 @@ HELP.md
 .classpath
 .project
 .gradle/
-.gradle/
 .gradle.kts/
 .idea/
 *.iml
@@ -47,11 +46,6 @@ target/
 .vscode/
 
 # Gradle 설정 파일과 래퍼
-settings.gradle
-gradlew
-gradlew.bat
-/.gradle/
-/gradle/
 *.yml
 
 
