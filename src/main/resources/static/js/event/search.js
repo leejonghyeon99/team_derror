@@ -3,7 +3,7 @@ let totalPages;
 function getEventInformation(targetPage) {
     const countryCode = document.getElementById('countryCode').value;
     const classificationName = document.getElementById('classification').value;
-    const apiUrl = `http://43.203.14.14/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}`;
+    const apiUrl = `http://ec2-43-203-14-14.ap-northeast-2.compute.amazonaws.com/countryinfo/list?countryCode=${countryCode}&page=${targetPage}&classificationName=${classificationName}`;
     console.log(apiUrl)
 
     if (countryCode === "선택하세요") {
@@ -46,7 +46,7 @@ function list(data) {
             const eventId = event.id;
             htmlString += `
                         <div class="col event-card" onclick="redirectToLoadInfo(this)">
-                            <form class="getDetailEvent" action="http://43.203.14.14/countryinfo/info">
+                            <form class="getDetailEvent" action="http://ec2-43-203-14-14.ap-northeast-2.compute.amazonaws.com/countryinfo/info">
                                 <input class="eventId" type="hidden" name="eventId" value="${eventId}">
                             </form>
                             <div class="card h-100">
