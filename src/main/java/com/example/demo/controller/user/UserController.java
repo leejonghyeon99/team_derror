@@ -110,7 +110,7 @@ public class UserController {
             return "redirect:/user/sign";
         }
 
-        String page = "/user/signupOk";
+        String page = "user/signupok";
         int cnt = userService.signup(member);
         model.addAttribute("result", cnt);
 
