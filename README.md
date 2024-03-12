@@ -56,7 +56,8 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 ## ❤**서비스 기능 소개**
 
 #### 로그인
-![](readme/login.gif)
+![image](https://github.com/leejonghyeon99/team_derror/assets/107775872/c44b2b1b-4076-419e-83a3-29c2a04d0dcd)
+
 ---
 
 #### 이벤트
