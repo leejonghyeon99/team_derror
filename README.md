@@ -48,7 +48,8 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 
 ## 🔄**시스템 설계**
 
-![](readme/mvc패턴.png)
+![mvc패턴](https://github.com/leejonghyeon99/team_derror/assets/107775872/23143caf-2d43-4d88-913b-5d29c665c770)
+
 
 시스템 설계는 SpringBoot Framework를 통한 MVC 패턴으로 작성되었습니다. 
 <br/>Controller는 세부적으로 Business Logic을 따라 작동하고 있습니다.
