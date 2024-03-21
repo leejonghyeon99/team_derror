@@ -66,7 +66,7 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 ---
 
 #### 항공
-![](readme/항공조회.gif)
+[![](readme/항공조회.gif)](https://github.com/JangGoun/TRAVELwith/blob/4d0889d80ff327ab148fee8b894fea1f0c840b76/readme/%ED%95%AD%EA%B3%B5%EC%A1%B0%ED%9A%8C.gif?raw=true)
 ---
 
 #### 숙박
