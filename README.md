@@ -70,7 +70,7 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 ---
 
 #### 숙박
-[![](readme/hotel.gif)](https://github.com/JangGoun/TRAVELwith/blob/4d0889d80ff327ab148fee8b894fea1f0c840b76/readme/%ED%95%AD%EA%B3%B5%EC%A1%B0%ED%9A%8C.gif)
+[[![](readme/hotel.gif)](https://github.com/JangGoun/TRAVELwith/blob/4d0889d80ff327ab148fee8b894fea1f0c840b76/readme/%ED%95%AD%EA%B3%B5%EC%A1%B0%ED%9A%8C.gif)](https://github.com/JangGoun/TRAVELwith/blob/4d0889d80ff327ab148fee8b894fea1f0c840b76/readme/hotel.gif?raw=true)
 ---
 
 #### 달력
