@@ -1,4 +1,3 @@
-
 ![](readme/homepage.png)
 
 ## ✈**TRAVEL with 소개**
@@ -11,18 +10,18 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 
 ## 😀**팀원 소개**
 
-|팀원|링크| 역할                         |
-|------|---|----------------------------|
-|이종현|깃허브| 버전 관리 및 DB 설계, AWS 배포      |
-||| 챗봇 도우미 구현                  |
-|서현기|깃허브| 홈, 항공, 숙박, 캘린더 페이지 구현      |
-||| API활용한 페이징 구현, 캘린더 CRUD 구현 |
-|임승빈|깃허브| 로그인 및 회원가입                 |
-||| 회원페이지                      |
-|장고운|깃허브| 게시판(공지사항, 자유, 공유) CRUD 구현  |
-||| 검색창, 목록필터, 페이징 구현          |
-|김종선|깃허브| 이벤트 정보 조회, 페이징 구현          |
-||| 이벤트 상세 정보 페이지, 일정 추가 구현    |
+|팀원|링크|역할|
+|------|---|---|
+|이종현|깃허브|버전 관리 및 DB 설계|
+|||챗봇 도우미 구현|
+|서현기|깃허브|홈, 항공, 숙박, 캘린더 페이지 구현|
+|||API활용한 페이징 구현, 캘린더 CRUD 구현|
+|임승빈|깃허브|로그인 및 회원가입|
+|||회원페이지|
+|장고운|깃허브|게시판(공지사항, 자유, 공유) CRUD 구현|
+|||검색창, 목록필터, 페이징 구현|
+|김종선|깃허브|이벤트 정보 조회, 페이징 구현|
+|||이벤트 상세 정보 페이지, 일정 추가 구현|
 
 
 ## 🛠**기술 스텍**
@@ -48,8 +47,7 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 
 ## 🔄**시스템 설계**
 
-![mvc패턴](https://github.com/leejonghyeon99/team_derror/assets/107775872/23143caf-2d43-4d88-913b-5d29c665c770)
-
+![](readme/mvc패턴.png)
 
 시스템 설계는 SpringBoot Framework를 통한 MVC 패턴으로 작성되었습니다. 
 <br/>Controller는 세부적으로 Business Logic을 따라 작동하고 있습니다.
@@ -57,8 +55,7 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 ## ❤**서비스 기능 소개**
 
 #### 로그인
-![image](https://github.com/leejonghyeon99/team_derror/assets/107775872/c44b2b1b-4076-419e-83a3-29c2a04d0dcd)
-
+![](readme/login.gif)
 ---
 
 #### 이벤트
@@ -66,12 +63,11 @@ Treavel with 는 한 번의 조회로 다양한 여행지와 공연 정보를 �
 ---
 
 #### 항공
-[![](readme/항공조회.gif)](https://github.com/JangGoun/TRAVELwith/blob/4d0889d80ff327ab148fee8b894fea1f0c840b76/readme/%ED%95%AD%EA%B3%B5%EC%A1%B0%ED%9A%8C.gif?raw=true)
+![](readme/항공조회.gif)
 ---
 
 #### 숙박
-![image](https://github.com/leejonghyeon99/team_derror/assets/107775872/24572eb4-ed5c-48ba-952e-6283bda4f908)
-
+![](readme/hotel.gif)
 ---
 
 #### 달력
